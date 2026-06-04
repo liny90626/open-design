@@ -8,7 +8,7 @@
 
 - **Node.js:** `~24`(Node 24.x). `package.json#engines`로 버전을 강제합니다.
 - **pnpm:** `10.33.x`. `packageManager`에 `pnpm@10.33.2`를 고정해 두었으니, Corepack을 쓰면 고정된 버전이 자동으로 선택됩니다.
-- **OS:** macOS, Linux, WSL2가 주요 지원 환경입니다. Windows 네이티브도 지원합니다. 자주 겪는 설치 문제는 [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md)를 참고하세요.
+- **OS:** macOS, Linux, WSL2가 주요 지원 환경입니다. Windows 네이티브도 지원합니다. 자주 겪는 설치 문제는 [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md)를 참고하세요.
 - **선택: 로컬 에이전트 CLI:** Claude Code, Codex, Devin for Terminal, Gemini CLI, OpenCode, Cursor Agent, Qwen, Qoder CLI, GitHub Copilot CLI 등. 설치된 CLI가 없으면 Settings에서 BYOK API 모드를 쓰면 됩니다.
 
 ### 로컬 에이전트 CLI와 PATH
@@ -383,7 +383,7 @@ open-design/
 
 ## 비전과 다시 잇기
 
-이 빠른 시작은 [`docs/`](docs/)에 담긴 스펙을 실제로 돌릴 수 있게 만든 씨앗입니다. 스펙은 이것이 어디로 자라날지 설명합니다([`docs/roadmap.md`](docs/roadmap.md) 참고). 핵심만 짚으면 다음과 같습니다.
+이 빠른 시작은 [`docs/`](../../docs/)에 담긴 스펙을 실제로 돌릴 수 있게 만든 씨앗입니다. 스펙은 이것이 어디로 자라날지 설명합니다([`docs/roadmap.md`](../../docs/roadmap.md) 참고). 핵심만 짚으면 다음과 같습니다.
 
 - `docs/architecture.md`는 출시된 스택을 설명합니다. 앞단의 Next.js 16 App Router, 그 뒤의 로컬 daemon, 그리고 dev에서 `apps/web/next.config.ts`의 rewrite가 브라우저를 같은 `/api` 표면과 계속 통신하게 유지하는 구조입니다.
 - `docs/skills-protocol.md`는 `od:` frontmatter 전체(타입 입력, 슬라이더, 기능 게이팅)를 설명합니다. 이 MVP는 `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires`만 읽습니다. 나머지를 추가하려면 `apps/daemon/src/skills.ts`를 확장하세요.

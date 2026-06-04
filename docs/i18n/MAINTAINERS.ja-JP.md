@@ -1,11 +1,11 @@
 <!-- Machine-translated draft. Native-speaker review and corrections welcome via PR. -->
 # Maintainers
 
-<p align="center"><a href="MAINTAINERS.md">English</a> · <a href="MAINTAINERS.pt-BR.md">Português (Brasil)</a> · <a href="MAINTAINERS.de.md">Deutsch</a> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <b>日本語</b></p>
+<p align="center"><a href="../../MAINTAINERS.md">English</a> · <a href="MAINTAINERS.pt-BR.md">Português (Brasil)</a> · <a href="MAINTAINERS.de.md">Deutsch</a> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <b>日本語</b></p>
 
 このドキュメントは、`nexu-io/open-design` の Maintainer になるため、その役割を務めるため、そして退任するためのルールを定めるものです。Core Team の個別のメンバー一覧は内部で管理されており、ここには列挙していません。公に重要なのは、全員が従うルールそのものです。
 
-> **ステータス**: v1、2026-05-11 にドラフト作成。[`CONTRIBUTING.md`](CONTRIBUTING.md#becoming-a-maintainer) のコンパニオン文書です。CONTRIBUTING.md は、コントリビューターを完全なルールのためにこちらへ案内しています。
+> **ステータス**: v1、2026-05-11 にドラフト作成。[`CONTRIBUTING.md`](../../CONTRIBUTING.md#becoming-a-maintainer) のコンパニオン文書です。CONTRIBUTING.md は、コントリビューターを完全なルールのためにこちらへ案内しています。
 
 ---
 

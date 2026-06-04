@@ -9,7 +9,7 @@ dans une PR.
 Ce guide indique où intervenir pour chaque type de contribution et quel niveau
 une PR doit atteindre avant d’être mergée.
 
-<p align="center"><a href="CONTRIBUTING.md">English</a> · <a href="CONTRIBUTING.pt-BR.md">Português (Brasil)</a> · <a href="CONTRIBUTING.de.md">Deutsch</a> · <b>Français</b> · <a href="CONTRIBUTING.zh-CN.md">简体中文</a> · <a href="CONTRIBUTING.ja-JP.md">日本語</a></p>
+<p align="center"><a href="../../CONTRIBUTING.md">English</a> · <a href="CONTRIBUTING.pt-BR.md">Português (Brasil)</a> · <a href="CONTRIBUTING.de.md">Deutsch</a> · <b>Français</b> · <a href="CONTRIBUTING.zh-CN.md">简体中文</a> · <a href="CONTRIBUTING.ja-JP.md">日本語</a></p>
 
 ---
 
@@ -17,9 +17,9 @@ une PR doit atteindre avant d’être mergée.
 
 | Si vous voulez… | Vous ajoutez en réalité | Où cela vit | Taille |
 |---|---|---|---|
-| Faire générer à OD un nouveau type d'artifact (facture, écran iOS Settings, one-pager…) | un **Skill** | [`skills/<your-skill>/`](skills/) | un dossier, ~2 fichiers |
-| Faire parler à OD le langage visuel d'une nouvelle marque | un **Design System** | [`design-systems/<brand>/DESIGN.md`](design-systems/) | un fichier Markdown |
-| Brancher une nouvelle CLI de coding agent | un **Agent adapter** | [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) | ~10 lignes dans un tableau |
+| Faire générer à OD un nouveau type d'artifact (facture, écran iOS Settings, one-pager…) | un **Skill** | [`skills/<your-skill>/`](../../skills/) | un dossier, ~2 fichiers |
+| Faire parler à OD le langage visuel d'une nouvelle marque | un **Design System** | [`design-systems/<brand>/DESIGN.md`](../../design-systems/) | un fichier Markdown |
+| Brancher une nouvelle CLI de coding agent | un **Agent adapter** | [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) | ~10 lignes dans un tableau |
 | Ajouter une feature, corriger un bug, reprendre un pattern UX de [`open-codesign`][ocod] | du code | `apps/web/src/`, `apps/daemon/` | PR classique |
 | Améliorer la doc, porter une section en Français / Deutsch / 中文, corriger une faute | documentation | `README.md`, `README.fr.md`, `README.de.md`, `README.zh-CN.md`, `docs/`, `QUICKSTART.md` | une PR |
 
@@ -48,7 +48,7 @@ Node `~24` et pnpm `10.33.x` sont requis. `nvm` / `fnm` sont optionnels ;
 utilisez `nvm install 24 && nvm use 24` ou `fnm install 24 && fnm use 24` si
 vous gérez Node comme cela. macOS, Linux et WSL2 sont les environnements
 principaux pris en charge.
-Windows natif est supporté ; voir [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md)
+Windows natif est supporté ; voir [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md)
 pour les pièges de configuration les plus courants.
 
 Vous n'avez pas besoin d'une CLI d'agent dans votre `PATH` pour développer OD.
@@ -60,7 +60,7 @@ de dev la plus rapide.
 
 ## Ajouter un nouveau Skill
 
-Un Skill est un dossier sous [`skills/`](skills/) avec un `SKILL.md` à la
+Un Skill est un dossier sous [`skills/`](../../skills/) avec un `SKILL.md` à la
 racine. Il suit la convention Claude Code [`SKILL.md`][skill], plus notre
 extension optionnelle `od:`. **Aucune étape d'enregistrement.** Déposez le
 dossier, redémarrez le daemon, et le picker l'affiche.
@@ -117,7 +117,7 @@ Body is free-form Markdown describing the workflow the agent should follow…
 ```
 
 La grammaire complète — typed inputs, paramètres de sliders, capability gating
-— se trouve dans [`docs/skills-protocol.md`](docs/skills-protocol.md).
+— se trouve dans [`docs/skills-protocol.md`](../../docs/skills-protocol.md).
 
 ### Critères de merge pour un nouveau Skill
 
@@ -137,8 +137,8 @@ visible pour l'utilisateur. Un nouveau Skill doit :
    écrivez `—` ou un bloc gris libellé, pas "10× faster".
 4. **Avoir un `references/checklist.md`** avec au moins les gates P0, c'est-à-dire
    ce que l'agent doit vérifier avant d'émettre `<artifact>`. Reprenez le format
-   de [`skills/guizang-ppt/references/checklist.md`](skills/guizang-ppt/) ou
-   [`skills/dating-web/references/checklist.md`](skills/dating-web/).
+   de [`skills/guizang-ppt/references/checklist.md`](../../skills/guizang-ppt/) ou
+   [`skills/dating-web/references/checklist.md`](../../skills/dating-web/).
 5. **Ajouter une capture** sous `docs/screenshots/skills/<skill>.png` si le Skill
    est featured. PNG, environ 1024×640 retina, capturé depuis le vrai
    `example.html` avec un zoom navigateur adapté.
@@ -152,21 +152,21 @@ faire `recruiting-web`), conservez la LICENSE et l'attribution d'auteur dans
 
 ### Skills existants à imiter
 
-- Prototype visuel single-screen : [`skills/dating-web/`](skills/dating-web/),
-  [`skills/digital-eguide/`](skills/digital-eguide/)
-- Flow mobile multi-frame : [`skills/mobile-onboarding/`](skills/mobile-onboarding/),
-  [`skills/gamified-app/`](skills/gamified-app/)
-- Document / template sans Design System requis : [`skills/pm-spec/`](skills/pm-spec/),
-  [`skills/weekly-update/`](skills/weekly-update/)
-- Deck mode : [`skills/guizang-ppt/`](skills/guizang-ppt/) (bundle repris tel
+- Prototype visuel single-screen : [`skills/dating-web/`](../../skills/dating-web/),
+  [`skills/digital-eguide/`](../../skills/digital-eguide/)
+- Flow mobile multi-frame : [`skills/mobile-onboarding/`](../../skills/mobile-onboarding/),
+  [`skills/gamified-app/`](../../skills/gamified-app/)
+- Document / template sans Design System requis : [`skills/pm-spec/`](../../skills/pm-spec/),
+  [`skills/weekly-update/`](../../skills/weekly-update/)
+- Deck mode : [`skills/guizang-ppt/`](../../skills/guizang-ppt/) (bundle repris tel
   quel depuis [op7418/guizang-ppt-skill][guizang]) et
-  [`skills/simple-deck/`](skills/simple-deck/)
+  [`skills/simple-deck/`](../../skills/simple-deck/)
 
 ---
 
 ## Ajouter un nouveau Design System
 
-Un design system est un seul fichier [`DESIGN.md`](design-systems/README.md)
+Un design system est un seul fichier [`DESIGN.md`](../../design-systems/README.md)
 sous `design-systems/<slug>/`. **Un fichier, pas de code.** Déposez-le,
 redémarrez le daemon, le picker l'affiche dans sa catégorie.
 
@@ -206,7 +206,7 @@ design-systems/your-brand/
 Le schéma à 9 sections est fixe : c'est ce que les Skill bodies cherchent. Le
 premier H1 devient le label dans le picker (le préfixe `Design System Inspired by`
 est retiré automatiquement), et la ligne `> Category: …` décide du groupe.
-Les catégories existantes sont listées dans [`design-systems/README.md`](design-systems/README.md) ;
+Les catégories existantes sont listées dans [`design-systems/README.md`](../../design-systems/README.md) ;
 si votre marque ne rentre vraiment nulle part, vous pouvez en introduire une
 nouvelle, mais **essayez d'abord les catégories existantes**.
 
@@ -229,7 +229,7 @@ nouvelle, mais **essayez d'abord les catégories existantes**.
    imitez-la.
 
 Les product systems livrés sont importés depuis [`VoltAgent/awesome-design-md`][acd2]
-via [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). Si votre
+via [`scripts/sync-design-systems.ts`](../../scripts/sync-design-systems.ts). Si votre
 marque appartient à cet upstream, **envoyez d'abord la PR là-bas** : OD le
 récupérera au prochain sync. Le dossier `design-systems/` sert aux systèmes qui
 ne rentrent pas upstream, plus nos starters écrits à la main.
@@ -239,7 +239,7 @@ ne rentrent pas upstream, plus nos starters écrits à la main.
 ## Ajouter une nouvelle CLI de coding agent
 
 Brancher un nouvel agent (par exemple une CLI `foo-coder`) revient à ajouter
-une entrée dans [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) :
+une entrée dans [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) :
 
 ```javascript
 {
@@ -255,7 +255,7 @@ une entrée dans [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) :
 C'est tout : le daemon la détecte dans le `PATH`, le picker l'affiche et le
 chemin chat fonctionne. Si la CLI émet des **typed events** (comme
 `--output-format stream-json` de Claude Code), ajoutez un parser dans
-[`apps/daemon/src/claude-stream.ts`](apps/daemon/src/claude-stream.ts) et mettez
+[`apps/daemon/src/claude-stream.ts`](../../apps/daemon/src/claude-stream.ts) et mettez
 `streamFormat: 'claude-stream-json'`.
 
 Critères de merge :
@@ -272,10 +272,10 @@ Critères de merge :
 
 En mode API, le chat envoie `max_tokens` au provider upstream à chaque requête.
 Le client web choisit ce nombre avec une lookup à trois niveaux dans
-[`apps/web/src/state/maxTokens.ts`](apps/web/src/state/maxTokens.ts) :
+[`apps/web/src/state/maxTokens.ts`](../../apps/web/src/state/maxTokens.ts) :
 
 1. L'override explicite de l'utilisateur dans Settings, s'il existe.
-2. Sinon, la valeur par modèle dans [`apps/web/src/state/litellm-models.json`](apps/web/src/state/litellm-models.json),
+2. Sinon, la valeur par modèle dans [`apps/web/src/state/litellm-models.json`](../../apps/web/src/state/litellm-models.json),
    un extrait vendored du `model_prices_and_context_window.json` de
    [BerriAI/litellm][litellm] (MIT). Il couvre environ 2k modèles chat chez
    Anthropic, OpenAI, DeepSeek, Groq, Together, Mistral, Gemini, Bedrock,
@@ -317,7 +317,7 @@ d'export et textes d'artifact générés par agent restent des limites connues,
 sauf si une PR les inclut explicitement.
 
 Pour les étapes détaillées d'ajout d'une locale (dictionnaire UI, README,
-language switcher, terminologie régionale), voir [`TRANSLATIONS.md`](TRANSLATIONS.md).
+language switcher, terminologie régionale), voir [`TRANSLATIONS.md`](../../TRANSLATIONS.md).
 
 ---
 
@@ -345,7 +345,7 @@ Au-delà de ça :
   compatibility explicite.
 - **Pas de nouvelle dépendance top-level** sans paragraphe dans la description
   de la PR expliquant ce qu'elle apporte et combien d'octets elle coûte. La liste
-  des dépendances dans [`package.json`](package.json) est petite volontairement.
+  des dépendances dans [`package.json`](../../package.json) est petite volontairement.
 - **Lancez `pnpm typecheck`** avant de push. CI le lance aussi ; s'il échoue,
   vous aurez un commentaire "please fix".
 
@@ -358,7 +358,7 @@ Au-delà de ça :
 - **Titre impératif + scope.** `add dating-web skill`,
   `fix daemon SSE backpressure when CLI hangs`, `docs: clarify .od layout`.
 - **Utilisez le template de PR.** Remplissez chaque section de
-  [`.github/pull_request_template.md`](.github/pull_request_template.md) — Why,
+  [`.github/pull_request_template.md`](../../.github/pull_request_template.md) — Why,
   What users will see, Surface area, Screenshots (si UI), Bug fix verification
   (si correctif), Validation. Les sections vides recevront un commentaire
   « please fill in ».
@@ -400,7 +400,7 @@ afin de voir si la violation vient du modèle ou du prompt.
   (préféré, car searchable pour la personne suivante).
 - "Comment écrire un Skill qui fait X ?" → ouvrez une discussion. Nous y
   répondrons et transformerons la réponse en ajout dans
-  [`docs/skills-protocol.md`](docs/skills-protocol.md) si c'est un pattern manquant.
+  [`docs/skills-protocol.md`](../../docs/skills-protocol.md) si c'est un pattern manquant.
 
 ---
 
@@ -432,7 +432,7 @@ discussion avant d'écrire le code.
 
 Si vous contribuez régulièrement et que vous souhaitez savoir à quoi
 ressemble le chemin pour devenir Mainteneur, les règles se trouvent dans
-**[`MAINTAINERS.md`](MAINTAINERS.md)**. La version courte :
+**[`MAINTAINERS.md`](../../MAINTAINERS.md)**. La version courte :
 
 - Un Mainteneur peut examiner, approuver et fermer des issues. Le bouton
   de merge reste à la Core Team — votre approbation compte tout de même
@@ -446,7 +446,7 @@ ressemble le chemin pour devenir Mainteneur, les règles se trouvent dans
   est facile et réversible (Emeritus → retour quand la vie se calme).
 - Tous les seuils, le flux de nomination, les règles de retrait et la
   dérogation pour les projets en phase initiale se trouvent dans
-  [`MAINTAINERS.md`](MAINTAINERS.md). Lisez ce document si l'un des
+  [`MAINTAINERS.md`](../../MAINTAINERS.md). Lisez ce document si l'un des
   points ci-dessus vous intéresse.
 
 Le tl;dr : livrez de bonnes PR, faites des reviews réfléchies, traînez
@@ -461,8 +461,8 @@ se fait tout seul.
 ## Licence
 
 En contribuant, vous acceptez que votre contribution soit licenciée sous la
-[licence Apache-2.0](LICENSE) de ce repo, à l'exception des fichiers dans
-[`skills/guizang-ppt/`](skills/guizang-ppt/), qui conservent leur licence MIT
+[licence Apache-2.0](../../LICENSE) de ce repo, à l'exception des fichiers dans
+[`skills/guizang-ppt/`](../../skills/guizang-ppt/), qui conservent leur licence MIT
 originale et l'attribution d'auteur à [op7418](https://github.com/op7418).
 
 [skill]: https://docs.anthropic.com/en/docs/claude-code/skills

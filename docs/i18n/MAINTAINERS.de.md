@@ -1,11 +1,11 @@
 <!-- Machine-translated draft. Native-speaker review and corrections welcome via PR. -->
 # Maintainer
 
-<p align="center"><a href="MAINTAINERS.md">English</a> · <a href="MAINTAINERS.pt-BR.md">Português (Brasil)</a> · <b>Deutsch</b> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <a href="MAINTAINERS.ja-JP.md">日本語</a></p>
+<p align="center"><a href="../../MAINTAINERS.md">English</a> · <a href="MAINTAINERS.pt-BR.md">Português (Brasil)</a> · <b>Deutsch</b> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <a href="MAINTAINERS.ja-JP.md">日本語</a></p>
 
 Dieses Dokument legt die Regeln dafür fest, wie man Maintainer von `nexu-io/open-design` wird, diese Rolle ausübt und sich aus ihr zurückzieht. Die individuelle Zusammensetzung des Core Teams wird intern verwaltet und ist hier nicht aufgeführt — was öffentlich zählt, sind die Regeln, an die sich alle halten.
 
-> **Status**: v1, entworfen am 2026-05-11. Begleitdokument zu [`CONTRIBUTING.md`](CONTRIBUTING.md#becoming-a-maintainer) — diese Datei verweist Beitragende für die vollständigen Regeln hierher.
+> **Status**: v1, entworfen am 2026-05-11. Begleitdokument zu [`CONTRIBUTING.md`](../../CONTRIBUTING.md#becoming-a-maintainer) — diese Datei verweist Beitragende für die vollständigen Regeln hierher.
 
 ---
 

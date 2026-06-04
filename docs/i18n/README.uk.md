@@ -2,7 +2,7 @@
 
 > 🔥 **Open Design 0.9.0 вже тут: створюйте без налаштувань.** [Офіційний Model Router](https://open-design.ai/amr) вбудований прямо в застосунок — без додаткової конфігурації, без CLI для встановлення, без потреби готувати API-ключ. Просто відкрийте застосунок, увійдіть і одразу починайте проєктувати та створювати. [Завантажити 0.9.0](https://github.com/nexu-io/open-design/releases) · [Долучитися до обговорення](https://github.com/nexu-io/open-design/discussions/3524)
 >
-> 🏅 **Програма Open Design Fellow тепер відкрита.** Якщо ви теж вірите, що дизайн має бути відкритим — станьте Open Design Fellow, формуйте продукт разом із основною командою та допомагайте більшій кількості людей брати участь у визначенні майбутнього дизайну. Деталі → [`MAINTAINERS.md`](MAINTAINERS.md) та [Discord](https://discord.gg/qhbcCH8Am4).
+> 🏅 **Програма Open Design Fellow тепер відкрита.** Якщо ви теж вірите, що дизайн має бути відкритим — станьте Open Design Fellow, формуйте продукт разом із основною командою та допомагайте більшій кількості людей брати участь у визначенні майбутнього дизайну. Деталі → [`MAINTAINERS.md`](../../MAINTAINERS.md) та [Discord](https://discord.gg/qhbcCH8Am4).
 
 <p align="center">
   <img src="https://repo-assets.open-design.ai/resources/images/hero.png" alt="Open Design — The open-source Claude Design alternative · 150 Design Systems · 261 Plugins · 21 Coding Agents · 14 Media Providers" width="100%" />
@@ -17,12 +17,12 @@
 
 <p align="center">
   <a href="https://github.com/nexu-io/open-design/releases"><img alt="release" src="https://img.shields.io/github/v/release/nexu-io/open-design?style=flat&color=blueviolet&label=release&include_prereleases&display_name=tag" /></a>
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
+  <a href="../../LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="discord" src="https://img.shields.io/discord/1479002485040480266?style=flat&logo=discord&logoColor=white&label=discord&color=5865F2&cacheSeconds=3600" /></a>
-  <a href="QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
+  <a href="../../QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
 </p>
 
-<p align="center"><a href="README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <b>Українська</b> · <a href="README.tr.md">Türkçe</a></p>
+<p align="center"><a href="../../README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <b>Українська</b> · <a href="README.tr.md">Türkçe</a></p>
 
 ---
 
@@ -135,7 +135,7 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 
 **Не встановлено жодного CLI?** Проксі BYOK на `POST /api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` дає вам той самий цикл (без породження процесу) — вставте `baseUrl` + `apiKey` + `model`, з підтримкою OpenAI, Anthropic, Azure OpenAI, Google Gemini, Ollama, LM Studio, vLLM або будь-якої OpenAI-сумісної кінцевої точки. Захист від SSRF для кожної цілі блокує внутрішні IP / link-local / CGNAT на межі демона.
 
-Контракт адаптера та парсери потоку містяться в [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts). Додавання нового CLI — це один запис, див. [`docs/agent-adapters.md`](docs/agent-adapters.md).
+Контракт адаптера та парсери потоку містяться в [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts). Додавання нового CLI — це один запис, див. [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -150,21 +150,21 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
+<img src="../../docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
 <sub><b>Вікно входу</b> — виберіть навичку, виберіть дизайн-систему, введіть бриф. Єдина поверхня для прототипів, дашбордів, презентацій, мобільних застосунків, журнальних сторінок.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
+<img src="../../docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
 <sub><b>Мобільний прототип</b> — піксельно точна оболонка iPhone 15 Pro, багатоекранні потоки. Агент ніколи не перемальовує рамку телефона; спільні рамки пристроїв містяться в <code>assets/frames/</code>.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
+<img src="../../docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
 <sub><b>Вебпрототип</b> — редакторський дашборд зі смугами прокрутки, KPI та діаграмами. Відрендерено прямо з <code>design-templates/dating-web/</code>.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
+<img src="../../docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
 <sub><b>Прототип мобільного застосунку</b> — гейміфікований потік із трьох екранів зі стрічками XP та деталями квестів. Передавайте прямо в Cursor / Codex / Claude Code, щоб перетворити на React/Next/Vue.</sub>
 </td>
 </tr>
@@ -177,21 +177,21 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
 <sub><b>Живий дашборд</b> — редагована стіна KPI, чия панель налаштувань виводить на поверхню параметри, які варто підкоригувати. Агент видає маніфест, і iframe перерендерюється без перезавантаження.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
+<img src="../../docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
 <sub><b>Кімната рішень</b> — багатоджерельний брифінговий артефакт для зустрічей із продукту / досліджень / операцій.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
+<img src="../../docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
 <sub><b>Дашборд у стилі GitHub</b> — метрики репозиторію, подані як живий артефакт.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
 <sub><b>Шаблон живого дашборда Flow</b> — KPI-шаблон для конкретної предметної області, брендований через активний <code>DESIGN.md</code>.</sub>
 </td>
 </tr>
@@ -202,11 +202,11 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
+<img src="../../docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
 <sub><b>Режим презентації (guizang-ppt)</b> — журнальні макети, WebGL-герой, чеклісти P0/P1/P2. Включено дослівно з <a href="https://github.com/op7418/guizang-ppt-skill"><code>op7418/guizang-ppt-skill</code></a> зі збереженням оригінальної ліцензії.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
+<img src="../../docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
 <sub><b>Презентація у швейцарському інтернаціональному стилі</b> — закріплена на сітці, монохромні акценти. Один із <b>15 шаблонів презентацій</b> та <b>36 тем</b> у <code>design-templates/html-ppt-*/</code>.</sub>
 </td>
 </tr>
@@ -226,7 +226,7 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 </tr>
 </table>
 
-**93 готових до відтворення промпти** містяться в [`prompt-templates/`](prompt-templates/) — мініатюри попереднього перегляду, повний текст промпта, цільова модель, співвідношення сторін та зазначення джерела. Один клік скидає бриф у композитор.
+**93 готових до відтворення промпти** містяться в [`prompt-templates/`](../../prompt-templates/) — мініатюри попереднього перегляду, повний текст промпта, цільова модель, співвідношення сторін та зазначення джерела. Один клік скидає бриф у композитор.
 
 ### 5 · Відео та HyperFrames — моушн-графіка agent-native
 
@@ -234,20 +234,20 @@ Open Design — це те, що ви отримуєте, коли **agent-native
 
 <table>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>30-секундне промо SaaS-продукту</b> · 16:9 · 3D-розкриття UI</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>TikTok-караоке з говорильною головою</b> · 9:16 · TTS + синхронізовані за словами субтитри</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>30-секундний брендовий sizzle-ролик</b> · 16:9 · аудіореактивна кінетична типографіка</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>Гонка стовпчикових діаграм</b> · 16:9 · інфографіка даних у стилі NYT</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>30-секундне промо SaaS-продукту</b> · 16:9 · 3D-розкриття UI</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>TikTok-караоке з говорильною головою</b> · 9:16 · TTS + синхронізовані за словами субтитри</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>30-секундний брендовий sizzle-ролик</b> · 16:9 · аудіореактивна кінетична типографіка</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>Гонка стовпчикових діаграм</b> · 16:9 · інфографіка даних у стилі NYT</sub></td>
 </tr>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>Мапа польоту</b> · 16:9 · розкриття маршруту в стилі Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>4-секундна кінематографічна заставка логотипа</b> · 16:9 · поелементне складання + bloom</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>Лічильник грошей $0 → $10K</b> · 9:16 · хайп у стилі Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>Сайт-у-відео</b> · 16:9 · захоплює сайт у 3 вікнах перегляду</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>Мапа польоту</b> · 16:9 · розкриття маршруту в стилі Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>4-секундна кінематографічна заставка логотипа</b> · 16:9 · поелементне складання + bloom</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>Лічильник грошей $0 → $10K</b> · 9:16 · хайп у стилі Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>Сайт-у-відео</b> · 16:9 · захоплює сайт у 3 вікнах перегляду</sub></td>
 </tr>
 </table>
 
-11 шаблонів HyperFrames + 39 промптів Seedance постачаються разом із репозиторієм. Мініатюри каталогу © HeyGen; платформа під ліцензією Apache-2.0. Специфічний для OD робочий процес рендерингу (кеш композиції, обхідний шлях sandbox-exec, MP4-як-чип) детально описаний у [`design-templates/hyperframes/`](design-templates/hyperframes/).
+11 шаблонів HyperFrames + 39 промптів Seedance постачаються разом із репозиторієм. Мініатюри каталогу © HeyGen; платформа під ліцензією Apache-2.0. Специфічний для OD робочий процес рендерингу (кеш композиції, обхідний шлях sandbox-exec, MP4-як-чип) детально описаний у [`design-templates/hyperframes/`](../../design-templates/hyperframes/).
 
 [hyperframes]: https://github.com/heygen-com/hyperframes
 
@@ -332,7 +332,7 @@ corepack enable && pnpm install
 pnpm tools-dev run web
 ```
 
-Node `~24`, pnpm `10.33.x`. Користувачі Windows, див. [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md). Повний швидкий старт, змінні середовища, Nix flake та процес упакованого збирання → [`QUICKSTART.md`](QUICKSTART.md).
+Node `~24`, pnpm `10.33.x`. Користувачі Windows, див. [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md). Повний швидкий старт, змінні середовища, Nix flake та процес упакованого збирання → [`QUICKSTART.md`](../../QUICKSTART.md).
 
 ### Повний робочий процес — від брифа до артефакта
 
@@ -364,7 +364,7 @@ od skill list --scenario marketing
 
 **Чому MCP?** Експорт і повторне приєднання zip-архіву на кожній ітерації порушує потік. MCP відкриває джерело дизайну безпосередньо — агент завжди бачить живий файл.
 
-**Для агента, що починає з нуля,** інсталятор розміщує `~/.config/<agent>/open-design.json` (або платформенний еквівалент) плюс готовий до вставлення фрагмент MCP. Cursor отримує deeplink в один клік; Claude Code отримує однорядкову команду `claude mcp add-json`; кожен інший агент отримує JSON у схемі, якої очікує його конфігурація. Повний процес для кожного агента → **Settings → MCP server** у десктопному застосунку або [`docs/agent-adapters.md`](docs/agent-adapters.md).
+**Для агента, що починає з нуля,** інсталятор розміщує `~/.config/<agent>/open-design.json` (або платформенний еквівалент) плюс готовий до вставлення фрагмент MCP. Cursor отримує deeplink в один клік; Claude Code отримує однорядкову команду `claude mcp add-json`; кожен інший агент отримує JSON у схемі, якої очікує його конфігурація. Повний процес для кожного агента → **Settings → MCP server** у десктопному застосунку або [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 **Модель безпеки.** За замовчуванням лише для читання, демон прив'язується до `127.0.0.1`, а SSRF блокується на межі проксі. Доступ із LAN вимагає явного `OD_BIND_HOST` плюс `OD_ALLOWED_ORIGINS`. Облікові дані конекторів та маршрути попереднього перегляду живих артефактів залишаються лише на петлевому інтерфейсі незалежно від цього.
 
@@ -372,34 +372,34 @@ od skill list --scenario marketing
 
 ## Навички
 
-**100+ навичок постачаються «з коробки»** — кожна є текою в [`skills/`](skills/), що дотримується конвенції [`SKILL.md`][skill] Claude Code, розширеної frontmatter `od:` (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`). Покладіть теку всередину, перезапустіть демон — і вона з'явиться в селекторі.
+**100+ навичок постачаються «з коробки»** — кожна є текою в [`skills/`](../../skills/), що дотримується конвенції [`SKILL.md`][skill] Claude Code, розширеної frontmatter `od:` (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`). Покладіть теку всередину, перезапустіть демон — і вона з'явиться в селекторі.
 
 Два **режими** є основою каталогу: `prototype` (односторінкові артефакти web/mobile/desktop) та `deck` (презентації з горизонтальним гортанням). Також режими `image`, `video`, `audio`, `template`, `design-system` та `utility`. Поле **`scenario`** групує їх за аудиторією: `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
 
 | Навичка | Режим | Сценарій | Що вона створює |
 |---|---|---|---|
-| [`web-prototype`](design-templates/web-prototype/) | prototype | design | Типовий лендинг / герой |
-| [`saas-landing`](design-templates/saas-landing/) | prototype | marketing | Герой / функції / ціни / CTA |
-| [`dashboard`](design-templates/dashboard/) | prototype | operation | Адмін / аналітика (з бічною панеллю) |
-| [`mobile-app`](design-templates/mobile-app/) | prototype | design | Застосунок у рамці iPhone 15 Pro / Pixel |
-| [`mobile-onboarding`](design-templates/mobile-onboarding/) | prototype | design | Заставка · ціннісна пропозиція · потік входу |
-| [`social-carousel`](design-templates/social-carousel/) | prototype | marketing | Карусель із 3 карток 1080×1080 |
-| [`email-marketing`](design-templates/email-marketing/) | prototype | marketing | Брендований email із безпечним табличним фолбеком |
-| [`magazine-poster`](design-templates/magazine-poster/) | prototype | marketing | Односторінковий журнальний макет |
-| [`motion-frames`](design-templates/motion-frames/) | prototype | marketing | Зациклений CSS-моушн-герой |
-| [`sprite-animation`](design-templates/sprite-animation/) | prototype | marketing | 8-бітний піксельний анімований пояснювач |
-| [`pm-spec`](design-templates/pm-spec/) | prototype | product | PM-специфікація (з ToC + журналом рішень) |
-| [`team-okrs`](design-templates/team-okrs/) | prototype | product | Табель OKR |
-| [`eng-runbook`](design-templates/eng-runbook/) | prototype | engineering | Runbook інцидентів |
-| [`finance-report`](design-templates/finance-report/) | prototype | finance | Виконавче фінансове резюме |
-| [`hr-onboarding`](design-templates/hr-onboarding/) | prototype | hr | План онбордингу на посаду |
-| [`guizang-ppt`](design-templates/guizang-ppt/) | deck | marketing | Веб-PPT у журнальному стилі (типовий для презентацій) |
-| [`html-ppt-*`](design-templates/) | deck | marketing | 15 шаблонів презентацій × 36 тем (головний шаблон у [`design-templates/html-ppt/`](design-templates/html-ppt/)) |
-| [`hyperframes`](design-templates/hyperframes/) | video | marketing | Моушн-графіка HTML → MP4 (OSS-платформа HeyGen) |
-| [`critique`](design-templates/critique/) | utility | design | П'ятивимірний табель самокритики |
-| [`tweaks`](design-templates/tweaks/) | utility | design | Маніфест панелі налаштувань, виданий ШІ |
+| [`web-prototype`](../../design-templates/web-prototype/) | prototype | design | Типовий лендинг / герой |
+| [`saas-landing`](../../design-templates/saas-landing/) | prototype | marketing | Герой / функції / ціни / CTA |
+| [`dashboard`](../../design-templates/dashboard/) | prototype | operation | Адмін / аналітика (з бічною панеллю) |
+| [`mobile-app`](../../design-templates/mobile-app/) | prototype | design | Застосунок у рамці iPhone 15 Pro / Pixel |
+| [`mobile-onboarding`](../../design-templates/mobile-onboarding/) | prototype | design | Заставка · ціннісна пропозиція · потік входу |
+| [`social-carousel`](../../design-templates/social-carousel/) | prototype | marketing | Карусель із 3 карток 1080×1080 |
+| [`email-marketing`](../../design-templates/email-marketing/) | prototype | marketing | Брендований email із безпечним табличним фолбеком |
+| [`magazine-poster`](../../design-templates/magazine-poster/) | prototype | marketing | Односторінковий журнальний макет |
+| [`motion-frames`](../../design-templates/motion-frames/) | prototype | marketing | Зациклений CSS-моушн-герой |
+| [`sprite-animation`](../../design-templates/sprite-animation/) | prototype | marketing | 8-бітний піксельний анімований пояснювач |
+| [`pm-spec`](../../design-templates/pm-spec/) | prototype | product | PM-специфікація (з ToC + журналом рішень) |
+| [`team-okrs`](../../design-templates/team-okrs/) | prototype | product | Табель OKR |
+| [`eng-runbook`](../../design-templates/eng-runbook/) | prototype | engineering | Runbook інцидентів |
+| [`finance-report`](../../design-templates/finance-report/) | prototype | finance | Виконавче фінансове резюме |
+| [`hr-onboarding`](../../design-templates/hr-onboarding/) | prototype | hr | План онбордингу на посаду |
+| [`guizang-ppt`](../../design-templates/guizang-ppt/) | deck | marketing | Веб-PPT у журнальному стилі (типовий для презентацій) |
+| [`html-ppt-*`](../../design-templates/) | deck | marketing | 15 шаблонів презентацій × 36 тем (головний шаблон у [`design-templates/html-ppt/`](../../design-templates/html-ppt/)) |
+| [`hyperframes`](../../design-templates/hyperframes/) | video | marketing | Моушн-графіка HTML → MP4 (OSS-платформа HeyGen) |
+| [`critique`](../../design-templates/critique/) | utility | design | П'ятивимірний табель самокритики |
+| [`tweaks`](../../design-templates/tweaks/) | utility | design | Маніфест панелі налаштувань, виданий ШІ |
 
-Повний протокол навичок → [`docs/skills-protocol.md`](docs/skills-protocol.md). Кінцева точка реєстру навичок: `GET /api/skills`.
+Повний протокол навичок → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Кінцева точка реєстру навичок: `GET /api/skills`.
 
 ---
 
@@ -430,7 +430,7 @@ od skill list --scenario marketing
 
 </details>
 
-Повторно імпортуйте бібліотеку через [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). Додайте власний бренд → покладіть `DESIGN.md` у `design-systems/<brand>/`. Повний посібник → [`design-systems/README.md`](design-systems/README.md).
+Повторно імпортуйте бібліотеку через [`scripts/sync-design-systems.ts`](../../scripts/sync-design-systems.ts). Додайте власний бренд → покладіть `DESIGN.md` у `design-systems/<brand>/`. Повний посібник → [`design-systems/README.md`](../../design-systems/README.md).
 
 [acd2]: https://github.com/VoltAgent/awesome-design-md
 
@@ -438,24 +438,24 @@ od skill list --scenario marketing
 
 ## Плагіни
 
-**261 офіційний плагін** міститься в [`plugins/_official/`](plugins/_official/). Кожен плагін — це **портативна тека agent-skill** — `SKILL.md` (зчитувана будь-яким агентом, що підтримує Agent Skills), плюс опціональний маніфест `open-design.json`, який надає Open Design метадані маркетплейсу, входи, попередні перегляди, конвеєри та декларації можливостей. Перейдіть одразу до категорії:
+**261 офіційний плагін** міститься в [`plugins/_official/`](../../plugins/_official/). Кожен плагін — це **портативна тека agent-skill** — `SKILL.md` (зчитувана будь-яким агентом, що підтримує Agent Skills), плюс опціональний маніфест `open-design.json`, який надає Open Design метадані маркетплейсу, входи, попередні перегляди, конвеєри та декларації можливостей. Перейдіть одразу до категорії:
 
 | Категорія | Кількість | Вміст |
 |---|---|---|
-| [`scenarios/`](plugins/_official/scenarios/) | 11 | Повні дизайн-сценарії — [`od-default`](plugins/_official/scenarios/od-default/), [`od-design-refine`](plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](plugins/_official/scenarios/od-code-migration/), [`od-react-export`](plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](plugins/_official/scenarios/od-plugin-authoring/) |
-| [`image-templates/`](plugins/_official/image-templates/) | 45 | Одношотові промпти зображень — редакторські, кінематографічні, продуктові, портретні |
-| [`video-templates/`](plugins/_official/video-templates/) | 50 | Моушн-шаблони HyperFrames / Seedance / Veo |
-| [`design-systems/`](plugins/_official/design-systems/) | 142 | Брендові `DESIGN.md`, обгорнуті як плагіни |
-| [`atoms/`](plugins/_official/atoms/) | 13 | Багаторазові фрагменти UI (кнопки, герої, KPI-картки) |
-| [`examples/`](plugins/_official/examples/) | 140 | Реміксувані еталонні результати |
+| [`scenarios/`](../../plugins/_official/scenarios/) | 11 | Повні дизайн-сценарії — [`od-default`](../../plugins/_official/scenarios/od-default/), [`od-design-refine`](../../plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/), [`od-react-export`](../../plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](../../plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](../../plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](../../plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](../../plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](../../plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](../../plugins/_official/scenarios/od-plugin-authoring/) |
+| [`image-templates/`](../../plugins/_official/image-templates/) | 45 | Одношотові промпти зображень — редакторські, кінематографічні, продуктові, портретні |
+| [`video-templates/`](../../plugins/_official/video-templates/) | 50 | Моушн-шаблони HyperFrames / Seedance / Veo |
+| [`design-systems/`](../../plugins/_official/design-systems/) | 142 | Брендові `DESIGN.md`, обгорнуті як плагіни |
+| [`atoms/`](../../plugins/_official/atoms/) | 13 | Багаторазові фрагменти UI (кнопки, герої, KPI-картки) |
+| [`examples/`](../../plugins/_official/examples/) | 140 | Реміксувані еталонні результати |
 
-Також [`plugins/community/`](plugins/community/) для плагінів спільноти та [`plugins/registry/`](plugins/registry/) для процесу публікації.
+Також [`plugins/community/`](../../plugins/community/) для плагінів спільноти та [`plugins/registry/`](../../plugins/registry/) для процесу публікації.
 
 ### Що можуть робити плагіни
 
-- 🤖 **Працюють у будь-якому кодувальному агенті** — [Claude Code](docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… через той самий протокол навичок, який агент уже знає.
-- 🔁 **Мігрують робочі процеси Figma / Pencil** → вихідний код React, Next.js або Vue. Див. [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/).
-- 🛠️ **Оновлюють наявну кодову базу до специфікації бренду** — спрямуйте плагін на репозиторій `git` + `DESIGN.md`, отримайте PR. Див. [`od-code-migration`](plugins/_official/scenarios/od-code-migration/).
+- 🤖 **Працюють у будь-якому кодувальному агенті** — [Claude Code](../../docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… через той самий протокол навичок, який агент уже знає.
+- 🔁 **Мігрують робочі процеси Figma / Pencil** → вихідний код React, Next.js або Vue. Див. [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/).
+- 🛠️ **Оновлюють наявну кодову базу до специфікації бренду** — спрямуйте плагін на репозиторій `git` + `DESIGN.md`, отримайте PR. Див. [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/).
 - 💾 **Зберігають користувацькі робочі процеси** — багаторазові шаблони вашої команди стоять поряд із тими, що постачаються.
 
 ### Використання плагінів
@@ -501,16 +501,16 @@ od plugin validate ./my-plugin                          # check manifest / file 
 pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 ```
 
-Повний набір полів та рантайм-контракт → [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md); розробка плагіна з кодувальним агентом → [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md); мінімальні шаблони для копіювання → [`plugins/spec/examples/`](plugins/spec/examples/).
+Повний набір полів та рантайм-контракт → [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md); розробка плагіна з кодувальним агентом → [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md); мінімальні шаблони для копіювання → [`plugins/spec/examples/`](../../plugins/spec/examples/).
 
 ### Внесок плагіна
 
-1. Покладіть теку плагіна в [`plugins/community/`](plugins/community/) (сторонні плагіни), або — щоб постачати його в комплекті з Open Design — у відповідний рівень [`plugins/_official/`](plugins/_official/).
+1. Покладіть теку плагіна в [`plugins/community/`](../../plugins/community/) (сторонні плагіни), або — щоб постачати його в комплекті з Open Design — у відповідний рівень [`plugins/_official/`](../../plugins/_official/).
 2. Пройдіть валідацію: `od plugin validate`, `pnpm guard`, `pnpm --filter @open-design/plugin-runtime typecheck`.
-3. Заповніть PR за шаблоном у [`plugins/spec/CONTRIBUTING.md`](plugins/spec/CONTRIBUTING.md) (ID, версія, лінія, режим, можливості, приклади тригерів; додайте скриншот / попередній перегляд для візуальних плагінів).
-4. Щоб опублікувати у зовнішньому реєстрі (skills.sh / ClawHub / окремий GitHub) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](plugins/spec/PUBLISHING-REGISTRIES.md).
+3. Заповніть PR за шаблоном у [`plugins/spec/CONTRIBUTING.md`](../../plugins/spec/CONTRIBUTING.md) (ID, версія, лінія, режим, можливості, приклади тригерів; додайте скриншот / попередній перегляд для візуальних плагінів).
+4. Щоб опублікувати у зовнішньому реєстрі (skills.sh / ClawHub / окремий GitHub) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](../../plugins/spec/PUBLISHING-REGISTRIES.md).
 
-Кінцева точка реєстру плагінів: `GET /api/plugins`. Огляд директорій → [`plugins/README.md`](plugins/README.md) ([简体中文](plugins/README.zh-CN.md)).
+Кінцева точка реєстру плагінів: `GET /api/plugins`. Огляд директорій → [`plugins/README.md`](../../plugins/README.md) ([简体中文](../../plugins/README.zh-CN.md)).
 
 ---
 
@@ -553,7 +553,7 @@ pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 | Десктоп | Оболонка Electron + рендерер у пісочниці + sidecar IPC (STATUS · EVAL · SCREENSHOT · CONSOLE · CLICK · SHUTDOWN) |
 | Життєвий цикл | Одна точка входу: `pnpm tools-dev` (start / stop / run / status / logs / inspect / check) |
 
-Повна архітектура → [`docs/architecture.md`](docs/architecture.md). Протокол навичок → [`docs/skills-protocol.md`](docs/skills-protocol.md). Контракт адаптера агента → [`docs/agent-adapters.md`](docs/agent-adapters.md).
+Повна архітектура → [`docs/architecture.md`](../../docs/architecture.md). Протокол навичок → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Контракт адаптера агента → [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -577,7 +577,7 @@ pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 - [ ] Плагіни міграції Figma / Pencil → React / Next / Vue (alpha)
 - [ ] Плагін оновлення наявної кодової бази (спрямувати на репозиторій git + `DESIGN.md`)
 
-Поетапна доставка → [`docs/roadmap.md`](docs/roadmap.md).
+Поетапна доставка → [`docs/roadmap.md`](../../docs/roadmap.md).
 
 ---
 
@@ -602,12 +602,12 @@ Open Design продовжує рухатися, бо контриб'ютори 
 
 | Хочете випустити… | Як | Де |
 |---|---|---|
-| Нову **навичку** | Покладіть теку з `SKILL.md` + `assets/` + `references/` | [`skills/`](skills/) · специфікація в [`docs/skills-protocol.md`](docs/skills-protocol.md) |
-| Нову **дизайн-систему** | Покладіть `DESIGN.md` за схемою з 9 розділів | [`design-systems/<brand>/`](design-systems/) |
-| Новий **плагін** | Покладіть `open-design.json` + маніфест під текою категорії | [`plugins/community/`](plugins/community/) · специфікація в [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md) · посібник із розробки агентом у [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md) |
-| Підтримку нового **CLI кодувального агента** | Один запис адаптера + парсер потоку | [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) |
+| Нову **навичку** | Покладіть теку з `SKILL.md` + `assets/` + `references/` | [`skills/`](../../skills/) · специфікація в [`docs/skills-protocol.md`](../../docs/skills-protocol.md) |
+| Нову **дизайн-систему** | Покладіть `DESIGN.md` за схемою з 9 розділів | [`design-systems/<brand>/`](../../design-systems/) |
+| Новий **плагін** | Покладіть `open-design.json` + маніфест під текою категорії | [`plugins/community/`](../../plugins/community/) · специфікація в [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md) · посібник із розробки агентом у [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md) |
+| Підтримку нового **CLI кодувального агента** | Один запис адаптера + парсер потоку | [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) |
 | Виправити баг або відполірувати UI | Перегляньте мітку [`good-first-issue`](https://github.com/nexu-io/open-design/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) | [Issues →](https://github.com/nexu-io/open-design/issues) |
-| Перекласти документацію | Оновіть файли `README.<lang>.md` | [`TRANSLATIONS.md`](TRANSLATIONS.md) |
+| Перекласти документацію | Оновіть файли `README.<lang>.md` | [`TRANSLATIONS.md`](../../TRANSLATIONS.md) |
 
 ### 🤖 Внесок як агент
 
@@ -631,11 +631,11 @@ pnpm --filter @open-design/<package> test
 gh pr create --fill
 ```
 
-Повний дружній до агентів процес внеску, стиль коду та планка PR → [`CONTRIBUTING.md`](CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
+Повний дружній до агентів процес внеску, стиль коду та планка PR → [`CONTRIBUTING.md`](../../CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
 
 ### 🏅 Програма Open Design Fellow
 
-Ми набираємо **Open Design Fellows** по всьому світу — Fellows формують продукт разом із основною командою, офіційно представляють Open Design у своєму регіоні та розвивають спільноту локально, маючи фінансовану підтримку ($1,000 / MR), безкоштовні LLM-кредити та прямий трек рев'ю. Деталі → [`MAINTAINERS.md`](MAINTAINERS.md) та анонс у [Discord](https://discord.gg/qhbcCH8Am4).
+Ми набираємо **Open Design Fellows** по всьому світу — Fellows формують продукт разом із основною командою, офіційно представляють Open Design у своєму регіоні та розвивають спільноту локально, маючи фінансовану підтримку ($1,000 / MR), безкоштовні LLM-кредити та прямий трек рев'ю. Деталі → [`MAINTAINERS.md`](../../MAINTAINERS.md) та анонс у [Discord](https://discord.gg/qhbcCH8Am4).
 
 ---
 
@@ -662,7 +662,7 @@ gh pr create --fill
   </tr>
 </table>
 
-Правила для maintainer'ів, критерії підвищення та протокол виходу → [`MAINTAINERS.md`](MAINTAINERS.md) (також [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
+Правила для maintainer'ів, критерії підвищення та протокол виходу → [`MAINTAINERS.md`](../../MAINTAINERS.md) (також [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
 
 ## Контриб'ютори
 
@@ -680,7 +680,7 @@ gh pr create --fill
   <img alt="Open Design — repository metrics" src="https://repo-assets.open-design.ai/resources/images/github-metrics.svg" />
 </picture>
 
-SVG вище щодня перегенеровується [`.github/workflows/metrics.yml`](.github/workflows/metrics.yml) за допомогою [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
+SVG вище щодня перегенеровується [`.github/workflows/metrics.yml`](../../.github/workflows/metrics.yml) за допомогою [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
 
 ---
 
@@ -708,7 +708,7 @@ SVG вище щодня перегенеровується [`.github/workflows/m
 |---|---|
 | [Claude Design][cd] | Закритий продукт, відкритою альтернативою якому є цей репозиторій. |
 | [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu-design) | Компас дизайн-філософії — робочий процес джуніор-дизайнера, протокол брендових ресурсів, чекліст проти AI-slop, п'ятивимірна критика. |
-| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | Навичка веб-PPT у журнальному стилі, включена дослівно під [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/). Типова для режиму презентацій. |
+| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | Навичка веб-PPT у журнальному стилі, включена дослівно під [`design-templates/guizang-ppt/`](../../design-templates/guizang-ppt/). Типова для режиму презентацій. |
 | [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) | Сімейство HTML PPT Studio — 15 шаблонів презентацій, 36 тем, 31 макет сторінки, рантайм анімації, режим презентера з магнітними картками. |
 | [`OpenCoworkAI/open-codesign`](https://github.com/OpenCoworkAI/open-codesign) | Перша відкрита альтернатива Claude Design; UX-патерни, які ми запозичуємо (цикл потокового артефакта, iframe-пісочниця, жива панель агента). |
 | [`multica-ai/multica`](https://github.com/multica-ai/multica) | Архітектура демон + адаптер — виявлення агентів скануванням PATH, локальний демон як єдиний привілейований процес. |
@@ -717,10 +717,10 @@ SVG вище щодня перегенеровується [`.github/workflows/m
 | [`heygen-com/hyperframes`](https://github.com/heygen-com/hyperframes) | Платформа моушн-графіки HTML→MP4, інтегрована як повноправний `hyperframes-html` в Open Design. |
 | [Claude Code skills][skill] | Конвенція `SKILL.md`, яку ми приймаємо дослівно. |
 
-Детальне походження → [`docs/references.md`](docs/references.md).
+Детальне походження → [`docs/references.md`](../../docs/references.md).
 
 [skill]: https://docs.anthropic.com/en/docs/claude-code/skills
 
 ## Ліцензія
 
-Apache-2.0. Включений `design-templates/guizang-ppt/` зберігає свою оригінальну [LICENSE](design-templates/guizang-ppt/LICENSE) (MIT, [@op7418](https://github.com/op7418)). Включений `design-templates/html-ppt/` зберігає свою оригінальну [LICENSE](design-templates/html-ppt/LICENSE) (MIT, [@lewislulu](https://github.com/lewislulu)).
+Apache-2.0. Включений `design-templates/guizang-ppt/` зберігає свою оригінальну [LICENSE](../../design-templates/guizang-ppt/LICENSE) (MIT, [@op7418](https://github.com/op7418)). Включений `design-templates/html-ppt/` зберігає свою оригінальну [LICENSE](../../design-templates/html-ppt/LICENSE) (MIT, [@lewislulu](https://github.com/lewislulu)).

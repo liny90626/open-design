@@ -1,6 +1,6 @@
 # Início rápido
 
-<p align="center"><a href="QUICKSTART.md">English</a> · <b>Português (Brasil)</b> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
+<p align="center"><a href="../../QUICKSTART.md">English</a> · <b>Português (Brasil)</b> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
 
 Rode o produto inteiro localmente.
 
@@ -371,7 +371,7 @@ open-design/
 
 ## Voltando à visão
 
-Este Início rápido é a semente executável da spec em [`docs/`](docs/). A spec descreve para onde isso evolui (veja [`docs/roadmap.md`](docs/roadmap.md)). Destaques:
+Este Início rápido é a semente executável da spec em [`docs/`](../../docs/). A spec descreve para onde isso evolui (veja [`docs/roadmap.md`](../../docs/roadmap.md)). Destaques:
 
 - `docs/architecture.md` descreve a stack entregue: Next.js 16 App Router na frente, daemon local atrás, e os rewrites de `apps/web/next.config.ts` em dev mantendo o navegador conversando com a mesma superfície `/api`.
 - `docs/skills-protocol.md` descreve o frontmatter `od:` completo (inputs tipados, sliders, gating de capacidades). Este MVP lê apenas `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires` — estenda `apps/daemon/src/skills.ts` para cobrir o resto.

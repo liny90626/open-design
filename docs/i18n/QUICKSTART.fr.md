@@ -1,6 +1,6 @@
 # Quickstart
 
-<p align="center"><a href="QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <b>Français</b> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
+<p align="center"><a href="../../QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <b>Français</b> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
 
 Exécutez le produit complet localement.
 
@@ -49,7 +49,7 @@ Au premier chargement, l’app détecte votre CLI de coding agent installée (Cl
 
 Le menu déroulant **Design System** charge les Design Systems depuis `design-systems/*/DESIGN.md` : starters écrits à la main, product systems intégrés et design skills normalisés. Choisissez-en un pour habiller chaque prototype dans l’esthétique de cette marque.
 
-Le menu déroulant **Skill** regroupe les entrées par `mode` / `surface` et affiche le Skill par défaut de chaque mode avec un suffixe `· default`. Le catalogue live vient de [`skills/`](skills/) et couvre les workflows web, deck, Design System, image, vidéo et audio. Exemples inclus :
+Le menu déroulant **Skill** regroupe les entrées par `mode` / `surface` et affiche le Skill par défaut de chaque mode avec un suffixe `· default`. Le catalogue live vient de [`skills/`](../../skills/) et couvre les workflows web, deck, Design System, image, vidéo et audio. Exemples inclus :
 
 - **Prototype** — `web-prototype` (générique), `saas-landing`, `dashboard`, `pricing-page`, `docs-page`, `blog-post`, `mobile-app`.
 - **Deck / PPT** — `simple-deck` (swipe horizontal single-file) et `magazine-web-ppt` (le bundle `guizang-ppt` depuis [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill), par défaut en mode deck, avec ses propres assets/template + 4 références). Les Skills avec side files reçoivent automatiquement un préambule "Skill root (absolute)" pour que l’agent puisse résoudre `assets/template.html` et `references/*.md` depuis le vrai chemin disque au lieu de son CWD.
@@ -372,7 +372,7 @@ open-design/
 
 ## Retour à la vision
 
-Ce Quickstart est la graine exécutable de la spec dans [`docs/`](docs/). La spec décrit vers quoi le projet grandit (voir [`docs/roadmap.md`](docs/roadmap.md)). Points clés :
+Ce Quickstart est la graine exécutable de la spec dans [`docs/`](../../docs/). La spec décrit vers quoi le projet grandit (voir [`docs/roadmap.md`](../../docs/roadmap.md)). Points clés :
 
 - `docs/architecture.md` décrit le stack livré : Next.js 16 App Router devant, daemon local derrière, et rewrites `apps/web/next.config.ts` en dev pour que le navigateur parle toujours à la même surface `/api`.
 - `docs/skills-protocol.md` décrit le schéma `od:` complet. Le daemon lit les métadonnées runtime utiles depuis `SKILL.md` pour router les Skills, composer le prompt, afficher les exemples et configurer les surfaces web / image / vidéo / audio ; le protocole reste la référence pour les champs avancés.

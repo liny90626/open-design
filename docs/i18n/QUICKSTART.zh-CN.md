@@ -1,6 +1,6 @@
 # 快速上手 · Quickstart
 
-<p align="center"><a href="QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <b>简体中文</b> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
+<p align="center"><a href="../../QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <b>简体中文</b> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
 
 在本地运行完整的产品。
 
@@ -371,7 +371,7 @@ open-design/
 
 ## 回到产品愿景
 
-本 Quickstart 对应 [`docs/`](docs/) 中 spec 的可运行起点；spec 描述了其演进方向（见 [`docs/roadmap.md`](docs/roadmap.md)）。要点如下：
+本 Quickstart 对应 [`docs/`](../../docs/) 中 spec 的可运行起点；spec 描述了其演进方向（见 [`docs/roadmap.md`](../../docs/roadmap.md)）。要点如下：
 
 - `docs/architecture.md` 描述了当前已交付的 stack：前端为 Next.js 16 App Router，后端为本地 daemon；`apps/web/next.config.ts` 在 dev 模式下进行 rewrite，使浏览器始终通过同一套 `/api` 入口通信。
 - `docs/skills-protocol.md` 描述了完整的 `od:` frontmatter（类型化输入、slider、能力 gating）。当前 MVP 仅读取 `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires` —— 如需支持更多字段，请扩展 `apps/daemon/src/skills.ts`。

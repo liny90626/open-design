@@ -1,14 +1,14 @@
 <!-- Machine-translated draft. Native-speaker review and corrections welcome via PR. -->
 # Maintainers
 
-<p align="center"><a href="MAINTAINERS.md">English</a> · <b>Português (Brasil)</b> · <a href="MAINTAINERS.de.md">Deutsch</a> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <a href="MAINTAINERS.ja-JP.md">日本語</a></p>
+<p align="center"><a href="../../MAINTAINERS.md">English</a> · <b>Português (Brasil)</b> · <a href="MAINTAINERS.de.md">Deutsch</a> · <a href="MAINTAINERS.fr.md">Français</a> · <a href="MAINTAINERS.zh-CN.md">简体中文</a> · <a href="MAINTAINERS.ja-JP.md">日本語</a></p>
 
 Este documento define as regras para se tornar, atuar como e deixar o cargo de
 Maintainer de `nexu-io/open-design`. A composição individual do Core Team é
 mantida internamente e não é enumerada aqui — o que importa publicamente são
 as regras pelas quais todos jogam.
 
-> **Status**: v1, redigido em 2026-05-11. Documento complementar ao [`CONTRIBUTING.md`](CONTRIBUTING.md#becoming-a-maintainer) — esse arquivo direciona contribuidores para cá em busca das regras completas.
+> **Status**: v1, redigido em 2026-05-11. Documento complementar ao [`CONTRIBUTING.md`](../../CONTRIBUTING.md#becoming-a-maintainer) — esse arquivo direciona contribuidores para cá em busca das regras completas.
 
 ---
 

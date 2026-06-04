@@ -1,6 +1,6 @@
 # クイックスタート
 
-<p align="center"><a href="QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <b>日本語</b> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
+<p align="center"><a href="../../QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <a href="QUICKSTART.de.md">Deutsch</a> · <a href="QUICKSTART.fr.md">Français</a> · <b>日本語</b> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
 
 製品全体をローカルで実行します。
 
@@ -371,7 +371,7 @@ open-design/
 
 ## ビジョンへのマッピング
 
-このクイックスタートは [`docs/`](docs/) にある仕様の実行可能なシードです。仕様は、これがどこへ成長するかを記述しています（[`docs/roadmap.md`](docs/roadmap.md) を参照）。ハイライト：
+このクイックスタートは [`docs/`](../../docs/) にある仕様の実行可能なシードです。仕様は、これがどこへ成長するかを記述しています（[`docs/roadmap.md`](../../docs/roadmap.md) を参照）。ハイライト：
 
 - `docs/architecture.md` は、出荷されたスタックを説明しています：前面に Next.js 16 App Router、その背後にローカル daemon、そして `apps/web/next.config.ts` の dev 時 rewrites によってブラウザが同じ `/api` 表面と通信し続けるようにします。
 - `docs/skills-protocol.md` は、完全な `od:` フロントマター（型付き入力、スライダー、機能ゲーティング）について説明しています。この MVP は `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires` のみを読み取ります — 残りを追加するには `apps/daemon/src/skills.ts` を拡張してください。

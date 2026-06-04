@@ -2,7 +2,7 @@
 
 > 🔥 **Open Design 0.9.0 ya está aquí: crea sin configuración previa.** El [Model Router oficial](https://open-design.ai/amr) viene integrado directamente en la app — sin configuración adicional, sin CLI que instalar, sin clave de API que preparar. Solo abre la app, inicia sesión y empieza a diseñar y crear de inmediato. [Descargar 0.9.0](https://github.com/nexu-io/open-design/releases) · [Únete a la conversación](https://github.com/nexu-io/open-design/discussions/3524)
 >
-> 🏅 **El programa Open Design Fellow ya está abierto.** Si tú también crees que el diseño debe ser abierto, conviértete en Open Design Fellow, da forma al producto junto al equipo principal y ayuda a que más personas participen en definir el futuro del diseño. Detalles → [`MAINTAINERS.md`](MAINTAINERS.md) y [Discord](https://discord.gg/qhbcCH8Am4).
+> 🏅 **El programa Open Design Fellow ya está abierto.** Si tú también crees que el diseño debe ser abierto, conviértete en Open Design Fellow, da forma al producto junto al equipo principal y ayuda a que más personas participen en definir el futuro del diseño. Detalles → [`MAINTAINERS.md`](../../MAINTAINERS.md) y [Discord](https://discord.gg/qhbcCH8Am4).
 
 <p align="center">
   <img src="https://repo-assets.open-design.ai/resources/images/hero.png" alt="Open Design — la alternativa de código abierto a Claude Design · 150 sistemas de diseño · 261 plugins · 21 agentes de codificación · 14 proveedores de medios" width="100%" />
@@ -17,12 +17,12 @@
 
 <p align="center">
   <a href="https://github.com/nexu-io/open-design/releases"><img alt="release" src="https://img.shields.io/github/v/release/nexu-io/open-design?style=flat&color=blueviolet&label=release&include_prereleases&display_name=tag" /></a>
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
+  <a href="../../LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="discord" src="https://img.shields.io/discord/1479002485040480266?style=flat&logo=discord&logoColor=white&label=discord&color=5865F2&cacheSeconds=3600" /></a>
-  <a href="QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
+  <a href="../../QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
 </p>
 
-<p align="center"><a href="README.md">English</a> · <b>Español</b> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <a href="README.tr.md">Türkçe</a></p>
+<p align="center"><a href="../../README.md">English</a> · <b>Español</b> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <a href="README.tr.md">Türkçe</a></p>
 
 ---
 
@@ -135,7 +135,7 @@ Dentro del Studio de un proyecto, el mismo sistema de diseño produce múltiples
 
 **¿No tienes una CLI instalada?** El proxy BYOK en `POST /api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` te da el mismo bucle (sin crear procesos): pega `baseUrl` + `apiKey` + `model`, con soporte para OpenAI, Anthropic, Azure OpenAI, Google Gemini, Ollama, LM Studio, vLLM o cualquier endpoint compatible con OpenAI. La protección SSRF por destino bloquea IPs internas / link-local / CGNAT en el borde del daemon.
 
-El contrato del adaptador y los analizadores de stream viven en [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts). Añadir una nueva CLI es una sola entrada — consulta [`docs/agent-adapters.md`](docs/agent-adapters.md).
+El contrato del adaptador y los analizadores de stream viven en [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts). Añadir una nueva CLI es una sola entrada — consulta [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -150,21 +150,21 @@ La superficie de salida por defecto. Artefactos HTML de una sola página que lee
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/01-entry-view.png" alt="Vista de entrada" /><br/>
+<img src="../../docs/screenshots/01-entry-view.png" alt="Vista de entrada" /><br/>
 <sub><b>Vista de entrada</b> — elige un skill, elige un sistema de diseño, escribe el brief. Una sola superficie para prototipos, dashboards, presentaciones, apps móviles y páginas de revista.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/mobile-onboarding.png" alt="Onboarding móvil" /><br/>
+<img src="../../docs/screenshots/skills/mobile-onboarding.png" alt="Onboarding móvil" /><br/>
 <sub><b>Prototipo móvil</b> — chrome de iPhone 15 Pro con precisión de píxel, flujos multipantalla. El agente nunca redibuja el marco del teléfono; los marcos de dispositivo compartidos viven en <code>assets/frames/</code>.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/dating-web.png" alt="Prototipo web dating-web" /><br/>
+<img src="../../docs/screenshots/skills/dating-web.png" alt="Prototipo web dating-web" /><br/>
 <sub><b>Prototipo web</b> — un dashboard editorial con barras de desplazamiento, KPIs y gráficos. Renderizado directamente desde <code>design-templates/dating-web/</code>.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/gamified-app.png" alt="App gamificada" /><br/>
+<img src="../../docs/screenshots/skills/gamified-app.png" alt="App gamificada" /><br/>
 <sub><b>Prototipo de app móvil</b> — un flujo gamificado de tres pantallas con cintas de XP y detalle de misiones. Entrégalo directamente a Cursor / Codex / Claude Code para convertirlo en React/Next/Vue.</sub>
 </td>
 </tr>
@@ -177,21 +177,21 @@ Dashboards en vivo, salas de decisión, muros de KPI — artefactos de una sola 
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/live-dashboard.png" alt="Dashboard en vivo" /><br/>
+<img src="../../docs/screenshots/skills/live-dashboard.png" alt="Dashboard en vivo" /><br/>
 <sub><b>Dashboard en vivo</b> — un muro de KPI editable cuyo panel de ajustes expone los parámetros que vale la pena modificar. El agente emite un manifiesto y el iframe se vuelve a renderizar sin recargar.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/research-decision-room.png" alt="Sala de decisión" /><br/>
+<img src="../../docs/screenshots/skills/research-decision-room.png" alt="Sala de decisión" /><br/>
 <sub><b>Sala de decisión</b> — un artefacto de briefing multifuente para reuniones de producto / investigación / operaciones.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/github-dashboard.png" alt="Dashboard estilo GitHub" /><br/>
+<img src="../../docs/screenshots/skills/github-dashboard.png" alt="Dashboard estilo GitHub" /><br/>
 <sub><b>Dashboard estilo GitHub</b> — métricas del repo presentadas como un artefacto en vivo.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Dashboard en vivo Flow" /><br/>
+<img src="../../docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Dashboard en vivo Flow" /><br/>
 <sub><b>Plantilla de dashboard en vivo Flow</b> — una plantilla de KPI específica de un dominio, con marca aplicada a través del <code>DESIGN.md</code> activo.</sub>
 </td>
 </tr>
@@ -202,11 +202,11 @@ Dashboards en vivo, salas de decisión, muros de KPI — artefactos de una sola 
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/07-magazine-deck.png" alt="Presentación tipo revista (guizang-ppt)" /><br/>
+<img src="../../docs/screenshots/07-magazine-deck.png" alt="Presentación tipo revista (guizang-ppt)" /><br/>
 <sub><b>Modo presentación (guizang-ppt)</b> — diseños tipo revista, hero WebGL, checklists P0/P1/P2. Empaquetado textualmente desde <a href="https://github.com/op7418/guizang-ppt-skill"><code>op7418/guizang-ppt-skill</code></a> con su licencia original preservada.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/deck-swiss-international.png" alt="Presentación suiza" /><br/>
+<img src="../../docs/screenshots/skills/deck-swiss-international.png" alt="Presentación suiza" /><br/>
 <sub><b>Presentación estilo Swiss International</b> — anclada a una cuadrícula, con acentos monocromáticos. Una de las <b>15 plantillas de presentación</b> y <b>36 temas</b> bajo <code>design-templates/html-ppt-*/</code>.</sub>
 </td>
 </tr>
@@ -226,7 +226,7 @@ Cada presentación se exporta a **HTML** (un solo archivo, recursos incorporados
 </tr>
 </table>
 
-**93 prompts listos para replicar** viven en [`prompt-templates/`](prompt-templates/) — miniaturas de vista previa, cuerpo completo del prompt, modelo objetivo, relación de aspecto y atribución de origen. Un clic deja un brief en el compositor.
+**93 prompts listos para replicar** viven en [`prompt-templates/`](../../prompt-templates/) — miniaturas de vista previa, cuerpo completo del prompt, modelo objetivo, relación de aspecto y atribución de origen. Un clic deja un brief en el compositor.
 
 ### 5 · Video y HyperFrames — gráficos en movimiento agent-native
 
@@ -234,20 +234,20 @@ Cada presentación se exporta a **HTML** (un solo archivo, recursos incorporados
 
 <table>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="Promo SaaS" /></a><br/><sub><b>Promo de producto SaaS de 30s</b> · 16:9 · revelaciones 3D de UI</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="Karaoke de TikTok" /></a><br/><sub><b>Talking-head de karaoke para TikTok</b> · 9:16 · TTS + subtítulos sincronizados por palabra</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Sizzle reel de marca" /></a><br/><sub><b>Sizzle reel de marca de 30s</b> · 16:9 · tipografía cinética reactiva al audio</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Carrera de gráfico de barras" /></a><br/><sub><b>Carrera de gráfico de barras</b> · 16:9 · infografía de datos estilo NYT</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="Promo SaaS" /></a><br/><sub><b>Promo de producto SaaS de 30s</b> · 16:9 · revelaciones 3D de UI</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="Karaoke de TikTok" /></a><br/><sub><b>Talking-head de karaoke para TikTok</b> · 9:16 · TTS + subtítulos sincronizados por palabra</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Sizzle reel de marca" /></a><br/><sub><b>Sizzle reel de marca de 30s</b> · 16:9 · tipografía cinética reactiva al audio</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Carrera de gráfico de barras" /></a><br/><sub><b>Carrera de gráfico de barras</b> · 16:9 · infografía de datos estilo NYT</sub></td>
 </tr>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Mapa de vuelo" /></a><br/><sub><b>Mapa de vuelo</b> · 16:9 · revelación de ruta estilo Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Outro de logo" /></a><br/><sub><b>Outro de logo cinematográfico de 4s</b> · 16:9 · ensamblaje pieza a pieza + bloom</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Contador de dinero" /></a><br/><sub><b>Contador de dinero $0 → $10K</b> · 9:16 · hype estilo Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Sitio web a video" /></a><br/><sub><b>Sitio web a video</b> · 16:9 · captura el sitio en 3 viewports</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Mapa de vuelo" /></a><br/><sub><b>Mapa de vuelo</b> · 16:9 · revelación de ruta estilo Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Outro de logo" /></a><br/><sub><b>Outro de logo cinematográfico de 4s</b> · 16:9 · ensamblaje pieza a pieza + bloom</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Contador de dinero" /></a><br/><sub><b>Contador de dinero $0 → $10K</b> · 9:16 · hype estilo Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Sitio web a video" /></a><br/><sub><b>Sitio web a video</b> · 16:9 · captura el sitio en 3 viewports</sub></td>
 </tr>
 </table>
 
-11 plantillas de HyperFrames + 39 prompts de Seedance se incluyen en el repo. Miniaturas del catálogo © HeyGen; el framework es Apache-2.0. El flujo de renderizado específico de OD (caché de composición, solución alternativa de sandbox-exec, MP4-como-chip) se detalla en [`design-templates/hyperframes/`](design-templates/hyperframes/).
+11 plantillas de HyperFrames + 39 prompts de Seedance se incluyen en el repo. Miniaturas del catálogo © HeyGen; el framework es Apache-2.0. El flujo de renderizado específico de OD (caché de composición, solución alternativa de sandbox-exec, MP4-como-chip) se detalla en [`design-templates/hyperframes/`](../../design-templates/hyperframes/).
 
 [hyperframes]: https://github.com/heygen-com/hyperframes
 
@@ -332,7 +332,7 @@ corepack enable && pnpm install
 pnpm tools-dev run web
 ```
 
-Node `~24`, pnpm `10.33.x`. Usuarios de Windows, consulten [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md). Inicio rápido completo, variables de entorno, Nix flake y flujo de compilación empaquetada → [`QUICKSTART.md`](QUICKSTART.md).
+Node `~24`, pnpm `10.33.x`. Usuarios de Windows, consulten [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md). Inicio rápido completo, variables de entorno, Nix flake y flujo de compilación empaquetada → [`QUICKSTART.md`](../../QUICKSTART.md).
 
 ### Un flujo de trabajo completo — del brief al artefacto
 
@@ -364,7 +364,7 @@ od skill list --scenario marketing
 
 **¿Por qué MCP?** Exportar y volver a adjuntar un zip en cada iteración rompe el flujo. MCP expone la fuente de diseño directamente — el agente siempre ve el archivo en vivo.
 
-**Para un agente que empieza desde cero,** el instalador coloca `~/.config/<agent>/open-design.json` (o el equivalente de la plataforma) más un fragmento MCP para copiar y pegar. Cursor obtiene un deeplink de un clic; Claude Code obtiene un comando `claude mcp add-json` de una línea; cada otro agente obtiene JSON en el esquema que su configuración espera. Flujo completo por agente → **Settings → MCP server** en la app de escritorio, o [`docs/agent-adapters.md`](docs/agent-adapters.md).
+**Para un agente que empieza desde cero,** el instalador coloca `~/.config/<agent>/open-design.json` (o el equivalente de la plataforma) más un fragmento MCP para copiar y pegar. Cursor obtiene un deeplink de un clic; Claude Code obtiene un comando `claude mcp add-json` de una línea; cada otro agente obtiene JSON en el esquema que su configuración espera. Flujo completo por agente → **Settings → MCP server** en la app de escritorio, o [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 **Modelo de seguridad.** De solo lectura por defecto, el daemon se enlaza a `127.0.0.1` y el SSRF se bloquea en el borde del proxy. La exposición a la LAN requiere un `OD_BIND_HOST` explícito más `OD_ALLOWED_ORIGINS`. Las credenciales de conectores y las rutas de vista previa de artefactos en vivo permanecen solo en loopback independientemente de ello.
 
@@ -372,34 +372,34 @@ od skill list --scenario marketing
 
 ## Skills
 
-**Más de 100 skills vienen incluidos** — cada uno es una carpeta bajo [`skills/`](skills/) que sigue la convención [`SKILL.md`][skill] de Claude Code, extendida con un frontmatter `od:` (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`). Suelta una carpeta, reinicia el daemon y aparece en el selector.
+**Más de 100 skills vienen incluidos** — cada uno es una carpeta bajo [`skills/`](../../skills/) que sigue la convención [`SKILL.md`][skill] de Claude Code, extendida con un frontmatter `od:` (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`). Suelta una carpeta, reinicia el daemon y aparece en el selector.
 
 Dos **modos** anclan el catálogo: `prototype` (artefactos de una sola página para web/móvil/escritorio) y `deck` (presentaciones de deslizamiento horizontal). También los modos `image`, `video`, `audio`, `template`, `design-system` y `utility`. El campo **`scenario`** los agrupa por audiencia: `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
 
 | Skill | Modo | Escenario | Qué produce |
 |---|---|---|---|
-| [`web-prototype`](design-templates/web-prototype/) | prototype | design | Landing page / hero por defecto |
-| [`saas-landing`](design-templates/saas-landing/) | prototype | marketing | Hero / características / precios / CTA |
-| [`dashboard`](design-templates/dashboard/) | prototype | operation | Admin / analítica (con barra lateral) |
-| [`mobile-app`](design-templates/mobile-app/) | prototype | design | App enmarcada en iPhone 15 Pro / Pixel |
-| [`mobile-onboarding`](design-templates/mobile-onboarding/) | prototype | design | Flujo de splash · propuesta de valor · inicio de sesión |
-| [`social-carousel`](design-templates/social-carousel/) | prototype | marketing | Carrusel de 3 tarjetas 1080×1080 |
-| [`email-marketing`](design-templates/email-marketing/) | prototype | marketing | Email de marca con respaldo seguro en tablas |
-| [`magazine-poster`](design-templates/magazine-poster/) | prototype | marketing | Diseño de revista de una sola página |
-| [`motion-frames`](design-templates/motion-frames/) | prototype | marketing | Hero de movimiento CSS en bucle |
-| [`sprite-animation`](design-templates/sprite-animation/) | prototype | marketing | Explicación animada en píxeles de 8 bits |
-| [`pm-spec`](design-templates/pm-spec/) | prototype | product | Documento de spec de PM (con TOC + registro de decisiones) |
-| [`team-okrs`](design-templates/team-okrs/) | prototype | product | Scorecard de OKR |
-| [`eng-runbook`](design-templates/eng-runbook/) | prototype | engineering | Runbook de incidentes |
-| [`finance-report`](design-templates/finance-report/) | prototype | finance | Resumen financiero ejecutivo |
-| [`hr-onboarding`](design-templates/hr-onboarding/) | prototype | hr | Plan de onboarding por rol |
-| [`guizang-ppt`](design-templates/guizang-ppt/) | deck | marketing | PPT web estilo revista (presentación por defecto) |
-| [`html-ppt-*`](design-templates/) | deck | marketing | 15 plantillas de presentación × 36 temas (plantilla maestra en [`design-templates/html-ppt/`](design-templates/html-ppt/)) |
-| [`hyperframes`](design-templates/hyperframes/) | video | marketing | Gráficos en movimiento HTML → MP4 (framework OSS de HeyGen) |
-| [`critique`](design-templates/critique/) | utility | design | Hoja de puntuación de autocrítica de cinco dimensiones |
-| [`tweaks`](design-templates/tweaks/) | utility | design | Manifiesto de panel de ajustes emitido por IA |
+| [`web-prototype`](../../design-templates/web-prototype/) | prototype | design | Landing page / hero por defecto |
+| [`saas-landing`](../../design-templates/saas-landing/) | prototype | marketing | Hero / características / precios / CTA |
+| [`dashboard`](../../design-templates/dashboard/) | prototype | operation | Admin / analítica (con barra lateral) |
+| [`mobile-app`](../../design-templates/mobile-app/) | prototype | design | App enmarcada en iPhone 15 Pro / Pixel |
+| [`mobile-onboarding`](../../design-templates/mobile-onboarding/) | prototype | design | Flujo de splash · propuesta de valor · inicio de sesión |
+| [`social-carousel`](../../design-templates/social-carousel/) | prototype | marketing | Carrusel de 3 tarjetas 1080×1080 |
+| [`email-marketing`](../../design-templates/email-marketing/) | prototype | marketing | Email de marca con respaldo seguro en tablas |
+| [`magazine-poster`](../../design-templates/magazine-poster/) | prototype | marketing | Diseño de revista de una sola página |
+| [`motion-frames`](../../design-templates/motion-frames/) | prototype | marketing | Hero de movimiento CSS en bucle |
+| [`sprite-animation`](../../design-templates/sprite-animation/) | prototype | marketing | Explicación animada en píxeles de 8 bits |
+| [`pm-spec`](../../design-templates/pm-spec/) | prototype | product | Documento de spec de PM (con TOC + registro de decisiones) |
+| [`team-okrs`](../../design-templates/team-okrs/) | prototype | product | Scorecard de OKR |
+| [`eng-runbook`](../../design-templates/eng-runbook/) | prototype | engineering | Runbook de incidentes |
+| [`finance-report`](../../design-templates/finance-report/) | prototype | finance | Resumen financiero ejecutivo |
+| [`hr-onboarding`](../../design-templates/hr-onboarding/) | prototype | hr | Plan de onboarding por rol |
+| [`guizang-ppt`](../../design-templates/guizang-ppt/) | deck | marketing | PPT web estilo revista (presentación por defecto) |
+| [`html-ppt-*`](../../design-templates/) | deck | marketing | 15 plantillas de presentación × 36 temas (plantilla maestra en [`design-templates/html-ppt/`](../../design-templates/html-ppt/)) |
+| [`hyperframes`](../../design-templates/hyperframes/) | video | marketing | Gráficos en movimiento HTML → MP4 (framework OSS de HeyGen) |
+| [`critique`](../../design-templates/critique/) | utility | design | Hoja de puntuación de autocrítica de cinco dimensiones |
+| [`tweaks`](../../design-templates/tweaks/) | utility | design | Manifiesto de panel de ajustes emitido por IA |
 
-Protocolo de skills completo → [`docs/skills-protocol.md`](docs/skills-protocol.md). Endpoint del registro de skills: `GET /api/skills`.
+Protocolo de skills completo → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Endpoint del registro de skills: `GET /api/skills`.
 
 ---
 
@@ -430,7 +430,7 @@ Protocolo de skills completo → [`docs/skills-protocol.md`](docs/skills-protoco
 
 </details>
 
-Vuelve a importar la biblioteca con [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). Añade tu propia marca → suelta un `DESIGN.md` en `design-systems/<brand>/`. Guía completa → [`design-systems/README.md`](design-systems/README.md).
+Vuelve a importar la biblioteca con [`scripts/sync-design-systems.ts`](../../scripts/sync-design-systems.ts). Añade tu propia marca → suelta un `DESIGN.md` en `design-systems/<brand>/`. Guía completa → [`design-systems/README.md`](../../design-systems/README.md).
 
 [acd2]: https://github.com/VoltAgent/awesome-design-md
 
@@ -438,24 +438,24 @@ Vuelve a importar la biblioteca con [`scripts/sync-design-systems.ts`](scripts/s
 
 ## Plugins
 
-**261 plugins oficiales** viven en [`plugins/_official/`](plugins/_official/). Cada plugin es una **carpeta portátil de agent-skill** — un `SKILL.md` (legible por cualquier agente que admita Agent Skills), más un manifiesto opcional `open-design.json` que le da a Open Design metadatos de marketplace, entradas, vistas previas, pipelines y declaraciones de capacidades. Salta directamente a una categoría:
+**261 plugins oficiales** viven en [`plugins/_official/`](../../plugins/_official/). Cada plugin es una **carpeta portátil de agent-skill** — un `SKILL.md` (legible por cualquier agente que admita Agent Skills), más un manifiesto opcional `open-design.json` que le da a Open Design metadatos de marketplace, entradas, vistas previas, pipelines y declaraciones de capacidades. Salta directamente a una categoría:
 
 | Categoría | Cantidad | Contenido |
 |---|---|---|
-| [`scenarios/`](plugins/_official/scenarios/) | 11 | Escenarios de diseño completos — [`od-default`](plugins/_official/scenarios/od-default/), [`od-design-refine`](plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](plugins/_official/scenarios/od-code-migration/), [`od-react-export`](plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](plugins/_official/scenarios/od-plugin-authoring/) |
-| [`image-templates/`](plugins/_official/image-templates/) | 45 | Prompts de imagen de una sola toma — editorial, cinematográfico, producto, retrato |
-| [`video-templates/`](plugins/_official/video-templates/) | 50 | Plantillas de movimiento HyperFrames / Seedance / Veo |
-| [`design-systems/`](plugins/_official/design-systems/) | 142 | `DESIGN.md` de marca empaquetados como plugins |
-| [`atoms/`](plugins/_official/atoms/) | 13 | Fragmentos de UI reutilizables (botones, heroes, tarjetas de KPI) |
-| [`examples/`](plugins/_official/examples/) | 140 | Salidas de referencia remezclables |
+| [`scenarios/`](../../plugins/_official/scenarios/) | 11 | Escenarios de diseño completos — [`od-default`](../../plugins/_official/scenarios/od-default/), [`od-design-refine`](../../plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/), [`od-react-export`](../../plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](../../plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](../../plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](../../plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](../../plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](../../plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](../../plugins/_official/scenarios/od-plugin-authoring/) |
+| [`image-templates/`](../../plugins/_official/image-templates/) | 45 | Prompts de imagen de una sola toma — editorial, cinematográfico, producto, retrato |
+| [`video-templates/`](../../plugins/_official/video-templates/) | 50 | Plantillas de movimiento HyperFrames / Seedance / Veo |
+| [`design-systems/`](../../plugins/_official/design-systems/) | 142 | `DESIGN.md` de marca empaquetados como plugins |
+| [`atoms/`](../../plugins/_official/atoms/) | 13 | Fragmentos de UI reutilizables (botones, heroes, tarjetas de KPI) |
+| [`examples/`](../../plugins/_official/examples/) | 140 | Salidas de referencia remezclables |
 
-También [`plugins/community/`](plugins/community/) para plugins de la comunidad y [`plugins/registry/`](plugins/registry/) para el flujo de publicación.
+También [`plugins/community/`](../../plugins/community/) para plugins de la comunidad y [`plugins/registry/`](../../plugins/registry/) para el flujo de publicación.
 
 ### Qué pueden hacer los plugins
 
-- 🤖 **Ejecutarse en cualquier agente de codificación** — [Claude Code](docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… a través del mismo protocolo de skills que el agente ya conoce.
-- 🔁 **Migrar flujos de trabajo de Figma / Pencil** → código fuente React, Next.js o Vue. Consulta [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/).
-- 🛠️ **Renovar una base de código existente a una especificación de marca** — apunta un plugin a un repo `git` + `DESIGN.md`, obtén un PR. Consulta [`od-code-migration`](plugins/_official/scenarios/od-code-migration/).
+- 🤖 **Ejecutarse en cualquier agente de codificación** — [Claude Code](../../docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… a través del mismo protocolo de skills que el agente ya conoce.
+- 🔁 **Migrar flujos de trabajo de Figma / Pencil** → código fuente React, Next.js o Vue. Consulta [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/).
+- 🛠️ **Renovar una base de código existente a una especificación de marca** — apunta un plugin a un repo `git` + `DESIGN.md`, obtén un PR. Consulta [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/).
 - 💾 **Persistir flujos de trabajo personalizados** — las plantillas reutilizables de tu equipo conviven junto a las incluidas.
 
 ### Usar plugins
@@ -501,16 +501,16 @@ od plugin validate ./my-plugin                          # check manifest / file 
 pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 ```
 
-Conjunto completo de campos y contrato de runtime → [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md); desarrollar un plugin con un agente de codificación → [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md); plantillas mínimas para copiar y pegar → [`plugins/spec/examples/`](plugins/spec/examples/).
+Conjunto completo de campos y contrato de runtime → [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md); desarrollar un plugin con un agente de codificación → [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md); plantillas mínimas para copiar y pegar → [`plugins/spec/examples/`](../../plugins/spec/examples/).
 
 ### Contribuir un plugin
 
-1. Suelta la carpeta del plugin en [`plugins/community/`](plugins/community/) (plugins de terceros), o — para distribuirlo empaquetado con Open Design — en el nivel correspondiente de [`plugins/_official/`](plugins/_official/).
+1. Suelta la carpeta del plugin en [`plugins/community/`](../../plugins/community/) (plugins de terceros), o — para distribuirlo empaquetado con Open Design — en el nivel correspondiente de [`plugins/_official/`](../../plugins/_official/).
 2. Pasa la validación: `od plugin validate`, `pnpm guard`, `pnpm --filter @open-design/plugin-runtime typecheck`.
-3. Completa el PR usando la plantilla en [`plugins/spec/CONTRIBUTING.md`](plugins/spec/CONTRIBUTING.md) (ID, versión, vía, modo, capacidades, ejemplos de disparadores; adjunta una captura / vista previa para plugins visuales).
-4. Para publicar en un registro externo (skills.sh / ClawHub / GitHub independiente) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](plugins/spec/PUBLISHING-REGISTRIES.md).
+3. Completa el PR usando la plantilla en [`plugins/spec/CONTRIBUTING.md`](../../plugins/spec/CONTRIBUTING.md) (ID, versión, vía, modo, capacidades, ejemplos de disparadores; adjunta una captura / vista previa para plugins visuales).
+4. Para publicar en un registro externo (skills.sh / ClawHub / GitHub independiente) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](../../plugins/spec/PUBLISHING-REGISTRIES.md).
 
-Endpoint del registro de plugins: `GET /api/plugins`. Resumen del directorio → [`plugins/README.md`](plugins/README.md) ([简体中文](plugins/README.zh-CN.md)).
+Endpoint del registro de plugins: `GET /api/plugins`. Resumen del directorio → [`plugins/README.md`](../../plugins/README.md) ([简体中文](../../plugins/README.zh-CN.md)).
 
 ---
 
@@ -553,7 +553,7 @@ Endpoint del registro de plugins: `GET /api/plugins`. Resumen del directorio →
 | Escritorio | Electron shell + renderizador en entorno aislado + IPC de sidecar (STATUS · EVAL · SCREENSHOT · CONSOLE · CLICK · SHUTDOWN) |
 | Ciclo de vida | Un único punto de entrada: `pnpm tools-dev` (start / stop / run / status / logs / inspect / check) |
 
-Arquitectura completa → [`docs/architecture.md`](docs/architecture.md). Protocolo de skills → [`docs/skills-protocol.md`](docs/skills-protocol.md). Contrato del adaptador de agentes → [`docs/agent-adapters.md`](docs/agent-adapters.md).
+Arquitectura completa → [`docs/architecture.md`](../../docs/architecture.md). Protocolo de skills → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Contrato del adaptador de agentes → [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -577,7 +577,7 @@ Arquitectura completa → [`docs/architecture.md`](docs/architecture.md). Protoc
 - [ ] Plugins de migración Figma / Pencil → React / Next / Vue (alfa)
 - [ ] Plugin de renovación de base de código existente (apuntar a un repo git + `DESIGN.md`)
 
-Entrega por fases → [`docs/roadmap.md`](docs/roadmap.md).
+Entrega por fases → [`docs/roadmap.md`](../../docs/roadmap.md).
 
 ---
 
@@ -602,12 +602,12 @@ Open Design sigue avanzando porque los colaboradores — diseñadores, ingeniero
 
 | Quieres lanzar… | Cómo | Dónde |
 |---|---|---|
-| Un nuevo **skill** | Suelta una carpeta con `SKILL.md` + `assets/` + `references/` | [`skills/`](skills/) · especificación en [`docs/skills-protocol.md`](docs/skills-protocol.md) |
-| Un nuevo **sistema de diseño** | Suelta un `DESIGN.md` usando el esquema de 9 secciones | [`design-systems/<brand>/`](design-systems/) |
-| Un nuevo **plugin** | Suelta `open-design.json` + manifiesto bajo una carpeta de categoría | [`plugins/community/`](plugins/community/) · especificación en [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md) · guía de desarrollo con agente en [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md) |
-| Dar soporte a una nueva **CLI de agente de codificación** | Una entrada de adaptador + analizador de stream | [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) |
+| Un nuevo **skill** | Suelta una carpeta con `SKILL.md` + `assets/` + `references/` | [`skills/`](../../skills/) · especificación en [`docs/skills-protocol.md`](../../docs/skills-protocol.md) |
+| Un nuevo **sistema de diseño** | Suelta un `DESIGN.md` usando el esquema de 9 secciones | [`design-systems/<brand>/`](../../design-systems/) |
+| Un nuevo **plugin** | Suelta `open-design.json` + manifiesto bajo una carpeta de categoría | [`plugins/community/`](../../plugins/community/) · especificación en [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md) · guía de desarrollo con agente en [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md) |
+| Dar soporte a una nueva **CLI de agente de codificación** | Una entrada de adaptador + analizador de stream | [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) |
 | Corregir un bug o pulir la UI | Explora la etiqueta [`good-first-issue`](https://github.com/nexu-io/open-design/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) | [Issues →](https://github.com/nexu-io/open-design/issues) |
-| Traducir la documentación | Actualiza los archivos `README.<lang>.md` | [`TRANSLATIONS.md`](TRANSLATIONS.md) |
+| Traducir la documentación | Actualiza los archivos `README.<lang>.md` | [`TRANSLATIONS.md`](../../TRANSLATIONS.md) |
 
 ### 🤖 Contribuir como agente
 
@@ -631,11 +631,11 @@ pnpm --filter @open-design/<package> test
 gh pr create --fill
 ```
 
-Flujo de contribución completo y amigable para agentes, estilo de código y nivel exigido para el PR → [`CONTRIBUTING.md`](CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
+Flujo de contribución completo y amigable para agentes, estilo de código y nivel exigido para el PR → [`CONTRIBUTING.md`](../../CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
 
 ### 🏅 Programa Open Design Fellow
 
-Estamos reclutando **Open Design Fellows** en todo el mundo — los Fellows dan forma al producto junto al equipo principal, representan oficialmente a Open Design en su región y hacen crecer la comunidad localmente, respaldados por apoyo financiado ($1,000 / MR), créditos LLM gratuitos y una vía de revisión directa. Detalles → [`MAINTAINERS.md`](MAINTAINERS.md) y el anuncio en [Discord](https://discord.gg/qhbcCH8Am4).
+Estamos reclutando **Open Design Fellows** en todo el mundo — los Fellows dan forma al producto junto al equipo principal, representan oficialmente a Open Design en su región y hacen crecer la comunidad localmente, respaldados por apoyo financiado ($1,000 / MR), créditos LLM gratuitos y una vía de revisión directa. Detalles → [`MAINTAINERS.md`](../../MAINTAINERS.md) y el anuncio en [Discord](https://discord.gg/qhbcCH8Am4).
 
 ---
 
@@ -662,7 +662,7 @@ Cargan con gran parte del trabajo — mantenimiento diario, revisión y apoyo a 
   </tr>
 </table>
 
-Reglas de los mantenedores, criterios de promoción y el protocolo de salida → [`MAINTAINERS.md`](MAINTAINERS.md) (también [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
+Reglas de los mantenedores, criterios de promoción y el protocolo de salida → [`MAINTAINERS.md`](../../MAINTAINERS.md) (también [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
 
 ## Colaboradores
 
@@ -680,7 +680,7 @@ Gracias a todos los que han participado — código, documentación, comentarios
   <img alt="Open Design — métricas del repositorio" src="https://repo-assets.open-design.ai/resources/images/github-metrics.svg" />
 </picture>
 
-El SVG de arriba se regenera diariamente mediante [`.github/workflows/metrics.yml`](.github/workflows/metrics.yml) usando [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
+El SVG de arriba se regenera diariamente mediante [`.github/workflows/metrics.yml`](../../.github/workflows/metrics.yml) usando [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
 
 ---
 
@@ -708,7 +708,7 @@ Si esto te ahorró treinta minutos, dale una ★. Las estrellas no pagan el alqu
 |---|---|
 | [Claude Design][cd] | El producto de código cerrado del que este repo es la alternativa de código abierto. |
 | [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu-design) | La brújula de la filosofía de diseño — flujo de trabajo de diseñador junior, protocolo de recursos de marca, checklist anti-AI-slop, crítica de cinco dimensiones. |
-| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | El skill de PPT web estilo revista, empaquetado textualmente bajo [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/). Por defecto para el modo presentación. |
+| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | El skill de PPT web estilo revista, empaquetado textualmente bajo [`design-templates/guizang-ppt/`](../../design-templates/guizang-ppt/). Por defecto para el modo presentación. |
 | [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) | La familia HTML PPT Studio — 15 plantillas de presentación, 36 temas, 31 layouts de página, runtime de animación, modo presentador de tarjetas magnéticas. |
 | [`OpenCoworkAI/open-codesign`](https://github.com/OpenCoworkAI/open-codesign) | La primera alternativa de código abierto a Claude Design; patrones de UX que tomamos prestados (bucle de artefacto en streaming, iframe en entorno aislado, panel de agente en vivo). |
 | [`multica-ai/multica`](https://github.com/multica-ai/multica) | La arquitectura de daemon + adaptador — detección de agentes por escaneo del PATH, daemon local como único proceso privilegiado. |
@@ -717,10 +717,10 @@ Si esto te ahorró treinta minutos, dale una ★. Las estrellas no pagan el alqu
 | [`heygen-com/hyperframes`](https://github.com/heygen-com/hyperframes) | El framework de gráficos en movimiento HTML→MP4, integrado como el `hyperframes-html` de primera clase en Open Design. |
 | [Claude Code skills][skill] | La convención `SKILL.md` que adoptamos textualmente. |
 
-Procedencia detallada → [`docs/references.md`](docs/references.md).
+Procedencia detallada → [`docs/references.md`](../../docs/references.md).
 
 [skill]: https://docs.anthropic.com/en/docs/claude-code/skills
 
 ## Licencia
 
-Apache-2.0. El `design-templates/guizang-ppt/` incluido conserva su [LICENSE](design-templates/guizang-ppt/LICENSE) original (MIT, [@op7418](https://github.com/op7418)). El `design-templates/html-ppt/` incluido conserva su [LICENSE](design-templates/html-ppt/LICENSE) original (MIT, [@lewislulu](https://github.com/lewislulu)).
+Apache-2.0. El `design-templates/guizang-ppt/` incluido conserva su [LICENSE](../../design-templates/guizang-ppt/LICENSE) original (MIT, [@op7418](https://github.com/op7418)). El `design-templates/html-ppt/` incluido conserva su [LICENSE](../../design-templates/html-ppt/LICENSE) original (MIT, [@lewislulu](https://github.com/lewislulu)).

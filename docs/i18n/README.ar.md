@@ -4,7 +4,7 @@
 
 > 🔥 **‏Open Design 0.9.0 وصل: أنشئ دون أي إعداد.** [Model Router الرسمي](https://open-design.ai/amr) مدمج مباشرة في التطبيق — لا إعدادات إضافية، ولا CLI لتثبيته، ولا مفتاح API لتجهيزه. ما عليك سوى فتح التطبيق وتسجيل الدخول والبدء فورًا في التصميم والإنشاء. [حمّل 0.9.0](https://github.com/nexu-io/open-design/releases) · [انضم إلى النقاش](https://github.com/nexu-io/open-design/discussions/3524)
 >
-> 🏅 **برنامج Open Design Fellow مفتوح الآن.** إن كنت تؤمن أنت أيضًا بأن التصميم يجب أن يكون مفتوحًا — كُن Open Design Fellow، وشارك في تشكيل المنتج جنبًا إلى جنب مع الفريق الأساسي، وساعد المزيد من الناس على المشاركة في تحديد مستقبل التصميم. التفاصيل ← [`MAINTAINERS.md`](MAINTAINERS.md) و[Discord](https://discord.gg/qhbcCH8Am4).
+> 🏅 **برنامج Open Design Fellow مفتوح الآن.** إن كنت تؤمن أنت أيضًا بأن التصميم يجب أن يكون مفتوحًا — كُن Open Design Fellow، وشارك في تشكيل المنتج جنبًا إلى جنب مع الفريق الأساسي، وساعد المزيد من الناس على المشاركة في تحديد مستقبل التصميم. التفاصيل ← [`MAINTAINERS.md`](../../MAINTAINERS.md) و[Discord](https://discord.gg/qhbcCH8Am4).
 
 <p align="center">
   <img src="https://repo-assets.open-design.ai/resources/images/hero.png" alt="Open Design — The open-source Claude Design alternative · 150 Design Systems · 261 Plugins · 21 Coding Agents · 14 Media Providers" width="100%" />
@@ -19,12 +19,12 @@
 
 <p align="center">
   <a href="https://github.com/nexu-io/open-design/releases"><img alt="release" src="https://img.shields.io/github/v/release/nexu-io/open-design?style=flat&color=blueviolet&label=release&include_prereleases&display_name=tag" /></a>
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
+  <a href="../../LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="discord" src="https://img.shields.io/discord/1479002485040480266?style=flat&logo=discord&logoColor=white&label=discord&color=5865F2&cacheSeconds=3600" /></a>
-  <a href="QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
+  <a href="../../QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
 </p>
 
-<p align="center"><a href="README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <b>العربية</b> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <a href="README.tr.md">Türkçe</a></p>
+<p align="center"><a href="../../README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <b>العربية</b> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <a href="README.tr.md">Türkçe</a></p>
 
 ---
 
@@ -137,7 +137,7 @@
 
 **لا توجد واجهة CLI مثبَّتة؟** يمنحك وكيل BYOK على `POST /api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` الحلقة نفسها (دون إنشاء عملية) — الصق `baseUrl` + `apiKey` + `model`، مع دعم OpenAI وAnthropic وAzure OpenAI وGoogle Gemini وOllama وLM Studio وvLLM، أو أي نقطة نهاية متوافقة مع OpenAI. تمنع حماية SSRF لكل هدف عناوين IP الداخلية / link-local / CGNAT عند حافة الـ daemon.
 
-يقيم عقد المحوّل ومحلّلات البثّ في [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts). إضافة واجهة CLI جديدة تتطلب مدخلًا واحدًا — راجع [`docs/agent-adapters.md`](docs/agent-adapters.md).
+يقيم عقد المحوّل ومحلّلات البثّ في [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts). إضافة واجهة CLI جديدة تتطلب مدخلًا واحدًا — راجع [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -152,21 +152,21 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
+<img src="../../docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
 <sub><b>واجهة الدخول</b> — اختر مهارة، اختر نظام تصميم، اكتب الموجز. سطح واحد للنماذج الأولية ولوحات المعلومات والعروض التقديمية وتطبيقات الجوال وصفحات المجلات.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
+<img src="../../docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
 <sub><b>نموذج أولي للجوال</b> — هيكل iPhone 15 Pro دقيق بالبكسل، وتدفقات متعددة الشاشات. لا يعيد الوكيل أبدًا رسم إطار الهاتف؛ إذ تقيم إطارات الأجهزة المشتركة في <code>assets/frames/</code>.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
+<img src="../../docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
 <sub><b>نموذج أولي للويب</b> — لوحة معلومات تحريرية بأشرطة تمرير ومؤشرات أداء رئيسية ومخططات. مُصيَّرة مباشرة من <code>design-templates/dating-web/</code>.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
+<img src="../../docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
 <sub><b>نموذج أولي لتطبيق جوال</b> — تدفق مُلعَّب بثلاث شاشات مع أشرطة XP وتفاصيل المهام. سلّمه مباشرة إلى Cursor / Codex / Claude Code لتحويله إلى React/Next/Vue.</sub>
 </td>
 </tr>
@@ -179,21 +179,21 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
 <sub><b>لوحة معلومات حية</b> — جدار مؤشرات أداء قابل للتحرير تُظهِر لوحة تعديلاته المعاملات الجديرة بالضبط. يصدر الوكيل بيان manifest، ويُعاد عرض iframe دون إعادة تحميل.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
+<img src="../../docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
 <sub><b>غرفة اتخاذ القرار</b> — مخرَج إحاطة متعدد المصادر لاجتماعات المنتج / البحث / العمليات.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
+<img src="../../docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
 <sub><b>لوحة معلومات بأسلوب GitHub</b> — مقاييس المستودع معروضة كمخرَج حي.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
 <sub><b>قالب لوحة معلومات حية من Flow</b> — قالب مؤشرات أداء خاص بمجال محدد، مُعلَّم وفق <code>DESIGN.md</code> النشِط.</sub>
 </td>
 </tr>
@@ -204,11 +204,11 @@
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
+<img src="../../docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
 <sub><b>وضع العرض التقديمي (guizang-ppt)</b> — تخطيطات بأسلوب المجلات، عنصر WebGL رئيسي، قوائم تحقق P0/P1/P2. مُجمَّع حرفيًا من <a href="https://github.com/op7418/guizang-ppt-skill"><code>op7418/guizang-ppt-skill</code></a> مع الحفاظ على ترخيصه الأصلي.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
+<img src="../../docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
 <sub><b>عرض تقديمي بأسلوب Swiss International</b> — مرتكز على الشبكة، بلمسات أحادية اللون. واحد من <b>15 قالب عرض تقديمي</b> و<b>36 سمة</b> ضمن <code>design-templates/html-ppt-*/</code>.</sub>
 </td>
 </tr>
@@ -228,7 +228,7 @@
 </tr>
 </table>
 
-**93 موجّهًا جاهزًا لإعادة الإنتاج** تقيم في [`prompt-templates/`](prompt-templates/) — صور مصغّرة للمعاينة، ونصّ الموجّه الكامل، والنموذج المستهدف، ونسبة الأبعاد، وإسناد المصدر. نقرة واحدة تُسقِط موجزًا في أداة الإنشاء.
+**93 موجّهًا جاهزًا لإعادة الإنتاج** تقيم في [`prompt-templates/`](../../prompt-templates/) — صور مصغّرة للمعاينة، ونصّ الموجّه الكامل، والنموذج المستهدف، ونسبة الأبعاد، وإسناد المصدر. نقرة واحدة تُسقِط موجزًا في أداة الإنشاء.
 
 ### 5 · الفيديو وHyperFrames — رسوميات حركية أصيلة للوكلاء
 
@@ -236,20 +236,20 @@
 
 <table>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>عرض ترويجي لمنتج SaaS مدته 30 ثانية</b> · 16:9 · كشوفات واجهة ثلاثية الأبعاد</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>وجه متحدث بكاريوكي TikTok</b> · 9:16 · TTS + تسميات توضيحية متزامنة مع الكلمات</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>مقطع ترويجي للعلامة التجارية مدته 30 ثانية</b> · 16:9 · خط حركي يتفاعل مع الصوت</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>سباق المخططات الشريطية</b> · 16:9 · إنفوجرافيك بيانات بأسلوب NYT</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>عرض ترويجي لمنتج SaaS مدته 30 ثانية</b> · 16:9 · كشوفات واجهة ثلاثية الأبعاد</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>وجه متحدث بكاريوكي TikTok</b> · 9:16 · TTS + تسميات توضيحية متزامنة مع الكلمات</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>مقطع ترويجي للعلامة التجارية مدته 30 ثانية</b> · 16:9 · خط حركي يتفاعل مع الصوت</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>سباق المخططات الشريطية</b> · 16:9 · إنفوجرافيك بيانات بأسلوب NYT</sub></td>
 </tr>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>خريطة رحلة طيران</b> · 16:9 · كشف مسار بأسلوب Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>خاتمة شعار سينمائية مدتها 4 ثوانٍ</b> · 16:9 · تجميع قطعة قطعة + توهّج</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>عدّاد أموال من $0 إلى $10K</b> · 9:16 · حماس بأسلوب Apple</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>من موقع ويب إلى فيديو</b> · 16:9 · يلتقط الموقع عند 3 منافذ عرض</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>خريطة رحلة طيران</b> · 16:9 · كشف مسار بأسلوب Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>خاتمة شعار سينمائية مدتها 4 ثوانٍ</b> · 16:9 · تجميع قطعة قطعة + توهّج</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>عدّاد أموال من $0 إلى $10K</b> · 9:16 · حماس بأسلوب Apple</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>من موقع ويب إلى فيديو</b> · 16:9 · يلتقط الموقع عند 3 منافذ عرض</sub></td>
 </tr>
 </table>
 
-يُشحَن مع المستودع 11 قالب HyperFrames + 39 موجّه Seedance. الصور المصغّرة للكتالوج © HeyGen؛ والإطار مرخَّص بـ Apache-2.0. سير عمل التصيير الخاص بـ OD (تخزين التركيب المؤقت، حل sandbox-exec البديل، MP4-as-chip) موضَّح بالتفصيل في [`design-templates/hyperframes/`](design-templates/hyperframes/).
+يُشحَن مع المستودع 11 قالب HyperFrames + 39 موجّه Seedance. الصور المصغّرة للكتالوج © HeyGen؛ والإطار مرخَّص بـ Apache-2.0. سير عمل التصيير الخاص بـ OD (تخزين التركيب المؤقت، حل sandbox-exec البديل، MP4-as-chip) موضَّح بالتفصيل في [`design-templates/hyperframes/`](../../design-templates/hyperframes/).
 
 [hyperframes]: https://github.com/heygen-com/hyperframes
 
@@ -334,7 +334,7 @@ corepack enable && pnpm install
 pnpm tools-dev run web
 ```
 
-‏Node `~24`، وpnpm `10.33.x`. مستخدمو Windows، راجعوا [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md). البدء السريع الكامل، ومتغيرات البيئة، وNix flake، وسير بناء الحزمة ← [`QUICKSTART.md`](QUICKSTART.md).
+‏Node `~24`، وpnpm `10.33.x`. مستخدمو Windows، راجعوا [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md). البدء السريع الكامل، ومتغيرات البيئة، وNix flake، وسير بناء الحزمة ← [`QUICKSTART.md`](../../QUICKSTART.md).
 
 ### سير عمل كامل — من الموجز إلى المخرَج
 
@@ -366,7 +366,7 @@ od skill list --scenario marketing
 
 **لماذا MCP؟** تصدير ملف مضغوط وإعادة إرفاقه في كل دورة يكسر الانسياب. يكشف MCP مصدر التصميم مباشرة — فيرى الوكيل دائمًا الملف الحي.
 
-**بالنسبة لوكيل يبدأ من الصفر،** يضع المثبِّت `~/.config/<agent>/open-design.json` (أو ما يكافئه على المنصة) إضافة إلى مقتطف MCP جاهز للصق. يحصل Cursor على رابط عميق بنقرة واحدة؛ ويحصل Claude Code على سطر `claude mcp add-json` واحد؛ ويحصل كل وكيل آخر على JSON بالمخطط الذي تتوقعه إعداداته. سير العمل الكامل لكل وكيل ← **Settings → MCP server** في تطبيق سطح المكتب، أو [`docs/agent-adapters.md`](docs/agent-adapters.md).
+**بالنسبة لوكيل يبدأ من الصفر،** يضع المثبِّت `~/.config/<agent>/open-design.json` (أو ما يكافئه على المنصة) إضافة إلى مقتطف MCP جاهز للصق. يحصل Cursor على رابط عميق بنقرة واحدة؛ ويحصل Claude Code على سطر `claude mcp add-json` واحد؛ ويحصل كل وكيل آخر على JSON بالمخطط الذي تتوقعه إعداداته. سير العمل الكامل لكل وكيل ← **Settings → MCP server** في تطبيق سطح المكتب، أو [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 **نموذج الأمان.** للقراءة فقط افتراضيًا، ويرتبط الـ daemon بـ `127.0.0.1`، ويُمنع SSRF عند حافة الوكيل. يتطلب الكشف على الشبكة المحلية تعيين `OD_BIND_HOST` صريح إضافة إلى `OD_ALLOWED_ORIGINS`. تبقى بيانات اعتماد الموصِّلات ومسارات معاينة المخرجات الحية على loopback فقط أيًا كان.
 
@@ -374,34 +374,34 @@ od skill list --scenario marketing
 
 ## المهارات
 
-**أكثر من 100 مهارة تُشحَن جاهزة** — كل منها مجلد ضمن [`skills/`](skills/) يتبع اصطلاح [`SKILL.md`][skill] الخاص بـ Claude Code، موسَّعًا بترويسة `od:` (`mode` و`platform` و`scenario` و`preview.type` و`design_system.requires` و`default_for` و`fidelity` و`example_prompt`). أسقِط مجلدًا، وأعِد تشغيل الـ daemon، فيظهر في المُنتقي.
+**أكثر من 100 مهارة تُشحَن جاهزة** — كل منها مجلد ضمن [`skills/`](../../skills/) يتبع اصطلاح [`SKILL.md`][skill] الخاص بـ Claude Code، موسَّعًا بترويسة `od:` (`mode` و`platform` و`scenario` و`preview.type` و`design_system.requires` و`default_for` و`fidelity` و`example_prompt`). أسقِط مجلدًا، وأعِد تشغيل الـ daemon، فيظهر في المُنتقي.
 
 يرسي **وضعان** أساس الكتالوج: `prototype` (مخرجات من صفحة واحدة للويب/الجوال/سطح المكتب) و`deck` (عروض تقديمية بالسحب الأفقي). إضافة إلى أوضاع `image` و`video` و`audio` و`template` و`design-system` و`utility`. ويجمّعها حقل **`scenario`** حسب الجمهور: `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
 
 | المهارة | الوضع | السيناريو | ما تنتجه |
 |---|---|---|---|
-| [`web-prototype`](design-templates/web-prototype/) | prototype | design | صفحة هبوط / عنصر رئيسي افتراضي |
-| [`saas-landing`](design-templates/saas-landing/) | prototype | marketing | عنصر رئيسي / ميزات / تسعير / دعوة لاتخاذ إجراء |
-| [`dashboard`](design-templates/dashboard/) | prototype | operation | إدارة / تحليلات (مع شريط جانبي) |
-| [`mobile-app`](design-templates/mobile-app/) | prototype | design | تطبيق مؤطَّر بـ iPhone 15 Pro / Pixel |
-| [`mobile-onboarding`](design-templates/mobile-onboarding/) | prototype | design | تدفق شاشة بداية · عرض القيمة · تسجيل دخول |
-| [`social-carousel`](design-templates/social-carousel/) | prototype | marketing | عرض دوّار من 3 بطاقات 1080×1080 |
-| [`email-marketing`](design-templates/email-marketing/) | prototype | marketing | بريد علامة تجارية آمن مع بديل جدولي |
-| [`magazine-poster`](design-templates/magazine-poster/) | prototype | marketing | تخطيط مجلة من صفحة واحدة |
-| [`motion-frames`](design-templates/motion-frames/) | prototype | marketing | عنصر رئيسي بحركة CSS متكررة |
-| [`sprite-animation`](design-templates/sprite-animation/) | prototype | marketing | شرح متحرك ببكسل 8-bit |
-| [`pm-spec`](design-templates/pm-spec/) | prototype | product | مستند مواصفة منتج (مع جدول محتويات + سجل قرارات) |
-| [`team-okrs`](design-templates/team-okrs/) | prototype | product | بطاقة نتائج OKR |
-| [`eng-runbook`](design-templates/eng-runbook/) | prototype | engineering | دليل إجراءات الحوادث |
-| [`finance-report`](design-templates/finance-report/) | prototype | finance | ملخّص مالي تنفيذي |
-| [`hr-onboarding`](design-templates/hr-onboarding/) | prototype | hr | خطة إعداد دور وظيفي |
-| [`guizang-ppt`](design-templates/guizang-ppt/) | deck | marketing | عرض ويب بأسلوب المجلات (افتراضي لوضع العرض التقديمي) |
-| [`html-ppt-*`](design-templates/) | deck | marketing | 15 قالب عرض تقديمي × 36 سمة (القالب الرئيسي في [`design-templates/html-ppt/`](design-templates/html-ppt/)) |
-| [`hyperframes`](design-templates/hyperframes/) | video | marketing | رسوميات حركية HTML → MP4 (إطار HeyGen مفتوح المصدر) |
-| [`critique`](design-templates/critique/) | utility | design | ورقة نقد ذاتي بخمسة أبعاد |
-| [`tweaks`](design-templates/tweaks/) | utility | design | بيان لوحة تعديلات يصدره الذكاء الاصطناعي |
+| [`web-prototype`](../../design-templates/web-prototype/) | prototype | design | صفحة هبوط / عنصر رئيسي افتراضي |
+| [`saas-landing`](../../design-templates/saas-landing/) | prototype | marketing | عنصر رئيسي / ميزات / تسعير / دعوة لاتخاذ إجراء |
+| [`dashboard`](../../design-templates/dashboard/) | prototype | operation | إدارة / تحليلات (مع شريط جانبي) |
+| [`mobile-app`](../../design-templates/mobile-app/) | prototype | design | تطبيق مؤطَّر بـ iPhone 15 Pro / Pixel |
+| [`mobile-onboarding`](../../design-templates/mobile-onboarding/) | prototype | design | تدفق شاشة بداية · عرض القيمة · تسجيل دخول |
+| [`social-carousel`](../../design-templates/social-carousel/) | prototype | marketing | عرض دوّار من 3 بطاقات 1080×1080 |
+| [`email-marketing`](../../design-templates/email-marketing/) | prototype | marketing | بريد علامة تجارية آمن مع بديل جدولي |
+| [`magazine-poster`](../../design-templates/magazine-poster/) | prototype | marketing | تخطيط مجلة من صفحة واحدة |
+| [`motion-frames`](../../design-templates/motion-frames/) | prototype | marketing | عنصر رئيسي بحركة CSS متكررة |
+| [`sprite-animation`](../../design-templates/sprite-animation/) | prototype | marketing | شرح متحرك ببكسل 8-bit |
+| [`pm-spec`](../../design-templates/pm-spec/) | prototype | product | مستند مواصفة منتج (مع جدول محتويات + سجل قرارات) |
+| [`team-okrs`](../../design-templates/team-okrs/) | prototype | product | بطاقة نتائج OKR |
+| [`eng-runbook`](../../design-templates/eng-runbook/) | prototype | engineering | دليل إجراءات الحوادث |
+| [`finance-report`](../../design-templates/finance-report/) | prototype | finance | ملخّص مالي تنفيذي |
+| [`hr-onboarding`](../../design-templates/hr-onboarding/) | prototype | hr | خطة إعداد دور وظيفي |
+| [`guizang-ppt`](../../design-templates/guizang-ppt/) | deck | marketing | عرض ويب بأسلوب المجلات (افتراضي لوضع العرض التقديمي) |
+| [`html-ppt-*`](../../design-templates/) | deck | marketing | 15 قالب عرض تقديمي × 36 سمة (القالب الرئيسي في [`design-templates/html-ppt/`](../../design-templates/html-ppt/)) |
+| [`hyperframes`](../../design-templates/hyperframes/) | video | marketing | رسوميات حركية HTML → MP4 (إطار HeyGen مفتوح المصدر) |
+| [`critique`](../../design-templates/critique/) | utility | design | ورقة نقد ذاتي بخمسة أبعاد |
+| [`tweaks`](../../design-templates/tweaks/) | utility | design | بيان لوحة تعديلات يصدره الذكاء الاصطناعي |
 
-بروتوكول المهارات الكامل ← [`docs/skills-protocol.md`](docs/skills-protocol.md). نقطة نهاية سجل المهارات: `GET /api/skills`.
+بروتوكول المهارات الكامل ← [`docs/skills-protocol.md`](../../docs/skills-protocol.md). نقطة نهاية سجل المهارات: `GET /api/skills`.
 
 ---
 
@@ -432,7 +432,7 @@ od skill list --scenario marketing
 
 </details>
 
-أعِد استيراد المكتبة عبر [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts). أضف علامتك التجارية الخاصة ← أسقِط ملف `DESIGN.md` في `design-systems/<brand>/`. الدليل الكامل ← [`design-systems/README.md`](design-systems/README.md).
+أعِد استيراد المكتبة عبر [`scripts/sync-design-systems.ts`](../../scripts/sync-design-systems.ts). أضف علامتك التجارية الخاصة ← أسقِط ملف `DESIGN.md` في `design-systems/<brand>/`. الدليل الكامل ← [`design-systems/README.md`](../../design-systems/README.md).
 
 [acd2]: https://github.com/VoltAgent/awesome-design-md
 
@@ -440,24 +440,24 @@ od skill list --scenario marketing
 
 ## الإضافات
 
-**261 إضافة رسمية** تقيم في [`plugins/_official/`](plugins/_official/). كل إضافة هي **مجلد مهارة-وكيل قابل للنقل** — ملف `SKILL.md` (قابل للقراءة من أي وكيل يدعم Agent Skills)، إضافة إلى بيان `open-design.json` اختياري يمنح Open Design بيانات وصفية للسوق، ومدخلات، ومعاينات، وخطوط أنابيب، وتصريحات قدرات. انتقل مباشرة إلى فئة:
+**261 إضافة رسمية** تقيم في [`plugins/_official/`](../../plugins/_official/). كل إضافة هي **مجلد مهارة-وكيل قابل للنقل** — ملف `SKILL.md` (قابل للقراءة من أي وكيل يدعم Agent Skills)، إضافة إلى بيان `open-design.json` اختياري يمنح Open Design بيانات وصفية للسوق، ومدخلات، ومعاينات، وخطوط أنابيب، وتصريحات قدرات. انتقل مباشرة إلى فئة:
 
 | الفئة | العدد | المحتويات |
 |---|---|---|
-| [`scenarios/`](plugins/_official/scenarios/) | 11 | سيناريوهات تصميم كاملة — [`od-default`](plugins/_official/scenarios/od-default/)، [`od-design-refine`](plugins/_official/scenarios/od-design-refine/)، [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/)، [`od-code-migration`](plugins/_official/scenarios/od-code-migration/)، [`od-react-export`](plugins/_official/scenarios/od-react-export/)، [`od-nextjs-export`](plugins/_official/scenarios/od-nextjs-export/)، [`od-vue-export`](plugins/_official/scenarios/od-vue-export/)، [`od-media-generation`](plugins/_official/scenarios/od-media-generation/)، [`od-new-generation`](plugins/_official/scenarios/od-new-generation/)، [`od-tune-collab`](plugins/_official/scenarios/od-tune-collab/)، [`od-plugin-authoring`](plugins/_official/scenarios/od-plugin-authoring/) |
-| [`image-templates/`](plugins/_official/image-templates/) | 45 | موجّهات صور بلقطة واحدة — تحريرية، سينمائية، منتجات، بورتريه |
-| [`video-templates/`](plugins/_official/video-templates/) | 50 | قوالب حركة HyperFrames / Seedance / Veo |
-| [`design-systems/`](plugins/_official/design-systems/) | 142 | ملفات `DESIGN.md` للعلامات التجارية مغلَّفة كإضافات |
-| [`atoms/`](plugins/_official/atoms/) | 13 | أجزاء واجهة قابلة لإعادة الاستخدام (أزرار، عناصر رئيسية، بطاقات مؤشرات أداء) |
-| [`examples/`](plugins/_official/examples/) | 140 | مخرجات مرجعية قابلة لإعادة المزج |
+| [`scenarios/`](../../plugins/_official/scenarios/) | 11 | سيناريوهات تصميم كاملة — [`od-default`](../../plugins/_official/scenarios/od-default/)، [`od-design-refine`](../../plugins/_official/scenarios/od-design-refine/)، [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/)، [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/)، [`od-react-export`](../../plugins/_official/scenarios/od-react-export/)، [`od-nextjs-export`](../../plugins/_official/scenarios/od-nextjs-export/)، [`od-vue-export`](../../plugins/_official/scenarios/od-vue-export/)، [`od-media-generation`](../../plugins/_official/scenarios/od-media-generation/)، [`od-new-generation`](../../plugins/_official/scenarios/od-new-generation/)، [`od-tune-collab`](../../plugins/_official/scenarios/od-tune-collab/)، [`od-plugin-authoring`](../../plugins/_official/scenarios/od-plugin-authoring/) |
+| [`image-templates/`](../../plugins/_official/image-templates/) | 45 | موجّهات صور بلقطة واحدة — تحريرية، سينمائية، منتجات، بورتريه |
+| [`video-templates/`](../../plugins/_official/video-templates/) | 50 | قوالب حركة HyperFrames / Seedance / Veo |
+| [`design-systems/`](../../plugins/_official/design-systems/) | 142 | ملفات `DESIGN.md` للعلامات التجارية مغلَّفة كإضافات |
+| [`atoms/`](../../plugins/_official/atoms/) | 13 | أجزاء واجهة قابلة لإعادة الاستخدام (أزرار، عناصر رئيسية، بطاقات مؤشرات أداء) |
+| [`examples/`](../../plugins/_official/examples/) | 140 | مخرجات مرجعية قابلة لإعادة المزج |
 
-كذلك [`plugins/community/`](plugins/community/) لإضافات المجتمع و[`plugins/registry/`](plugins/registry/) لسير النشر.
+كذلك [`plugins/community/`](../../plugins/community/) لإضافات المجتمع و[`plugins/registry/`](../../plugins/registry/) لسير النشر.
 
 ### ما يمكن للإضافات فعله
 
-- 🤖 **التشغيل في أي وكيل برمجة** — [Claude Code](docs/agent-adapters.md) وCodex وCursor وCopilot و[OpenClaw](https://github.com/openclaw/openclaw) و[Antigravity](https://antigravity.google) وHermes وKimi… عبر بروتوكول المهارات نفسه الذي يعرفه الوكيل أصلًا.
-- 🔁 **نقل سير عمل Figma / Pencil** ← شفرة React أو Next.js أو Vue. راجع [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/).
-- 🛠️ **تحديث قاعدة شفرة موجودة وفق مواصفة علامة تجارية** — وجّه إضافة نحو مستودع `git` + ملف `DESIGN.md`، واحصل على PR. راجع [`od-code-migration`](plugins/_official/scenarios/od-code-migration/).
+- 🤖 **التشغيل في أي وكيل برمجة** — [Claude Code](../../docs/agent-adapters.md) وCodex وCursor وCopilot و[OpenClaw](https://github.com/openclaw/openclaw) و[Antigravity](https://antigravity.google) وHermes وKimi… عبر بروتوكول المهارات نفسه الذي يعرفه الوكيل أصلًا.
+- 🔁 **نقل سير عمل Figma / Pencil** ← شفرة React أو Next.js أو Vue. راجع [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/).
+- 🛠️ **تحديث قاعدة شفرة موجودة وفق مواصفة علامة تجارية** — وجّه إضافة نحو مستودع `git` + ملف `DESIGN.md`، واحصل على PR. راجع [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/).
 - 💾 **الاحتفاظ بسير عمل مخصّص** — تجلس قوالب فريقك القابلة لإعادة الاستخدام بجوار القوالب المشحونة.
 
 ### استخدام الإضافات
@@ -503,16 +503,16 @@ od plugin validate ./my-plugin                          # check manifest / file 
 pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 ```
 
-مجموعة الحقول الكاملة وعقد وقت التشغيل ← [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md)؛ تطوير إضافة بوكيل برمجة ← [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md)؛ قوالب دنيا جاهزة للصق ← [`plugins/spec/examples/`](plugins/spec/examples/).
+مجموعة الحقول الكاملة وعقد وقت التشغيل ← [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md)؛ تطوير إضافة بوكيل برمجة ← [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md)؛ قوالب دنيا جاهزة للصق ← [`plugins/spec/examples/`](../../plugins/spec/examples/).
 
 ### المساهمة بإضافة
 
-1. أسقِط مجلد الإضافة في [`plugins/community/`](plugins/community/) (الإضافات الخارجية)، أو — لشحنها مجمَّعة مع Open Design — في المستوى المطابق ضمن [`plugins/_official/`](plugins/_official/).
+1. أسقِط مجلد الإضافة في [`plugins/community/`](../../plugins/community/) (الإضافات الخارجية)، أو — لشحنها مجمَّعة مع Open Design — في المستوى المطابق ضمن [`plugins/_official/`](../../plugins/_official/).
 2. اجتز التحقق: `od plugin validate` و`pnpm guard` و`pnpm --filter @open-design/plugin-runtime typecheck`.
-3. املأ الـ PR باستخدام القالب في [`plugins/spec/CONTRIBUTING.md`](plugins/spec/CONTRIBUTING.md) (المعرّف، الإصدار، المسار، الوضع، القدرات، أمثلة التشغيل؛ أرفِق لقطة شاشة / معاينة للإضافات البصرية).
-4. للنشر على سجل خارجي (skills.sh / ClawHub / GitHub مستقل) ← [`plugins/spec/PUBLISHING-REGISTRIES.md`](plugins/spec/PUBLISHING-REGISTRIES.md).
+3. املأ الـ PR باستخدام القالب في [`plugins/spec/CONTRIBUTING.md`](../../plugins/spec/CONTRIBUTING.md) (المعرّف، الإصدار، المسار، الوضع، القدرات، أمثلة التشغيل؛ أرفِق لقطة شاشة / معاينة للإضافات البصرية).
+4. للنشر على سجل خارجي (skills.sh / ClawHub / GitHub مستقل) ← [`plugins/spec/PUBLISHING-REGISTRIES.md`](../../plugins/spec/PUBLISHING-REGISTRIES.md).
 
-نقطة نهاية سجل الإضافات: `GET /api/plugins`. نظرة عامة على الدليل ← [`plugins/README.md`](plugins/README.md) ([简体中文](plugins/README.zh-CN.md)).
+نقطة نهاية سجل الإضافات: `GET /api/plugins`. نظرة عامة على الدليل ← [`plugins/README.md`](../../plugins/README.md) ([简体中文](../../plugins/README.zh-CN.md)).
 
 ---
 
@@ -555,7 +555,7 @@ pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 | سطح المكتب | غلاف Electron + مُصيِّر معزول + IPC جانبي (STATUS · EVAL · SCREENSHOT · CONSOLE · CLICK · SHUTDOWN) |
 | دورة الحياة | نقطة دخول واحدة: `pnpm tools-dev` (start / stop / run / status / logs / inspect / check) |
 
-البنية المعمارية الكاملة ← [`docs/architecture.md`](docs/architecture.md). بروتوكول المهارات ← [`docs/skills-protocol.md`](docs/skills-protocol.md). عقد محوّل الوكلاء ← [`docs/agent-adapters.md`](docs/agent-adapters.md).
+البنية المعمارية الكاملة ← [`docs/architecture.md`](../../docs/architecture.md). بروتوكول المهارات ← [`docs/skills-protocol.md`](../../docs/skills-protocol.md). عقد محوّل الوكلاء ← [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -579,7 +579,7 @@ pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 - [ ] إضافات نقل Figma / Pencil ← React / Next / Vue (ألفا)
 - [ ] إضافة تحديث قاعدة شفرة موجودة (وجّهها نحو مستودع git + ملف `DESIGN.md`)
 
-التسليم المرحلي ← [`docs/roadmap.md`](docs/roadmap.md).
+التسليم المرحلي ← [`docs/roadmap.md`](../../docs/roadmap.md).
 
 ---
 
@@ -604,12 +604,12 @@ pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 
 | تريد أن تشحن… | كيف | أين |
 |---|---|---|
-| **مهارة** جديدة | أسقِط مجلدًا يحوي `SKILL.md` + `assets/` + `references/` | [`skills/`](skills/) · المواصفة في [`docs/skills-protocol.md`](docs/skills-protocol.md) |
-| **نظام تصميم** جديد | أسقِط ملف `DESIGN.md` باستخدام مخطط الأقسام التسعة | [`design-systems/<brand>/`](design-systems/) |
-| **إضافة** جديدة | أسقِط `open-design.json` + بيانًا ضمن مجلد فئة | [`plugins/community/`](plugins/community/) · المواصفة في [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md) · دليل تطوير الوكيل في [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md) |
-| دعم **واجهة CLI** جديدة لوكيل برمجة | مدخل محوّل واحد + محلّل بثّ | [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) |
+| **مهارة** جديدة | أسقِط مجلدًا يحوي `SKILL.md` + `assets/` + `references/` | [`skills/`](../../skills/) · المواصفة في [`docs/skills-protocol.md`](../../docs/skills-protocol.md) |
+| **نظام تصميم** جديد | أسقِط ملف `DESIGN.md` باستخدام مخطط الأقسام التسعة | [`design-systems/<brand>/`](../../design-systems/) |
+| **إضافة** جديدة | أسقِط `open-design.json` + بيانًا ضمن مجلد فئة | [`plugins/community/`](../../plugins/community/) · المواصفة في [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md) · دليل تطوير الوكيل في [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md) |
+| دعم **واجهة CLI** جديدة لوكيل برمجة | مدخل محوّل واحد + محلّل بثّ | [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) |
 | إصلاح خطأ أو تحسين الواجهة | تصفّح تصنيف [`good-first-issue`](https://github.com/nexu-io/open-design/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) | [Issues ←](https://github.com/nexu-io/open-design/issues) |
-| ترجمة الوثائق | حدّث ملفات `README.<lang>.md` | [`TRANSLATIONS.md`](TRANSLATIONS.md) |
+| ترجمة الوثائق | حدّث ملفات `README.<lang>.md` | [`TRANSLATIONS.md`](../../TRANSLATIONS.md) |
 
 ### 🤖 المساهمة بصفتك وكيلًا
 
@@ -633,11 +633,11 @@ pnpm --filter @open-design/<package> test
 gh pr create --fill
 ```
 
-سير المساهمة الكامل الصديق للوكلاء، وأسلوب الشفرة، ومستوى الـ PR ← [`CONTRIBUTING.md`](CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
+سير المساهمة الكامل الصديق للوكلاء، وأسلوب الشفرة، ومستوى الـ PR ← [`CONTRIBUTING.md`](../../CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
 
 ### 🏅 برنامج Open Design Fellow
 
-نوظّف **Open Design Fellows** حول العالم — يشكّل الزملاء المنتج جنبًا إلى جنب مع الفريق الأساسي، ويمثّلون Open Design رسميًا في منطقتهم، وينمّون المجتمع محليًا، مدعومين بدعم مموَّل ($1,000 / MR)، ورصيد LLM مجاني، ومسار مراجعة مباشر. التفاصيل ← [`MAINTAINERS.md`](MAINTAINERS.md) والإعلان على [Discord](https://discord.gg/qhbcCH8Am4).
+نوظّف **Open Design Fellows** حول العالم — يشكّل الزملاء المنتج جنبًا إلى جنب مع الفريق الأساسي، ويمثّلون Open Design رسميًا في منطقتهم، وينمّون المجتمع محليًا، مدعومين بدعم مموَّل ($1,000 / MR)، ورصيد LLM مجاني، ومسار مراجعة مباشر. التفاصيل ← [`MAINTAINERS.md`](../../MAINTAINERS.md) والإعلان على [Discord](https://discord.gg/qhbcCH8Am4).
 
 ---
 
@@ -664,7 +664,7 @@ gh pr create --fill
   </tr>
 </table>
 
-قواعد المشرفين، ومعايير الترقية، وبروتوكول الخروج ← [`MAINTAINERS.md`](MAINTAINERS.md) (كذلك [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
+قواعد المشرفين، ومعايير الترقية، وبروتوكول الخروج ← [`MAINTAINERS.md`](../../MAINTAINERS.md) (كذلك [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
 
 ## المساهمون
 
@@ -682,7 +682,7 @@ gh pr create --fill
   <img alt="Open Design — repository metrics" src="https://repo-assets.open-design.ai/resources/images/github-metrics.svg" />
 </picture>
 
-يُعاد توليد ملف SVG أعلاه يوميًا بواسطة [`.github/workflows/metrics.yml`](.github/workflows/metrics.yml) باستخدام [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
+يُعاد توليد ملف SVG أعلاه يوميًا بواسطة [`.github/workflows/metrics.yml`](../../.github/workflows/metrics.yml) باستخدام [`lowlighter/metrics`](https://github.com/lowlighter/metrics).
 
 ---
 
@@ -710,7 +710,7 @@ gh pr create --fill
 |---|---|
 | [Claude Design][cd] | المنتج مغلق المصدر الذي يُعدّ هذا المستودع البديل مفتوح المصدر له. |
 | [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu-design) | بوصلة فلسفة التصميم — سير عمل المصمم المبتدئ، بروتوكول أصول العلامة التجارية، قائمة تحقق ضد الركاكة بالذكاء الاصطناعي، نقد بخمسة أبعاد. |
-| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | مهارة عرض الويب بأسلوب المجلات، مجمَّعة حرفيًا ضمن [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/). افتراضية لوضع العرض التقديمي. |
+| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | مهارة عرض الويب بأسلوب المجلات، مجمَّعة حرفيًا ضمن [`design-templates/guizang-ppt/`](../../design-templates/guizang-ppt/). افتراضية لوضع العرض التقديمي. |
 | [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) | عائلة HTML PPT Studio — 15 قالب عرض تقديمي، 36 سمة، 31 تخطيط صفحة، وقت تشغيل للحركة، وضع عرض ببطاقات مغناطيسية. |
 | [`OpenCoworkAI/open-codesign`](https://github.com/OpenCoworkAI/open-codesign) | أول بديل مفتوح المصدر لـ Claude Design؛ أنماط تجربة الاستخدام التي نستعيرها (حلقة بثّ المخرجات، iframe المعزول، لوحة الوكيل الحية). |
 | [`multica-ai/multica`](https://github.com/multica-ai/multica) | بنية الـ daemon + المحوّل — اكتشاف الوكلاء بمسح PATH، الـ daemon المحلي بصفته العملية المميَّزة الوحيدة. |
@@ -719,12 +719,12 @@ gh pr create --fill
 | [`heygen-com/hyperframes`](https://github.com/heygen-com/hyperframes) | إطار الرسوميات الحركية HTML→MP4، مدمج بصفته `hyperframes-html` من الدرجة الأولى في Open Design. |
 | [Claude Code skills][skill] | اصطلاح `SKILL.md` الذي نعتمده حرفيًا. |
 
-النَّسَب التفصيلي ← [`docs/references.md`](docs/references.md).
+النَّسَب التفصيلي ← [`docs/references.md`](../../docs/references.md).
 
 [skill]: https://docs.anthropic.com/en/docs/claude-code/skills
 
 ## الترخيص
 
-‏Apache-2.0. يحتفظ المجمَّع `design-templates/guizang-ppt/` بترخيصه الأصلي [LICENSE](design-templates/guizang-ppt/LICENSE) (MIT، [@op7418](https://github.com/op7418)). ويحتفظ المجمَّع `design-templates/html-ppt/` بترخيصه الأصلي [LICENSE](design-templates/html-ppt/LICENSE) (MIT، [@lewislulu](https://github.com/lewislulu)).
+‏Apache-2.0. يحتفظ المجمَّع `design-templates/guizang-ppt/` بترخيصه الأصلي [LICENSE](../../design-templates/guizang-ppt/LICENSE) (MIT، [@op7418](https://github.com/op7418)). ويحتفظ المجمَّع `design-templates/html-ppt/` بترخيصه الأصلي [LICENSE](../../design-templates/html-ppt/LICENSE) (MIT، [@lewislulu](https://github.com/lewislulu)).
 
 </div>

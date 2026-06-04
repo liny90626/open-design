@@ -1,6 +1,6 @@
 # Schnellstart
 
-<p align="center"><a href="QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <b>Deutsch</b> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
+<p align="center"><a href="../../QUICKSTART.md">English</a> · <a href="QUICKSTART.pt-BR.md">Português (Brasil)</a> · <b>Deutsch</b> · <a href="QUICKSTART.fr.md">Français</a> · <a href="QUICKSTART.ja-JP.md">日本語</a> · <a href="QUICKSTART.zh-CN.md">简体中文</a> · <a href="QUICKSTART.zh-TW.md">繁體中文</a></p>
 
 Führen Sie das vollständige Produkt lokal aus.
 
@@ -371,9 +371,9 @@ open-design/
 
 ## Bezug zur Vision
 
-Dieser Schnellstart ist der lauffähige Einstieg zur Spec in [`docs/`](docs/). Die Spec beschreibt, wohin das Projekt wächst (siehe [`docs/roadmap.md`](docs/roadmap.md)). Highlights:
+Dieser Schnellstart ist der lauffähige Einstieg zur Spec in [`docs/`](../../docs/). Die Spec beschreibt, wohin das Projekt wächst (siehe [`docs/roadmap.md`](../../docs/roadmap.md)). Highlights:
 
 - `docs/architecture.md` beschreibt den ausgelieferten Stack: Next.js 16 App Router vorne, lokaler daemon dahinter und `apps/web/next.config.ts` Rewrites in dev, damit der Browser mit derselben `/api` Oberfläche spricht.
-- `docs/skills-protocol.md` beschreibt das vollständige `od:` Frontmatter (typed inputs, sliders, capability gating). Dieses MVP liest nur `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires`; erweitern Sie [`apps/daemon/src/skills.ts`](apps/daemon/src/skills.ts), um den Rest hinzuzufügen.
+- `docs/skills-protocol.md` beschreibt das vollständige `od:` Frontmatter (typed inputs, sliders, capability gating). Dieses MVP liest nur `name` / `description` / `triggers` / `od.mode` / `od.design_system.requires`; erweitern Sie [`apps/daemon/src/skills.ts`](../../apps/daemon/src/skills.ts), um den Rest hinzuzufügen.
 - `docs/agent-adapters.md` sieht reicheren Dispatch vor (capability detection, streaming tool-calls). Unser `apps/daemon/src/agents.ts` ist ein minimaler Dispatcher: genug, um die Verdrahtung zu beweisen.
 - `docs/modes.md` listet vier Modi: prototype / deck / template / design-system. Wir liefern Skills für die ersten beiden; der Picker filtert bereits nach `mode`.

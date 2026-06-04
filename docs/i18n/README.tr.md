@@ -2,7 +2,7 @@
 
 > 🔥 **Open Design 0.9.0 burada: kurulum olmadan üret.** [Resmî Model Router](https://open-design.ai/amr) doğrudan uygulamaya gömülü — ek yapılandırma yok, kurulacak CLI yok, hazırlanacak API anahtarı yok. Sadece uygulamayı açın, oturum açın ve hemen tasarlamaya ve üretmeye başlayın. [0.9.0'ı indir](https://github.com/nexu-io/open-design/releases) · [Tartışmaya katıl](https://github.com/nexu-io/open-design/discussions/3524)
 >
-> 🏅 **Open Design Fellow programı artık açık.** Siz de tasarımın açık olması gerektiğine inanıyorsanız — bir Open Design Fellow olun, ürünü çekirdek ekiple birlikte şekillendirin ve daha fazla insanın tasarımın geleceğini tanımlamaya katılmasına yardımcı olun. Ayrıntılar → [`MAINTAINERS.md`](MAINTAINERS.md) ve [Discord](https://discord.gg/qhbcCH8Am4).
+> 🏅 **Open Design Fellow programı artık açık.** Siz de tasarımın açık olması gerektiğine inanıyorsanız — bir Open Design Fellow olun, ürünü çekirdek ekiple birlikte şekillendirin ve daha fazla insanın tasarımın geleceğini tanımlamaya katılmasına yardımcı olun. Ayrıntılar → [`MAINTAINERS.md`](../../MAINTAINERS.md) ve [Discord](https://discord.gg/qhbcCH8Am4).
 
 <p align="center">
   <img src="https://repo-assets.open-design.ai/resources/images/hero.png" alt="Open Design — The open-source Claude Design alternative · 150 Design Systems · 261 Plugins · 21 Coding Agents · 14 Media Providers" width="100%" />
@@ -17,12 +17,12 @@
 
 <p align="center">
   <a href="https://github.com/nexu-io/open-design/releases"><img alt="release" src="https://img.shields.io/github/v/release/nexu-io/open-design?style=flat&color=blueviolet&label=release&include_prereleases&display_name=tag" /></a>
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
+  <a href="../../LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
   <a href="https://discord.gg/qhbcCH8Am4"><img alt="discord" src="https://img.shields.io/discord/1479002485040480266?style=flat&logo=discord&logoColor=white&label=discord&color=5865F2&cacheSeconds=3600" /></a>
-  <a href="QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
+  <a href="../../QUICKSTART.md"><img alt="quickstart" src="https://img.shields.io/badge/quickstart-3%20commands-green?style=flat" /></a>
 </p>
 
-<p align="center"><a href="README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <b>Türkçe</b></p>
+<p align="center"><a href="../../README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja-JP.md">日本語</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a> · <a href="README.uk.md">Українська</a> · <b>Türkçe</b></p>
 
 ---
 
@@ -135,7 +135,7 @@ Kuru çalıştırma önizlemesi için `od mcp install <agent> --print` · kaldı
 
 **Kurulu CLI yok mu?** `POST /api/proxy/{anthropic,openai,azure,google,ollama,senseaudio}/stream` adresindeki BYOK proxy size aynı döngüyü verir (süreç başlatma yok) — `baseUrl` + `apiKey` + `model` yapıştırın; OpenAI, Anthropic, Azure OpenAI, Google Gemini, Ollama, LM Studio, vLLM veya herhangi bir OpenAI uyumlu uç nokta desteğiyle. Hedef bazlı SSRF koruması, daemon kenarında dahili IP'leri / link-local / CGNAT adreslerini engeller.
 
-Adaptör sözleşmesi ve akış ayrıştırıcıları [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) içinde yer alır. Yeni bir CLI eklemek tek bir girdidir — bkz. [`docs/agent-adapters.md`](docs/agent-adapters.md).
+Adaptör sözleşmesi ve akış ayrıştırıcıları [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) içinde yer alır. Yeni bir CLI eklemek tek bir girdidir — bkz. [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -150,21 +150,21 @@ Varsayılan çıktı yüzeyi. `DESIGN.md` dosyanızı okuyan ve yalıtılmış b
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
+<img src="../../docs/screenshots/01-entry-view.png" alt="Entry view" /><br/>
 <sub><b>Giriş görünümü</b> — bir beceri seçin, bir tasarım sistemi seçin, özeti yazın. Prototipler, panolar, sunum desteleri, mobil uygulamalar, dergi sayfaları için tek bir yüzey.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
+<img src="../../docs/screenshots/skills/mobile-onboarding.png" alt="Mobile onboarding" /><br/>
 <sub><b>Mobil prototip</b> — piksel hassasiyetinde iPhone 15 Pro çerçevesi, çok ekranlı akışlar. Ajan telefon çerçevesini asla yeniden çizmez; paylaşılan cihaz çerçeveleri <code>assets/frames/</code> içinde yer alır.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
+<img src="../../docs/screenshots/skills/dating-web.png" alt="Web prototype dating-web" /><br/>
 <sub><b>Web prototip</b> — kaydırma çubukları, KPI'lar ve grafiklerle editöryel bir pano. Doğrudan <code>design-templates/dating-web/</code> dizininden işlenmiştir.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
+<img src="../../docs/screenshots/skills/gamified-app.png" alt="Gamified app" /><br/>
 <sub><b>Mobil uygulama prototipi</b> — XP şeritleri ve görev detayı olan üç ekranlı oyunlaştırılmış bir akış. React/Next/Vue'ya dönüştürmek için doğrudan Cursor / Codex / Claude Code'a devredin.</sub>
 </td>
 </tr>
@@ -177,21 +177,21 @@ Canlı panolar, karar odaları, KPI duvarları — verileri bir ayar paneli arac
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/live-dashboard.png" alt="Live dashboard" /><br/>
 <sub><b>Canlı pano</b> — ayar paneli üzerinde ince ayar yapmaya değer parametreleri ortaya çıkaran, düzenlenebilir bir KPI duvarı. Ajan bir manifest yayar ve iframe yeniden yükleme olmadan yeniden işlenir.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
+<img src="../../docs/screenshots/skills/research-decision-room.png" alt="Decision room" /><br/>
 <sub><b>Karar odası</b> — ürün / araştırma / operasyon toplantıları için çok kaynaklı bir brifing artifact'i.</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
+<img src="../../docs/screenshots/skills/github-dashboard.png" alt="GitHub dashboard" /><br/>
 <sub><b>GitHub tarzı pano</b> — depo metrikleri canlı bir artifact olarak sunulur.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
+<img src="../../docs/screenshots/skills/flowai-live-dashboard-template.png" alt="Flow live dashboard" /><br/>
 <sub><b>Flow canlı pano şablonu</b> — etkin <code>DESIGN.md</code> ile markalanmış, alana özgü bir KPI şablonu.</sub>
 </td>
 </tr>
@@ -202,11 +202,11 @@ Canlı panolar, karar odaları, KPI duvarları — verileri bir ayar paneli arac
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
+<img src="../../docs/screenshots/07-magazine-deck.png" alt="Magazine deck (guizang-ppt)" /><br/>
 <sub><b>Deste modu (guizang-ppt)</b> — dergi düzenleri, WebGL hero, P0/P1/P2 kontrol listeleri. Orijinal lisansı korunarak <a href="https://github.com/op7418/guizang-ppt-skill"><code>op7418/guizang-ppt-skill</code></a> deposundan birebir paketlenmiştir.</sub>
 </td>
 <td width="50%" valign="top">
-<img src="docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
+<img src="../../docs/screenshots/skills/deck-swiss-international.png" alt="Swiss deck" /><br/>
 <sub><b>Swiss International tarzı deste</b> — ızgaraya sabitlenmiş, monokrom vurgular. <code>design-templates/html-ppt-*/</code> altındaki <b>15 deste şablonundan</b> ve <b>36 temadan</b> biri.</sub>
 </td>
 </tr>
@@ -226,7 +226,7 @@ Her deste **HTML** (tek dosya, gömülü varlıklar), **PDF** (tarayıcı yazdı
 </tr>
 </table>
 
-**93 çoğaltmaya hazır komut** [`prompt-templates/`](prompt-templates/) içinde yer alır — önizleme küçük resimleri, tam komut metni, hedef model, en boy oranı ve kaynak atıfı. Tek tıkla composer'a bir özet bırakır.
+**93 çoğaltmaya hazır komut** [`prompt-templates/`](../../prompt-templates/) içinde yer alır — önizleme küçük resimleri, tam komut metni, hedef model, en boy oranı ve kaynak atıfı. Tek tıkla composer'a bir özet bırakır.
 
 ### 5 · Video ve HyperFrames — ajan-yerel hareket grafikleri
 
@@ -234,20 +234,20 @@ Her deste **HTML** (tek dosya, gömülü varlıklar), **PDF** (tarayıcı yazdı
 
 <table>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>30sn SaaS ürün tanıtımı</b> · 16:9 · UI 3D açılımları</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>TikTok karaoke konuşan kafa</b> · 9:16 · TTS + kelime senkronlu altyazılar</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>30sn marka tanıtım filmi</b> · 16:9 · sese tepkili kinetik tipografi</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>Çubuk grafik yarışı</b> · 16:9 · NYT tarzı veri infografiği</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-saas-product-promo-30s.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/app-showcase.png" alt="SaaS promo" /></a><br/><sub><b>30sn SaaS ürün tanıtımı</b> · 16:9 · UI 3D açılımları</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-tiktok-karaoke-talking-head.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/tiktok-follow.png" alt="TikTok karaoke" /></a><br/><sub><b>TikTok karaoke konuşan kafa</b> · 9:16 · TTS + kelime senkronlu altyazılar</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-brand-sizzle-reel.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Brand sizzle reel" /></a><br/><sub><b>30sn marka tanıtım filmi</b> · 16:9 · sese tepkili kinetik tipografi</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-data-bar-chart-race.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/data-chart.png" alt="Bar chart race" /></a><br/><sub><b>Çubuk grafik yarışı</b> · 16:9 · NYT tarzı veri infografiği</sub></td>
 </tr>
 <tr>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>Uçuş haritası</b> · 16:9 · Apple tarzı rota açılımı</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>4sn sinematik logo kapanışı</b> · 16:9 · parça parça birleşme + bloom</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>$0 → $10K para sayacı</b> · 9:16 · Apple tarzı heyecan</sub></td>
-<td width="25%" valign="top"><a href="prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>Web sitesinden videoya</b> · 16:9 · siteyi 3 görünüm penceresinde yakalar</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-flight-map-route.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/nyc-paris-flight.png" alt="Flight map" /></a><br/><sub><b>Uçuş haritası</b> · 16:9 · Apple tarzı rota açılımı</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-logo-outro-cinematic.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/logo-outro.png" alt="Logo outro" /></a><br/><sub><b>4sn sinematik logo kapanışı</b> · 16:9 · parça parça birleşme + bloom</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-money-counter-hype.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/apple-money-count.png" alt="Money counter" /></a><br/><sub><b>$0 → $10K para sayacı</b> · 9:16 · Apple tarzı heyecan</sub></td>
+<td width="25%" valign="top"><a href="../../prompt-templates/video/hyperframes-website-to-video-promo.json"><img src="https://static.heygen.ai/hyperframes-oss/docs/images/catalog/blocks/instagram-follow.png" alt="Website to video" /></a><br/><sub><b>Web sitesinden videoya</b> · 16:9 · siteyi 3 görünüm penceresinde yakalar</sub></td>
 </tr>
 </table>
 
-11 HyperFrames şablonu + 39 Seedance komutu depoyla birlikte gelir. Katalog küçük resimleri © HeyGen; çerçeve Apache-2.0'dır. OD'ye özgü işleme iş akışı (kompozisyon önbelleği, sandbox-exec geçici çözümü, çip olarak MP4) [`design-templates/hyperframes/`](design-templates/hyperframes/) içinde ayrıntılı olarak açıklanmıştır.
+11 HyperFrames şablonu + 39 Seedance komutu depoyla birlikte gelir. Katalog küçük resimleri © HeyGen; çerçeve Apache-2.0'dır. OD'ye özgü işleme iş akışı (kompozisyon önbelleği, sandbox-exec geçici çözümü, çip olarak MP4) [`design-templates/hyperframes/`](../../design-templates/hyperframes/) içinde ayrıntılı olarak açıklanmıştır.
 
 [hyperframes]: https://github.com/heygen-com/hyperframes
 
@@ -332,7 +332,7 @@ corepack enable && pnpm install
 pnpm tools-dev run web
 ```
 
-Node `~24`, pnpm `10.33.x`. Windows kullanıcıları, bkz. [`docs/windows-troubleshooting.md`](docs/windows-troubleshooting.md). Tam hızlı başlangıç, ortam değişkenleri, Nix flake ve paketlenmiş derleme akışı → [`QUICKSTART.md`](QUICKSTART.md).
+Node `~24`, pnpm `10.33.x`. Windows kullanıcıları, bkz. [`docs/windows-troubleshooting.md`](../../docs/windows-troubleshooting.md). Tam hızlı başlangıç, ortam değişkenleri, Nix flake ve paketlenmiş derleme akışı → [`QUICKSTART.md`](../../QUICKSTART.md).
 
 ### Eksiksiz bir iş akışı — özetten artifact'e
 
@@ -364,7 +364,7 @@ od skill list --scenario marketing
 
 **Neden MCP?** Her yinelemede bir zip dosyasını dışa aktarıp yeniden eklemek akışı bozar. MCP, tasarım kaynağını doğrudan ortaya çıkarır — ajan her zaman canlı dosyayı görür.
 
-**Sıfırdan başlayan bir ajan için,** yükleyici `~/.config/<agent>/open-design.json` dosyasını (veya platform eşdeğerini) artı kopyala-yapıştır bir MCP parçacığını yerleştirir. Cursor tek tıklık bir deeplink alır; Claude Code bir `claude mcp add-json` tek satırlık komut alır; diğer her ajan, yapılandırmasının beklediği şemada JSON alır. Ajan başına tam akış → masaüstü uygulamasında **Settings → MCP server** veya [`docs/agent-adapters.md`](docs/agent-adapters.md).
+**Sıfırdan başlayan bir ajan için,** yükleyici `~/.config/<agent>/open-design.json` dosyasını (veya platform eşdeğerini) artı kopyala-yapıştır bir MCP parçacığını yerleştirir. Cursor tek tıklık bir deeplink alır; Claude Code bir `claude mcp add-json` tek satırlık komut alır; diğer her ajan, yapılandırmasının beklediği şemada JSON alır. Ajan başına tam akış → masaüstü uygulamasında **Settings → MCP server** veya [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 **Güvenlik modeli.** Varsayılan olarak salt okunur, daemon `127.0.0.1` adresine bağlanır ve SSRF, proxy kenarında engellenir. LAN erişimi açık bir `OD_BIND_HOST` artı `OD_ALLOWED_ORIGINS` gerektirir. Bağlayıcı kimlik bilgileri ve canlı artifact önizleme rotaları ne olursa olsun yalnızca loopback'te kalır.
 
@@ -372,34 +372,34 @@ od skill list --scenario marketing
 
 ## Beceriler
 
-**Kutudan çıktığı gibi 100+ beceri gelir** — her biri [`skills/`](skills/) altında, Claude Code [`SKILL.md`][skill] kuralını takip eden ve bir `od:` frontmatter (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`) ile genişletilmiş bir klasördür. Bir klasör bırakın, daemon'u yeniden başlatın, seçicide belirir.
+**Kutudan çıktığı gibi 100+ beceri gelir** — her biri [`skills/`](../../skills/) altında, Claude Code [`SKILL.md`][skill] kuralını takip eden ve bir `od:` frontmatter (`mode`, `platform`, `scenario`, `preview.type`, `design_system.requires`, `default_for`, `fidelity`, `example_prompt`) ile genişletilmiş bir klasördür. Bir klasör bırakın, daemon'u yeniden başlatın, seçicide belirir.
 
 İki **mod** kataloğa zemin oluşturur: `prototype` (web/mobil/masaüstü tek sayfalık artifact'ler) ve `deck` (yatay kaydırmalı sunumlar). Ayrıca `image`, `video`, `audio`, `template`, `design-system` ve `utility` modları. **`scenario`** alanı bunları kitleye göre gruplar: `design` · `marketing` · `operation` · `engineering` · `product` · `finance` · `hr` · `sale` · `personal`.
 
 | Beceri | Mod | Senaryo | Ne ürettiği |
 |---|---|---|---|
-| [`web-prototype`](design-templates/web-prototype/) | prototype | design | Varsayılan açılış sayfası / hero |
-| [`saas-landing`](design-templates/saas-landing/) | prototype | marketing | Hero / özellikler / fiyatlandırma / CTA |
-| [`dashboard`](design-templates/dashboard/) | prototype | operation | Yönetim / analitik (kenar çubuklu) |
-| [`mobile-app`](design-templates/mobile-app/) | prototype | design | iPhone 15 Pro / Pixel çerçeveli uygulama |
-| [`mobile-onboarding`](design-templates/mobile-onboarding/) | prototype | design | Açılış · değer önerisi · oturum açma akışı |
-| [`social-carousel`](design-templates/social-carousel/) | prototype | marketing | 3 kartlı 1080×1080 karusel |
-| [`email-marketing`](design-templates/email-marketing/) | prototype | marketing | Tablo yedeği güvenli marka e-postası |
-| [`magazine-poster`](design-templates/magazine-poster/) | prototype | marketing | Tek sayfalık dergi düzeni |
-| [`motion-frames`](design-templates/motion-frames/) | prototype | marketing | Döngüsel CSS hareket hero'su |
-| [`sprite-animation`](design-templates/sprite-animation/) | prototype | marketing | 8-bit piksel animasyonlu açıklayıcı |
-| [`pm-spec`](design-templates/pm-spec/) | prototype | product | PM spesifikasyon belgesi (TOC + karar günlüğü ile) |
-| [`team-okrs`](design-templates/team-okrs/) | prototype | product | OKR puan kartı |
-| [`eng-runbook`](design-templates/eng-runbook/) | prototype | engineering | Olay müdahale kılavuzu |
-| [`finance-report`](design-templates/finance-report/) | prototype | finance | Yönetici finans özeti |
-| [`hr-onboarding`](design-templates/hr-onboarding/) | prototype | hr | Rol başlatma planı |
-| [`guizang-ppt`](design-templates/guizang-ppt/) | deck | marketing | Dergi tarzı web PPT (deste varsayılanı) |
-| [`html-ppt-*`](design-templates/) | deck | marketing | 15 deste şablonu × 36 tema (ana şablon [`design-templates/html-ppt/`](design-templates/html-ppt/) içinde) |
-| [`hyperframes`](design-templates/hyperframes/) | video | marketing | HTML → MP4 hareket grafikleri (HeyGen OSS çerçevesi) |
-| [`critique`](design-templates/critique/) | utility | design | Beş boyutlu öz-eleştiri puan tablosu |
-| [`tweaks`](design-templates/tweaks/) | utility | design | AI tarafından yayılan ayar paneli manifesti |
+| [`web-prototype`](../../design-templates/web-prototype/) | prototype | design | Varsayılan açılış sayfası / hero |
+| [`saas-landing`](../../design-templates/saas-landing/) | prototype | marketing | Hero / özellikler / fiyatlandırma / CTA |
+| [`dashboard`](../../design-templates/dashboard/) | prototype | operation | Yönetim / analitik (kenar çubuklu) |
+| [`mobile-app`](../../design-templates/mobile-app/) | prototype | design | iPhone 15 Pro / Pixel çerçeveli uygulama |
+| [`mobile-onboarding`](../../design-templates/mobile-onboarding/) | prototype | design | Açılış · değer önerisi · oturum açma akışı |
+| [`social-carousel`](../../design-templates/social-carousel/) | prototype | marketing | 3 kartlı 1080×1080 karusel |
+| [`email-marketing`](../../design-templates/email-marketing/) | prototype | marketing | Tablo yedeği güvenli marka e-postası |
+| [`magazine-poster`](../../design-templates/magazine-poster/) | prototype | marketing | Tek sayfalık dergi düzeni |
+| [`motion-frames`](../../design-templates/motion-frames/) | prototype | marketing | Döngüsel CSS hareket hero'su |
+| [`sprite-animation`](../../design-templates/sprite-animation/) | prototype | marketing | 8-bit piksel animasyonlu açıklayıcı |
+| [`pm-spec`](../../design-templates/pm-spec/) | prototype | product | PM spesifikasyon belgesi (TOC + karar günlüğü ile) |
+| [`team-okrs`](../../design-templates/team-okrs/) | prototype | product | OKR puan kartı |
+| [`eng-runbook`](../../design-templates/eng-runbook/) | prototype | engineering | Olay müdahale kılavuzu |
+| [`finance-report`](../../design-templates/finance-report/) | prototype | finance | Yönetici finans özeti |
+| [`hr-onboarding`](../../design-templates/hr-onboarding/) | prototype | hr | Rol başlatma planı |
+| [`guizang-ppt`](../../design-templates/guizang-ppt/) | deck | marketing | Dergi tarzı web PPT (deste varsayılanı) |
+| [`html-ppt-*`](../../design-templates/) | deck | marketing | 15 deste şablonu × 36 tema (ana şablon [`design-templates/html-ppt/`](../../design-templates/html-ppt/) içinde) |
+| [`hyperframes`](../../design-templates/hyperframes/) | video | marketing | HTML → MP4 hareket grafikleri (HeyGen OSS çerçevesi) |
+| [`critique`](../../design-templates/critique/) | utility | design | Beş boyutlu öz-eleştiri puan tablosu |
+| [`tweaks`](../../design-templates/tweaks/) | utility | design | AI tarafından yayılan ayar paneli manifesti |
 
-Tam beceri protokolü → [`docs/skills-protocol.md`](docs/skills-protocol.md). Beceri kayıt uç noktası: `GET /api/skills`.
+Tam beceri protokolü → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Beceri kayıt uç noktası: `GET /api/skills`.
 
 ---
 
@@ -430,7 +430,7 @@ Tam beceri protokolü → [`docs/skills-protocol.md`](docs/skills-protocol.md). 
 
 </details>
 
-Kütüphaneyi [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts) ile yeniden içe aktarın. Kendi markanızı ekleyin → `design-systems/<brand>/` içine bir `DESIGN.md` bırakın. Tam kılavuz → [`design-systems/README.md`](design-systems/README.md).
+Kütüphaneyi [`scripts/sync-design-systems.ts`](../../scripts/sync-design-systems.ts) ile yeniden içe aktarın. Kendi markanızı ekleyin → `design-systems/<brand>/` içine bir `DESIGN.md` bırakın. Tam kılavuz → [`design-systems/README.md`](../../design-systems/README.md).
 
 [acd2]: https://github.com/VoltAgent/awesome-design-md
 
@@ -438,24 +438,24 @@ Kütüphaneyi [`scripts/sync-design-systems.ts`](scripts/sync-design-systems.ts)
 
 ## Eklentiler
 
-**261 resmî eklenti** [`plugins/_official/`](plugins/_official/) içinde yer alır. Her eklenti **taşınabilir bir ajan-beceri klasörüdür** — bir `SKILL.md` (Agent Skills'i destekleyen herhangi bir ajan tarafından okunabilir), artı Open Design'a pazar yeri meta verisi, girdiler, önizlemeler, işlem hatları ve yetenek bildirimleri veren isteğe bağlı bir `open-design.json` manifesti. Doğrudan bir kategoriye atlayın:
+**261 resmî eklenti** [`plugins/_official/`](../../plugins/_official/) içinde yer alır. Her eklenti **taşınabilir bir ajan-beceri klasörüdür** — bir `SKILL.md` (Agent Skills'i destekleyen herhangi bir ajan tarafından okunabilir), artı Open Design'a pazar yeri meta verisi, girdiler, önizlemeler, işlem hatları ve yetenek bildirimleri veren isteğe bağlı bir `open-design.json` manifesti. Doğrudan bir kategoriye atlayın:
 
 | Kategori | Sayı | İçerik |
 |---|---|---|
-| [`scenarios/`](plugins/_official/scenarios/) | 11 | Eksiksiz tasarım senaryoları — [`od-default`](plugins/_official/scenarios/od-default/), [`od-design-refine`](plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](plugins/_official/scenarios/od-code-migration/), [`od-react-export`](plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](plugins/_official/scenarios/od-plugin-authoring/) |
-| [`image-templates/`](plugins/_official/image-templates/) | 45 | Tek seferlik görsel komutları — editöryel, sinematik, ürün, portre |
-| [`video-templates/`](plugins/_official/video-templates/) | 50 | HyperFrames / Seedance / Veo hareket şablonları |
-| [`design-systems/`](plugins/_official/design-systems/) | 142 | Eklenti olarak sarmalanmış marka `DESIGN.md` dosyaları |
-| [`atoms/`](plugins/_official/atoms/) | 13 | Yeniden kullanılabilir UI parçaları (düğmeler, hero'lar, KPI kartları) |
-| [`examples/`](plugins/_official/examples/) | 140 | Yeniden harmanlanabilir referans çıktıları |
+| [`scenarios/`](../../plugins/_official/scenarios/) | 11 | Eksiksiz tasarım senaryoları — [`od-default`](../../plugins/_official/scenarios/od-default/), [`od-design-refine`](../../plugins/_official/scenarios/od-design-refine/), [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/), [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/), [`od-react-export`](../../plugins/_official/scenarios/od-react-export/), [`od-nextjs-export`](../../plugins/_official/scenarios/od-nextjs-export/), [`od-vue-export`](../../plugins/_official/scenarios/od-vue-export/), [`od-media-generation`](../../plugins/_official/scenarios/od-media-generation/), [`od-new-generation`](../../plugins/_official/scenarios/od-new-generation/), [`od-tune-collab`](../../plugins/_official/scenarios/od-tune-collab/), [`od-plugin-authoring`](../../plugins/_official/scenarios/od-plugin-authoring/) |
+| [`image-templates/`](../../plugins/_official/image-templates/) | 45 | Tek seferlik görsel komutları — editöryel, sinematik, ürün, portre |
+| [`video-templates/`](../../plugins/_official/video-templates/) | 50 | HyperFrames / Seedance / Veo hareket şablonları |
+| [`design-systems/`](../../plugins/_official/design-systems/) | 142 | Eklenti olarak sarmalanmış marka `DESIGN.md` dosyaları |
+| [`atoms/`](../../plugins/_official/atoms/) | 13 | Yeniden kullanılabilir UI parçaları (düğmeler, hero'lar, KPI kartları) |
+| [`examples/`](../../plugins/_official/examples/) | 140 | Yeniden harmanlanabilir referans çıktıları |
 
-Ayrıca topluluk eklentileri için [`plugins/community/`](plugins/community/) ve yayınlama akışı için [`plugins/registry/`](plugins/registry/).
+Ayrıca topluluk eklentileri için [`plugins/community/`](../../plugins/community/) ve yayınlama akışı için [`plugins/registry/`](../../plugins/registry/).
 
 ### Eklentiler ne yapabilir
 
-- 🤖 **Herhangi bir kodlama ajanında çalışın** — [Claude Code](docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… ajanın zaten bildiği aynı beceri protokolü aracılığıyla.
-- 🔁 **Figma / Pencil iş akışlarını taşıyın** → React, Next.js veya Vue kaynağı. Bkz. [`od-figma-migration`](plugins/_official/scenarios/od-figma-migration/).
-- 🛠️ **Mevcut bir kod tabanını bir marka spesifikasyonuna yenileyin** — bir eklentiyi bir `git` deposu + `DESIGN.md` dosyasına yönlendirin, bir PR alın. Bkz. [`od-code-migration`](plugins/_official/scenarios/od-code-migration/).
+- 🤖 **Herhangi bir kodlama ajanında çalışın** — [Claude Code](../../docs/agent-adapters.md), Codex, Cursor, Copilot, [OpenClaw](https://github.com/openclaw/openclaw), [Antigravity](https://antigravity.google), Hermes, Kimi… ajanın zaten bildiği aynı beceri protokolü aracılığıyla.
+- 🔁 **Figma / Pencil iş akışlarını taşıyın** → React, Next.js veya Vue kaynağı. Bkz. [`od-figma-migration`](../../plugins/_official/scenarios/od-figma-migration/).
+- 🛠️ **Mevcut bir kod tabanını bir marka spesifikasyonuna yenileyin** — bir eklentiyi bir `git` deposu + `DESIGN.md` dosyasına yönlendirin, bir PR alın. Bkz. [`od-code-migration`](../../plugins/_official/scenarios/od-code-migration/).
 - 💾 **Özel iş akışlarını kalıcı kılın** — ekibinizin yeniden kullanılabilir şablonları, sunulanların yanında durur.
 
 ### Eklentileri kullanma
@@ -501,16 +501,16 @@ od plugin validate ./my-plugin                          # check manifest / file 
 pnpm guard && pnpm --filter @open-design/plugin-runtime typecheck
 ```
 
-Tam alan kümesi ve çalışma zamanı sözleşmesi → [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md); bir kodlama ajanıyla eklenti geliştirme → [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md); kopyala-yapıştır minimal şablonlar → [`plugins/spec/examples/`](plugins/spec/examples/).
+Tam alan kümesi ve çalışma zamanı sözleşmesi → [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md); bir kodlama ajanıyla eklenti geliştirme → [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md); kopyala-yapıştır minimal şablonlar → [`plugins/spec/examples/`](../../plugins/spec/examples/).
 
 ### Bir eklentiye katkıda bulunma
 
-1. Eklenti klasörünü [`plugins/community/`](plugins/community/) içine (üçüncü taraf eklentiler) veya — onu Open Design ile birlikte paketlenmiş olarak sunmak için — [`plugins/_official/`](plugins/_official/) içindeki eşleşen katmana bırakın.
+1. Eklenti klasörünü [`plugins/community/`](../../plugins/community/) içine (üçüncü taraf eklentiler) veya — onu Open Design ile birlikte paketlenmiş olarak sunmak için — [`plugins/_official/`](../../plugins/_official/) içindeki eşleşen katmana bırakın.
 2. Doğrulamayı geçin: `od plugin validate`, `pnpm guard`, `pnpm --filter @open-design/plugin-runtime typecheck`.
-3. PR'ı [`plugins/spec/CONTRIBUTING.md`](plugins/spec/CONTRIBUTING.md) içindeki şablonu kullanarak doldurun (kimlik, sürüm, hat, mod, yetenekler, tetikleme örnekleri; görsel eklentiler için bir ekran görüntüsü / önizleme ekleyin).
-4. Harici bir kayda yayınlamak için (skills.sh / ClawHub / bağımsız GitHub) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](plugins/spec/PUBLISHING-REGISTRIES.md).
+3. PR'ı [`plugins/spec/CONTRIBUTING.md`](../../plugins/spec/CONTRIBUTING.md) içindeki şablonu kullanarak doldurun (kimlik, sürüm, hat, mod, yetenekler, tetikleme örnekleri; görsel eklentiler için bir ekran görüntüsü / önizleme ekleyin).
+4. Harici bir kayda yayınlamak için (skills.sh / ClawHub / bağımsız GitHub) → [`plugins/spec/PUBLISHING-REGISTRIES.md`](../../plugins/spec/PUBLISHING-REGISTRIES.md).
 
-Eklenti kayıt uç noktası: `GET /api/plugins`. Dizin genel bakışı → [`plugins/README.md`](plugins/README.md) ([简体中文](plugins/README.zh-CN.md)).
+Eklenti kayıt uç noktası: `GET /api/plugins`. Dizin genel bakışı → [`plugins/README.md`](../../plugins/README.md) ([简体中文](../../plugins/README.zh-CN.md)).
 
 ---
 
@@ -553,7 +553,7 @@ Eklenti kayıt uç noktası: `GET /api/plugins`. Dizin genel bakışı → [`plu
 | Masaüstü | Electron shell + yalıtılmış renderer + sidecar IPC (STATUS · EVAL · SCREENSHOT · CONSOLE · CLICK · SHUTDOWN) |
 | Yaşam döngüsü | Tek giriş noktası: `pnpm tools-dev` (start / stop / run / status / logs / inspect / check) |
 
-Tam mimari → [`docs/architecture.md`](docs/architecture.md). Beceri protokolü → [`docs/skills-protocol.md`](docs/skills-protocol.md). Ajan adaptör sözleşmesi → [`docs/agent-adapters.md`](docs/agent-adapters.md).
+Tam mimari → [`docs/architecture.md`](../../docs/architecture.md). Beceri protokolü → [`docs/skills-protocol.md`](../../docs/skills-protocol.md). Ajan adaptör sözleşmesi → [`docs/agent-adapters.md`](../../docs/agent-adapters.md).
 
 ---
 
@@ -577,7 +577,7 @@ Tam mimari → [`docs/architecture.md`](docs/architecture.md). Beceri protokolü
 - [ ] Figma / Pencil → React / Next / Vue taşıma eklentileri (alpha)
 - [ ] Mevcut kod tabanını yenileme eklentisi (bir git deposu + `DESIGN.md` dosyasına yönlendirin)
 
-Aşamalı teslimat → [`docs/roadmap.md`](docs/roadmap.md).
+Aşamalı teslimat → [`docs/roadmap.md`](../../docs/roadmap.md).
 
 ---
 
@@ -602,12 +602,12 @@ Open Design, katkıda bulunanlar — tasarımcılar, mühendisler, komut yazarla
 
 | Ne sunmak istiyorsun… | Nasıl | Nerede |
 |---|---|---|
-| Yeni bir **beceri** | `SKILL.md` + `assets/` + `references/` içeren bir klasör bırakın | [`skills/`](skills/) · spesifikasyon [`docs/skills-protocol.md`](docs/skills-protocol.md) içinde |
-| Yeni bir **tasarım sistemi** | 9 bölümlük şemayı kullanan bir `DESIGN.md` bırakın | [`design-systems/<brand>/`](design-systems/) |
-| Yeni bir **eklenti** | Bir kategori klasörü altına `open-design.json` + manifest bırakın | [`plugins/community/`](plugins/community/) · spesifikasyon [`plugins/spec/SPEC.md`](plugins/spec/SPEC.md) içinde · ajan geliştirme kılavuzu [`plugins/spec/AGENT-DEVELOPMENT.md`](plugins/spec/AGENT-DEVELOPMENT.md) içinde |
-| Yeni bir **kodlama ajanı CLI'si** destekleyin | Bir adaptör girdisi + akış ayrıştırıcı | [`apps/daemon/src/agents.ts`](apps/daemon/src/agents.ts) |
+| Yeni bir **beceri** | `SKILL.md` + `assets/` + `references/` içeren bir klasör bırakın | [`skills/`](../../skills/) · spesifikasyon [`docs/skills-protocol.md`](../../docs/skills-protocol.md) içinde |
+| Yeni bir **tasarım sistemi** | 9 bölümlük şemayı kullanan bir `DESIGN.md` bırakın | [`design-systems/<brand>/`](../../design-systems/) |
+| Yeni bir **eklenti** | Bir kategori klasörü altına `open-design.json` + manifest bırakın | [`plugins/community/`](../../plugins/community/) · spesifikasyon [`plugins/spec/SPEC.md`](../../plugins/spec/SPEC.md) içinde · ajan geliştirme kılavuzu [`plugins/spec/AGENT-DEVELOPMENT.md`](../../plugins/spec/AGENT-DEVELOPMENT.md) içinde |
+| Yeni bir **kodlama ajanı CLI'si** destekleyin | Bir adaptör girdisi + akış ayrıştırıcı | [`apps/daemon/src/agents.ts`](../../apps/daemon/src/agents.ts) |
 | Bir hatayı düzeltin veya UI'yi cilalayın | [`good-first-issue`](https://github.com/nexu-io/open-design/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) etiketine göz atın | [Issues →](https://github.com/nexu-io/open-design/issues) |
-| Belgeleri çevirin | `README.<lang>.md` dosyalarını güncelleyin | [`TRANSLATIONS.md`](TRANSLATIONS.md) |
+| Belgeleri çevirin | `README.<lang>.md` dosyalarını güncelleyin | [`TRANSLATIONS.md`](../../TRANSLATIONS.md) |
 
 ### 🤖 Bir ajan olarak katkıda bulunma
 
@@ -631,11 +631,11 @@ pnpm --filter @open-design/<package> test
 gh pr create --fill
 ```
 
-Tam ajan dostu katkı akışı, kod stili ve PR çıtası → [`CONTRIBUTING.md`](CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
+Tam ajan dostu katkı akışı, kod stili ve PR çıtası → [`CONTRIBUTING.md`](../../CONTRIBUTING.md) ([Deutsch](CONTRIBUTING.de.md) · [Français](CONTRIBUTING.fr.md) · [简体中文](CONTRIBUTING.zh-CN.md) · [日本語](CONTRIBUTING.ja-JP.md) · [Português](CONTRIBUTING.pt-BR.md)).
 
 ### 🏅 Open Design Fellow programı
 
-Dünya çapında **Open Design Fellow'ları** alıyoruz — Fellow'lar ürünü çekirdek ekiple birlikte şekillendirir, kendi bölgelerinde Open Design'ı resmî olarak temsil eder ve topluluğu yerel olarak büyütür; fonlu destek ($1,000 / MR), ücretsiz LLM kredileri ve doğrudan inceleme hattıyla desteklenir. Ayrıntılar → [`MAINTAINERS.md`](MAINTAINERS.md) ve [Discord](https://discord.gg/qhbcCH8Am4) üzerindeki duyuru.
+Dünya çapında **Open Design Fellow'ları** alıyoruz — Fellow'lar ürünü çekirdek ekiple birlikte şekillendirir, kendi bölgelerinde Open Design'ı resmî olarak temsil eder ve topluluğu yerel olarak büyütür; fonlu destek ($1,000 / MR), ücretsiz LLM kredileri ve doğrudan inceleme hattıyla desteklenir. Ayrıntılar → [`MAINTAINERS.md`](../../MAINTAINERS.md) ve [Discord](https://discord.gg/qhbcCH8Am4) üzerindeki duyuru.
 
 ---
 
@@ -662,7 +662,7 @@ Yükün çoğunu onlar taşıyor — günlük bakım, inceleme ve topluluk deste
   </tr>
 </table>
 
-Bakımcı kuralları, terfi kriterleri ve çıkış protokolü → [`MAINTAINERS.md`](MAINTAINERS.md) (ayrıca [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
+Bakımcı kuralları, terfi kriterleri ve çıkış protokolü → [`MAINTAINERS.md`](../../MAINTAINERS.md) (ayrıca [Deutsch](MAINTAINERS.de.md) · [Français](MAINTAINERS.fr.md) · [简体中文](MAINTAINERS.zh-CN.md) · [日本語](MAINTAINERS.ja-JP.md) · [Português](MAINTAINERS.pt-BR.md)).
 
 ## Katkıda bulunanlar
 
@@ -680,7 +680,7 @@ Katılan herkese teşekkürler — kod, belge, geri bildirim, keskin bir issue, 
   <img alt="Open Design — repository metrics" src="https://repo-assets.open-design.ai/resources/images/github-metrics.svg" />
 </picture>
 
-Yukarıdaki SVG, [`lowlighter/metrics`](https://github.com/lowlighter/metrics) kullanılarak [`.github/workflows/metrics.yml`](.github/workflows/metrics.yml) tarafından günlük olarak yeniden oluşturulur.
+Yukarıdaki SVG, [`lowlighter/metrics`](https://github.com/lowlighter/metrics) kullanılarak [`.github/workflows/metrics.yml`](../../.github/workflows/metrics.yml) tarafından günlük olarak yeniden oluşturulur.
 
 ---
 
@@ -708,7 +708,7 @@ Bu size otuz dakika kazandırdıysa, bir ★ verin. Yıldızlar kira ödemez —
 |---|---|
 | [Claude Design][cd] | Bu deponun açık kaynaklı alternatifi olduğu kapalı kaynaklı ürün. |
 | [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu-design) | Tasarım felsefesi pusulası — junior-tasarımcı iş akışı, marka-varlığı protokolü, anti-AI-slop kontrol listesi, beş boyutlu eleştiri. |
-| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | Dergi tarzı web PPT becerisi, [`design-templates/guizang-ppt/`](design-templates/guizang-ppt/) altında birebir paketlenmiştir. Deste modu için varsayılan. |
+| [`op7418/guizang-ppt-skill`](https://github.com/op7418/guizang-ppt-skill) | Dergi tarzı web PPT becerisi, [`design-templates/guizang-ppt/`](../../design-templates/guizang-ppt/) altında birebir paketlenmiştir. Deste modu için varsayılan. |
 | [`lewislulu/html-ppt-skill`](https://github.com/lewislulu/html-ppt-skill) | HTML PPT Studio ailesi — 15 deste şablonu, 36 tema, 31 sayfa düzeni, animasyon çalışma zamanı, manyetik-kart sunucu modu. |
 | [`OpenCoworkAI/open-codesign`](https://github.com/OpenCoworkAI/open-codesign) | İlk açık kaynaklı Claude Design alternatifi; ödünç aldığımız UX desenleri (akış-artifact döngüsü, yalıtılmış iframe, canlı ajan paneli). |
 | [`multica-ai/multica`](https://github.com/multica-ai/multica) | Daemon + adaptör mimarisi — PATH-tarama ajan algılama, tek ayrıcalıklı süreç olarak yerel daemon. |
@@ -717,10 +717,10 @@ Bu size otuz dakika kazandırdıysa, bir ★ verin. Yıldızlar kira ödemez —
 | [`heygen-com/hyperframes`](https://github.com/heygen-com/hyperframes) | HTML→MP4 hareket grafikleri çerçevesi, Open Design'da birinci sınıf `hyperframes-html` olarak entegre edilmiştir. |
 | [Claude Code skills][skill] | Birebir benimsediğimiz `SKILL.md` kuralı. |
 
-Ayrıntılı köken → [`docs/references.md`](docs/references.md).
+Ayrıntılı köken → [`docs/references.md`](../../docs/references.md).
 
 [skill]: https://docs.anthropic.com/en/docs/claude-code/skills
 
 ## Lisans
 
-Apache-2.0. Paketlenmiş `design-templates/guizang-ppt/` orijinal [LICENSE](design-templates/guizang-ppt/LICENSE) dosyasını korur (MIT, [@op7418](https://github.com/op7418)). Paketlenmiş `design-templates/html-ppt/` orijinal [LICENSE](design-templates/html-ppt/LICENSE) dosyasını korur (MIT, [@lewislulu](https://github.com/lewislulu)).
+Apache-2.0. Paketlenmiş `design-templates/guizang-ppt/` orijinal [LICENSE](../../design-templates/guizang-ppt/LICENSE) dosyasını korur (MIT, [@op7418](https://github.com/op7418)). Paketlenmiş `design-templates/html-ppt/` orijinal [LICENSE](../../design-templates/html-ppt/LICENSE) dosyasını korur (MIT, [@lewislulu](https://github.com/lewislulu)).
