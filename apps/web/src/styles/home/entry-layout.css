@@ -1726,6 +1726,18 @@
   color: var(--text-strong);
 }
 
+.onboarding-cloud__topbar .lang-menu-wrap {
+  align-self: center;
+}
+
+.onboarding-cloud__topbar .lang-menu-popover {
+  top: calc(100% + 6px);
+  right: 0;
+  bottom: auto;
+  left: auto;
+  z-index: 60;
+}
+
 .onboarding-cloud__theme {
   display: inline-flex;
   align-items: center;

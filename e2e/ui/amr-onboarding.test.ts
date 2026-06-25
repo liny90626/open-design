@@ -93,6 +93,33 @@ test('[P0] onboarding signed-out AMR authorization cannot be skipped or bypassed
   await expect(page.getByText(/Optional details for better defaults/i)).toHaveCount(0);
 });
 
+test('[P1] onboarding cloud language menu opens inside the top-right toolbar', async ({ page }) => {
+  const config = await wireOnboardingMocks(page, {
+    amrAvailable: true,
+    initialLoggedIn: false,
+  });
+
+  await seedOnboardingConfig(page, config);
+  await gotoOnboarding(page);
+
+  const toolbar = page.locator('.onboarding-cloud__topbar');
+  const trigger = toolbar.locator('.lang-pill--compact');
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+
+  const menu = toolbar.getByRole('menu');
+  await expect(menu).toBeVisible();
+  const triggerBox = await trigger.boundingBox();
+  const menuBox = await menu.boundingBox();
+  expect(triggerBox).not.toBeNull();
+  expect(menuBox).not.toBeNull();
+  expect(menuBox!.y).toBeGreaterThan(triggerBox!.y + triggerBox!.height - 1);
+  expect(menuBox!.y).toBeGreaterThanOrEqual(0);
+
+  await menu.getByRole('menuitemradio', { name: /简体中文.*zh-CN/i }).click();
+  await expect(page.getByRole('heading', { name: /登录 Open Design/ })).toBeVisible();
+});
+
 test('[P0] @critical onboarding Local CLI card lets the user pick an agent model before continuing', async ({ page }) => {
   const config = await wireOnboardingMocks(page, {
     amrAvailable: false,
