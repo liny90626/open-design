@@ -334,7 +334,7 @@ export const ptBR: Dict = {
   'settings.fetchModelsFailed': 'Não foi possível buscar os modelos: {detail}',
   'settings.suggestedModelsHint': 'Estes são modelos sugeridos para este protocolo. Seu provedor pode oferecer suporte a modelos diferentes.',
   'settings.baseUrl': 'URL base',
-  'settings.baseUrlInvalid': 'Use uma URL pública http:// ou https://.',
+  'settings.baseUrlInvalid': 'Use uma URL http:// ou https:// válida.',
   'settings.baseUrlCustomize': 'Personalizar',
   'settings.baseUrlDefaultHint': 'Endpoint padrão. Normalmente não é necessário alterar.',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

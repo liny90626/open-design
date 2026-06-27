@@ -10,6 +10,42 @@ import { AIHUBMIX_APP_CODE } from '../src/integrations/aihubmix.js';
 type FetchInput = Parameters<typeof fetch>[0];
 type FetchInit = Parameters<typeof fetch>[1];
 
+const PROXY_ENV_KEYS = [
+  'ALL_PROXY',
+  'all_proxy',
+  'HTTP_PROXY',
+  'http_proxy',
+  'HTTPS_PROXY',
+  'https_proxy',
+  'NODE_USE_ENV_PROXY',
+  'node_use_env_proxy',
+  'NO_PROXY',
+  'no_proxy',
+] as const;
+
+async function withProxyEnv<T>(
+  values: Partial<Record<(typeof PROXY_ENV_KEYS)[number], string | undefined>>,
+  run: () => Promise<T>,
+): Promise<T> {
+  const original = Object.fromEntries(
+    PROXY_ENV_KEYS.map((key) => [key, process.env[key]]),
+  ) as Record<(typeof PROXY_ENV_KEYS)[number], string | undefined>;
+  try {
+    for (const key of PROXY_ENV_KEYS) delete process.env[key];
+    for (const [key, value] of Object.entries(values)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    return await run();
+  } finally {
+    for (const key of PROXY_ENV_KEYS) {
+      const value = original[key];
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+}
+
 describe('API proxy routes', () => {
   const realFetch = globalThis.fetch;
   const originalMediaConfigDir = process.env.OD_MEDIA_CONFIG_DIR;
@@ -288,14 +324,7 @@ describe('API proxy routes', () => {
   });
 
   it('reports malformed proxy env before sending the start event on Anthropic streams', async () => {
-    const originalHttpProxy = process.env.HTTP_PROXY;
-    const originalHttpsProxy = process.env.HTTPS_PROXY;
-    const originalAllProxy = process.env.ALL_PROXY;
-    process.env.HTTP_PROXY = 'not a valid proxy url';
-    delete process.env.HTTPS_PROXY;
-    delete process.env.ALL_PROXY;
-
-    try {
+    await withProxyEnv({ HTTP_PROXY: 'not a valid proxy url' }, async () => {
       const res = await realFetch(`${baseUrl}/api/proxy/anthropic/stream`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -312,14 +341,7 @@ describe('API proxy routes', () => {
       expect(text).toContain('event: error');
       expect(text).toContain('INTERNAL_ERROR');
       expect(text).not.toContain('event: start');
-    } finally {
-      if (originalHttpProxy === undefined) delete process.env.HTTP_PROXY;
-      else process.env.HTTP_PROXY = originalHttpProxy;
-      if (originalHttpsProxy === undefined) delete process.env.HTTPS_PROXY;
-      else process.env.HTTPS_PROXY = originalHttpsProxy;
-      if (originalAllProxy === undefined) delete process.env.ALL_PROXY;
-      else process.env.ALL_PROXY = originalAllProxy;
-    }
+    });
   });
 
   // Regression: appendVersionedApiPath needs to thread three shapes:
@@ -472,8 +494,12 @@ describe('API proxy routes', () => {
     );
   });
 
-  it('blocks private network API base URLs before proxying', async () => {
-    const fetchMock = vi.fn();
+  it('allows RFC1918 private network API base URLs before proxying', async () => {
+    const fetchMock = vi.fn((input: FetchInput, init?: FetchInit) => {
+      const url = String(input);
+      if (url.startsWith(baseUrl)) return realFetch(input, init);
+      return Promise.resolve(sseResponse('data: [DONE]\n\n'));
+    });
     vi.stubGlobal('fetch', fetchMock);
 
     const res = await realFetch(`${baseUrl}/api/proxy/openai/stream`, {
@@ -487,9 +513,15 @@ describe('API proxy routes', () => {
       }),
     });
 
-    expect(res.status).toBe(403);
-    await expect(res.text()).resolves.toContain('Internal IPs blocked');
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(res.status).toBe(200);
+    await expect(res.text()).resolves.toContain('event: end');
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://192.168.1.50:11434/v1/chat/completions',
+      expect.objectContaining({
+        headers: expect.objectContaining({ Authorization: 'Bearer sk-private' }),
+        redirect: 'error',
+      }),
+    );
   });
 
   it.each([
@@ -498,10 +530,10 @@ describe('API proxy routes', () => {
     'http://169.254.169.254/latest/meta-data',
     'http://224.0.0.1:11434/v1',
     'http://[::]/v1',
-    'http://[::ffff:192.168.1.50]:11434/v1',
+    'http://[::ffff:169.254.169.254]:11434/v1',
     'http://[fd00::1]:11434/v1',
     'http://[fe80::1]:11434/v1',
-  ])('blocks local and private API base URL form %s before proxying', async (privateBaseUrl) => {
+  ])('blocks non-RFC1918 internal API base URL form %s before proxying', async (privateBaseUrl) => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
 

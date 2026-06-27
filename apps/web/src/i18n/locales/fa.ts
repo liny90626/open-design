@@ -334,7 +334,7 @@ export const fa: Dict = {
   'settings.fetchModelsFailed': 'دریافت مدل‌ها ممکن نشد: {detail}',
   'settings.suggestedModelsHint': 'این‌ها مدل‌های پیشنهادی برای این پروتکل هستند. ارائه‌دهنده شما ممکن است مدل‌های دیگری را پشتیبانی کند.',
   'settings.baseUrl': 'آدرس پایه',
-  'settings.baseUrlInvalid': 'از URL عمومی http:// یا https:// استفاده کنید.',
+  'settings.baseUrlInvalid': 'از URL معتبر http:// یا https:// استفاده کنید.',
   'settings.baseUrlCustomize': 'سفارشی‌سازی',
   'settings.baseUrlDefaultHint': 'نقطه پایانی پیش‌فرض. معمولاً نیازی به تغییر آن نیست.',
   'settings.azureBaseUrlPlaceholder': 'URL نقطه پایانی Azure را جای‌گذاری کنید',

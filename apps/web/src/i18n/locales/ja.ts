@@ -334,7 +334,7 @@ export const ja: Dict = {
   'settings.fetchModelsFailed': 'モデルを取得できませんでした: {detail}',
   'settings.suggestedModelsHint': 'これはこのプロトコル向けの推奨モデルです。プロバイダーによっては別のモデルをサポートしている場合があります。',
   'settings.baseUrl': 'ベース URL',
-  'settings.baseUrlInvalid': '公開 http:// または https:// URL を使用してください。',
+  'settings.baseUrlInvalid': '有効な http:// または https:// URL を使用してください。',
   'settings.baseUrlCustomize': 'カスタマイズ',
   'settings.baseUrlDefaultHint': 'デフォルトのエンドポイントです。通常は変更不要です。',
   'settings.azureBaseUrlPlaceholder': 'Azure エンドポイント URL を貼り付け',

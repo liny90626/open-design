@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process";
-import { access, cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { tmpdir } from "node:os";
+import { access, cp, mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
+import { dirname, isAbsolute, join, resolve } from "node:path";
 import { promisify } from "node:util";
 
 import {
@@ -17,7 +18,12 @@ import {
   resolveToolPackLauncherRoot,
 } from "../launcher-layout.js";
 import { readPackagedVersion } from "./manifest.js";
-import { WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, resolveWinNsisOverlayRequiredPaths } from "./custom-installer.js";
+import {
+  WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS,
+  prepareWindowsToolArgsForWine,
+  resolveWinNsisOverlayRequiredPaths,
+  resolveWindowsToolInvocation,
+} from "./custom-installer.js";
 import type { WinBuiltAppManifest, WinPackTiming, WinPaths } from "./types.js";
 
 const execFileAsync = promisify(execFile);
@@ -63,6 +69,15 @@ function logWinPayloadProgress(message: string, fields: Record<string, unknown> 
   process.stderr.write(`[tools-pack win] ${message}${suffix.length === 0 ? "" : ` ${suffix}`}\n`);
 }
 
+async function execWindowsTool(command: string, args: string[], options: { cwd?: string } = {}): Promise<void> {
+  const invocation = await resolveWindowsToolInvocation(command);
+  const toolArgs = invocation.runner === "wine" ? prepareWindowsToolArgsForWine(args) : args;
+  await execFileAsync(invocation.command, [...invocation.argsPrefix, ...toolArgs], {
+    cwd: options.cwd,
+    windowsHide: true,
+  });
+}
+
 export async function buildWinLauncherPayloadArchive(
   config: ToolPackConfig,
   paths: WinPaths,
@@ -70,7 +85,6 @@ export async function buildWinLauncherPayloadArchive(
   cache?: ToolPackCache,
   options: { seedFromInstallerPayload?: boolean } = {},
 ): Promise<WinPackTiming[]> {
-  if (process.platform !== "win32") throw new Error("Windows launcher payload build must run on Windows");
   const timings: WinPackTiming[] = [];
   const packagedVersion = await readPackagedVersion(config);
   const channel = resolveToolPackLauncherChannel(config);
@@ -148,9 +162,8 @@ export async function buildWinLauncherPayloadArchive(
     await rm(stageRoot, { force: true, recursive: true });
     await mkdir(payloadRoot, { recursive: true });
     await cp(builtApp.unpackedRoot, payloadRoot, { recursive: true });
-    await execFileAsync(winResources.sevenZipExe, ["a", ...WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["a", ...WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, outputPath, ".\\*"], {
       cwd: stageRoot,
-      windowsHide: true,
     });
   };
 
@@ -168,14 +181,11 @@ export async function buildWinLauncherPayloadArchive(
       .filter((name) => !overlayTopLevel.has(name))
       .flatMap((name) => [name, `payload/${name}`]);
     if (renameArgs.length > 0) {
-      await execFileAsync(winResources.sevenZipExe, ["rn", outputPath, ...renameArgs], {
-        windowsHide: true,
-      });
+      await execWindowsTool(winResources.sevenZipExe, ["rn", outputPath, ...renameArgs]);
     }
     await writeOverlay({ includeExecutable: true });
-    await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
       cwd: overlayRoot,
-      windowsHide: true,
     });
     return true;
   };
@@ -184,9 +194,8 @@ export async function buildWinLauncherPayloadArchive(
     if (await createArchiveFromInstallerBase(outputPath)) return;
     await createBaseArchive(outputPath);
     await writeOverlay({ includeExecutable: false });
-    await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
       cwd: overlayRoot,
-      windowsHide: true,
     });
   };
 
@@ -245,9 +254,8 @@ export async function buildWinLauncherPayloadArchive(
           if (baseArchivePath == null) throw new Error("missing Windows launcher payload base cache path");
           await cp(baseArchivePath, outputPath);
           await writeOverlay({ includeExecutable: false });
-          await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+          await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
             cwd: overlayRoot,
-            windowsHide: true,
           });
         }
         return { createdAt: new Date().toISOString(), sourceKey };
@@ -283,4 +291,54 @@ export async function buildWinLauncherPayloadArchive(
     await rm(overlayRoot, { force: true, recursive: true });
   });
   return timings;
+}
+
+function requirePayloadManifestValue(value: unknown, name: string, expected: unknown): void {
+  if (value !== expected) {
+    throw new Error(`launcher payload manifest ${name} expected ${JSON.stringify(expected)} but got ${JSON.stringify(value)}`);
+  }
+}
+
+function archiveRelativePath(value: string): string {
+  if (value.length === 0 || isAbsolute(value) || value.includes("..")) {
+    throw new Error(`unsafe launcher payload relative path: ${value}`);
+  }
+  return value.replaceAll("/", "\\").replaceAll("\\", "\\");
+}
+
+export async function validateWinLauncherPayloadArchive(input: {
+  expectedVersion: string;
+  namespace: string;
+  payloadPath: string;
+  workspaceRoot: string;
+}): Promise<{ manifest: WinLauncherPayloadManifest; payloadPath: string; valid: true }> {
+  if (process.platform !== "win32") throw new Error("Windows launcher payload validation must run on Windows");
+  const payloadPath = isAbsolute(input.payloadPath) ? input.payloadPath : resolve(input.workspaceRoot, input.payloadPath);
+  if (!(await stat(payloadPath).then((entry) => entry.isFile()).catch(() => false))) {
+    throw new Error(`Windows launcher payload archive not found: ${payloadPath}`);
+  }
+
+  const extractRoot = await mkdtemp(join(tmpdir(), "od-win-payload-"));
+  try {
+    await execWindowsTool(winResources.sevenZipExe, ["x", payloadPath, `-o${extractRoot}`, "-y"]);
+    const manifest = JSON.parse(await readFile(join(extractRoot, "manifest.json"), "utf8")) as WinLauncherPayloadManifest;
+    const expectedChannel = resolveToolPackLauncherChannel({
+      appVersion: input.expectedVersion,
+      namespace: input.namespace,
+    });
+    requirePayloadManifestValue(manifest.schemaVersion, "schemaVersion", LAUNCHER_SCHEMA_VERSION);
+    requirePayloadManifestValue(manifest.channel, "channel", expectedChannel);
+    requirePayloadManifestValue(manifest.namespace, "namespace", input.namespace);
+    requirePayloadManifestValue(manifest.version, "version", input.expectedVersion);
+    requirePayloadManifestValue(manifest.platform, "platform", "win32");
+    requirePayloadManifestValue(manifest.payloadRoot, "payloadRoot", "payload");
+    requirePayloadManifestValue(manifest.entry?.cwd, "entry.cwd", "payload");
+    requirePayloadManifestValue(manifest.entry?.executable, "entry.executable", "payload/Open Design.exe");
+
+    await stat(join(extractRoot, archiveRelativePath("payload/Open Design.exe")));
+    await stat(join(extractRoot, archiveRelativePath("payload/resources/open-design-config.json")));
+    return { manifest, payloadPath, valid: true };
+  } finally {
+    await rm(extractRoot, { force: true, recursive: true });
+  }
 }

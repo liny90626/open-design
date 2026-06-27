@@ -334,7 +334,7 @@ export const tr: Dict = {
   'settings.fetchModelsFailed': 'Modeller getirilemedi: {detail}',
   'settings.suggestedModelsHint': 'Bunlar bu protokol için önerilen modellerdir. Sağlayıcınız farklı modelleri destekleyebilir.',
   'settings.baseUrl': 'Temel URL',
-  'settings.baseUrlInvalid': 'Genel bir http:// veya https:// URL kullanın.',
+  'settings.baseUrlInvalid': 'Geçerli bir http:// veya https:// URL kullanın.',
   'settings.baseUrlCustomize': 'Özelleştir',
   'settings.baseUrlDefaultHint': 'Varsayılan uç nokta. Genellikle değiştirmeniz gerekmez.',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

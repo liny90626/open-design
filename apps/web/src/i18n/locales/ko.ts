@@ -334,7 +334,7 @@ export const ko: Dict = {
   'settings.fetchModelsFailed': '모델을 가져올 수 없습니다: {detail}',
   'settings.suggestedModelsHint': '이 프로토콜에 대한 추천 모델입니다. 사용 중인 제공자는 다른 모델을 지원할 수 있습니다.',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': '공개 http:// 또는 https:// URL을 사용하세요.',
+  'settings.baseUrlInvalid': '유효한 http:// 또는 https:// URL을 사용하세요.',
   'settings.baseUrlCustomize': '사용자 지정',
   'settings.baseUrlDefaultHint': '기본 엔드포인트입니다. 보통 변경할 필요가 없습니다.',
   'settings.azureBaseUrlPlaceholder': 'Azure 엔드포인트 URL 붙여넣기',

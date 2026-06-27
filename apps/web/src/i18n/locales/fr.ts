@@ -334,7 +334,7 @@ export const fr: Dict = {
   'settings.fetchModelsFailed': 'Impossible de récupérer les modèles : {detail}',
   'settings.suggestedModelsHint': 'Ce sont des modèles suggérés pour ce protocole. Votre fournisseur peut prendre en charge d\'autres modèles.',
   'settings.baseUrl': 'URL de base',
-  'settings.baseUrlInvalid': 'Utilisez une URL publique http:// ou https://.',
+  'settings.baseUrlInvalid': 'Utilisez une URL http:// ou https:// valide.',
   'settings.baseUrlCustomize': 'Personnaliser',
   'settings.baseUrlDefaultHint': 'Point de terminaison par défaut. Inutile de le modifier dans la plupart des cas.',
   'settings.azureBaseUrlPlaceholder': 'Collez l’URL de l’endpoint Azure',

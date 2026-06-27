@@ -334,7 +334,7 @@ export const de: Dict = {
   'settings.fetchModelsFailed': 'Modelle konnten nicht abgerufen werden: {detail}',
   'settings.suggestedModelsHint': 'Dies sind vorgeschlagene Modelle für dieses Protokoll. Ihr Anbieter kann andere Modelle unterstützen.',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': 'Öffentliche http://- oder https://-URL verwenden.',
+  'settings.baseUrlInvalid': 'Gültige http://- oder https://-URL verwenden.',
   'settings.baseUrlCustomize': 'Anpassen',
   'settings.baseUrlDefaultHint': 'Standard-Endpunkt. Normalerweise muss dies nicht geändert werden.',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

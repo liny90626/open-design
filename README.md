@@ -1,3 +1,21 @@
+## Fork Differences
+
+This fork tracks the official `nexu-io/open-design` upstream release branches.
+The current `release/v0.12.0` fork branch is based on official
+`open-design-v0.12.0` and keeps a small local patch set for LAN-hosted model
+gateways. The reusable patch branch is `feature/rfc1918-lan-byok`; release
+branches apply that branch on top of the matching official release branch.
+
+- BYOK/provider Base URLs allow RFC1918 LAN IPv4 targets by default
+  (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) so a local relay,
+  NAS, workstation, or intranet model gateway can be used directly.
+- Link-local, CGNAT, multicast, IPv6-private, and untrusted asset/download URLs
+  remain blocked by the existing SSRF protections.
+- Linux-hosted Windows packaging is kept compatible with the documented
+  Docker/Wine build path used for local Windows upgrade installers.
+
+---
+
 <h1 align="center">Open Design: The open-source Claude Design alternative</h1>
 
 > 🔥 **Open Design 0.10.0 is here: the all-in-one Agentic design workspace.** The whole craft now lives in one window — go from a vague idea to discovering references, gathering material, editing interactively, queuing comments, polishing motion, and handing off to an editor or a Code Agent — without leaving the app. With parallel sessions, it stops feeling like one assistant and starts feeling like a local design team working for you. [Download 0.10.0](https://github.com/nexu-io/open-design/releases) · [Join the discussion](https://github.com/nexu-io/open-design/discussions/4153)

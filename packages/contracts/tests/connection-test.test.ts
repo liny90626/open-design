@@ -1,17 +1,22 @@
 import { describe, expect, it } from 'vitest';
 import {
+  parseByokPrivateAllowlistFromEnv,
   isLoopbackApiHost,
   validateBaseUrl,
 } from '../src/api/connectionTest';
 
 describe('provider base URL validation', () => {
-  it('allows public endpoints and loopback local providers', () => {
+  it('allows public endpoints, loopback local providers, and RFC1918 provider targets', () => {
     for (const baseUrl of [
       'https://api.openai.com/v1',
       'http://localhost:11434/v1',
       'http://127.0.0.1:11434/v1',
       'http://[::1]:11434/v1',
       'http://[::ffff:127.0.0.1]:11434/v1',
+      'http://10.0.0.5:11434/v1',
+      'http://172.16.0.5:11434/v1',
+      'http://192.168.1.5:11434/v1',
+      'http://[::ffff:192.168.1.5]:11434/v1',
     ]) {
       expect(validateBaseUrl(baseUrl).error).toBeUndefined();
     }
@@ -26,19 +31,16 @@ describe('provider base URL validation', () => {
     }
   });
 
-  it('blocks private, link-local, CGNAT, multicast, and mapped forms', () => {
+  it('blocks non-provider internal, link-local, CGNAT, multicast, and mapped forms', () => {
     for (const baseUrl of [
       'http://0.0.0.0:11434/v1',
-      'http://10.0.0.5:11434/v1',
       'http://100.64.0.1:11434/v1',
       'http://169.254.169.254/latest/meta-data',
-      'http://172.16.0.5:11434/v1',
-      'http://192.168.1.5:11434/v1',
       'http://224.0.0.1:11434/v1',
       'http://[::]/v1',
       'http://[fd00::1]:11434/v1',
       'http://[fe80::1]:11434/v1',
-      'http://[::ffff:192.168.1.5]:11434/v1',
+      'http://[::ffff:169.254.169.254]:11434/v1',
     ]) {
       expect(validateBaseUrl(baseUrl)).toMatchObject({
         error: 'Internal IPs blocked',
@@ -47,17 +49,23 @@ describe('provider base URL validation', () => {
     }
   });
 
-  it('blocks trailing-dot FQDN bypass across every blocked IPv4 range', () => {
+  it('allows trailing-dot FQDN forms of default RFC1918 provider ranges', () => {
+    for (const baseUrl of [
+      'http://10.0.0.5.:11434/v1',
+      'http://172.16.0.5.:11434/v1',
+      'http://192.168.1.5.:11434/v1',
+    ]) {
+      expect(validateBaseUrl(baseUrl).error).toBeUndefined();
+    }
+  });
+
+  it('blocks trailing-dot FQDN bypass across remaining blocked IPv4 ranges', () => {
     // The trailing-dot strip in normalizeBracketedIpv6 must apply to
-    // every range isBlockedIpv4 covers — not just the three originally
-    // demonstrated. One representative case per range:
+    // every range isBlockedIpv4 still blocks. One representative case per range:
     for (const baseUrl of [
       'http://0.0.0.0.:11434/v1',              // 0.0.0.0/8
-      'http://10.0.0.5.:11434/v1',             // 10/8
       'http://100.64.0.1.:11434/v1',           // 100.64/10 CGNAT
       'http://169.254.169.254./latest/meta-data', // 169.254/16 metadata
-      'http://172.16.0.5.:11434/v1',           // 172.16/12
-      'http://192.168.1.5.:11434/v1',          // 192.168/16
       'http://224.0.0.1.:11434/v1',            // multicast >=224
     ]) {
       expect(validateBaseUrl(baseUrl)).toMatchObject({
@@ -65,5 +73,27 @@ describe('provider base URL validation', () => {
         forbidden: true,
       });
     }
+  });
+
+  it('supports strict mode when callers must block default RFC1918 ranges', () => {
+    expect(validateBaseUrl('http://192.168.1.5:11434/v1', { allowlist: null })).toMatchObject({
+      error: 'Internal IPs blocked',
+      forbidden: true,
+    });
+  });
+
+  it('merges default RFC1918 CIDRs with configured BYOK private allowlists', () => {
+    const allowlist = parseByokPrivateAllowlistFromEnv({
+      OD_BYOK_PRIVATE_HOST_ALLOWLIST: 'host.docker.internal, http://litellm.internal:4000/v1',
+      OD_BYOK_PRIVATE_CIDR_ALLOWLIST: '100.64.0.0/10',
+    });
+    expect([...allowlist.hostnames]).toEqual(['host.docker.internal', 'litellm.internal']);
+    expect(allowlist.cidrs).toEqual([
+      '10.0.0.0/8',
+      '172.16.0.0/12',
+      '192.168.0.0/16',
+      '100.64.0.0/10',
+    ]);
+    expect(validateBaseUrl('http://100.64.0.1:11434/v1', { allowlist }).error).toBeUndefined();
   });
 });
