@@ -168,7 +168,7 @@ export function validateByokDraft(
       field: 'base_url',
       level: 'error',
       code: 'base_url_invalid',
-      message: 'Base URL must be a valid public http:// or https:// URL.',
+      message: 'Base URL must be a valid http:// or https:// URL.',
       action: 'focus_base_url',
     });
   } else if (protocol === 'google' && baseUrl) {

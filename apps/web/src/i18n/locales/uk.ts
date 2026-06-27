@@ -340,7 +340,7 @@ export const uk: Dict = {
   'settings.fetchModelsFailed': 'Не вдалося отримати моделі: {detail}',
   'settings.suggestedModelsHint': 'Це рекомендовані моделі для цього протоколу. Ваш провайдер може підтримувати інші моделі.',
   'settings.baseUrl': 'Базовий URL',
-  'settings.baseUrlInvalid': 'Використовуйте публічний URL з http:// або https://.',
+  'settings.baseUrlInvalid': 'Використовуйте коректний URL з http:// або https://.',
   'settings.baseUrlCustomize': 'Налаштувати',
   'settings.baseUrlDefaultHint': 'Типовий кінцевий пункт. Зазвичай його не потрібно змінювати.',
   'settings.azureBaseUrlPlaceholder': 'Вставте URL кінцевої точки Azure',

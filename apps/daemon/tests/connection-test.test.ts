@@ -12,8 +12,11 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest
 import * as platform from '@open-design/platform';
 import {
   createAgentSink,
+  assertExternalAssetUrl,
+  getByokPrivateTargetAllowlistForApi,
   isSmokeOkReply,
   mergeNoProxyWithLoopbackDefaults,
+  parseByokPrivateAllowlistFromEnv,
   proxyDispatcherRequestInit,
   redactSecrets,
   resolveConnectionTestTimeoutMs,
@@ -38,6 +41,18 @@ const realFetch = globalThis.fetch;
 let baseUrl: string;
 let server: http.Server;
 const FAKE_VELA_FIXTURE = path.resolve(process.cwd(), 'tests', 'fixtures', 'fake-vela.mjs');
+const PROXY_ENV_KEYS = [
+  'ALL_PROXY',
+  'all_proxy',
+  'HTTP_PROXY',
+  'http_proxy',
+  'HTTPS_PROXY',
+  'https_proxy',
+  'NODE_USE_ENV_PROXY',
+  'node_use_env_proxy',
+  'NO_PROXY',
+  'no_proxy',
+] as const;
 
 function jsonResponse(body: unknown, init?: ResponseInit): Response {
   return new Response(JSON.stringify(body), {
@@ -59,6 +74,29 @@ function passThroughOrUpstream(handler: (url: string, init?: FetchInit) => Respo
     if (url.startsWith(baseUrl)) return realFetch(input, init);
     return Promise.resolve(handler(url, init));
   });
+}
+
+async function withProxyEnv<T>(
+  values: Partial<Record<(typeof PROXY_ENV_KEYS)[number], string | undefined>>,
+  run: () => Promise<T>,
+): Promise<T> {
+  const original = Object.fromEntries(
+    PROXY_ENV_KEYS.map((key) => [key, process.env[key]]),
+  ) as Record<(typeof PROXY_ENV_KEYS)[number], string | undefined>;
+  try {
+    for (const key of PROXY_ENV_KEYS) delete process.env[key];
+    for (const [key, value] of Object.entries(values)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    return await run();
+  } finally {
+    for (const key of PROXY_ENV_KEYS) {
+      const value = original[key];
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
 }
 
 async function withFakeAgent<T>(
@@ -464,8 +502,11 @@ describe('POST /api/provider/models', () => {
     }
   });
 
-  it('rejects private-network base URLs without calling upstream fetch', async () => {
-    const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
+  it('allows RFC1918 provider model base URLs and calls upstream fetch', async () => {
+    const fetchMock = passThroughOrUpstream((url) => {
+      expect(url).toBe('http://192.168.1.5:8080/v1/models');
+      return jsonResponse({ data: [{ id: 'local-model', object: 'model' }] });
+    });
     vi.stubGlobal('fetch', fetchMock);
 
     const res = await realFetch(`${baseUrl}/api/provider/models`, {
@@ -474,6 +515,32 @@ describe('POST /api/provider/models', () => {
       body: JSON.stringify({
         protocol: 'openai',
         baseUrl: 'http://192.168.1.5:8080/v1',
+        apiKey: 'sk-good',
+      }),
+    });
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body).toMatchObject({
+      ok: true,
+      kind: 'success',
+      models: [{ id: 'local-model', label: 'local-model' }],
+    });
+    expect(
+      fetchMock.mock.calls.some(
+        ([input]) => !String(input).startsWith(baseUrl),
+      ),
+    ).toBe(true);
+  });
+
+  it('rejects non-RFC1918 internal provider model base URLs without calling upstream fetch', async () => {
+    const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await realFetch(`${baseUrl}/api/provider/models`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        protocol: 'openai',
+        baseUrl: 'http://169.254.169.254/latest/meta-data',
         apiKey: 'sk-good',
       }),
     });
@@ -489,14 +556,14 @@ describe('POST /api/provider/models', () => {
   // Regression for the DNS-bypass SSRF gap flagged on PR #1176: the route
   // must resolve the hostname and reject when *any* resolved address is in
   // a blocked range, not just when the literal hostname is a private IP.
-  it('rejects hostnames that resolve to a private IP without calling upstream fetch', async () => {
+  it('rejects hostnames that resolve to a non-RFC1918 blocked IP without calling upstream fetch', async () => {
     const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
     vi.stubGlobal('fetch', fetchMock);
     const dnsSpy = vi
       .spyOn(dnsPromises, 'lookup')
       .mockImplementation((async (hostname: string) => {
         if (hostname === 'rebind.example.test') {
-          return [{ address: '10.0.0.5', family: 4 }];
+          return [{ address: '169.254.169.254', family: 4 }];
         }
         const err: NodeJS.ErrnoException = new Error('ENOTFOUND');
         err.code = 'ENOTFOUND';
@@ -1020,8 +1087,15 @@ describe('POST /api/test/connection provider mode', () => {
     ).toBe(false);
   });
 
-  it('reports forbidden for an internal-IP base URL without calling fetch', async () => {
-    const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
+  it('allows RFC1918 provider smoke-test base URLs and calls upstream fetch', async () => {
+    const fetchMock = passThroughOrUpstream((url) => {
+      if (url.endsWith('/models')) {
+        return jsonResponse({ data: [{ id: 'gpt-4o', object: 'model' }] });
+      }
+      return jsonResponse({
+        choices: [{ message: { role: 'assistant', content: 'ok' } }],
+      });
+    });
     vi.stubGlobal('fetch', fetchMock);
 
     const res = await realFetch(`${baseUrl}/api/test/connection`, {
@@ -1036,9 +1110,33 @@ describe('POST /api/test/connection provider mode', () => {
       }),
     });
     const body = (await res.json()) as Record<string, unknown>;
+    expect(body.ok).toBe(true);
+    expect(body.kind).toBe('success');
+    expect(
+      fetchMock.mock.calls.some(
+        ([input]) => !String(input).startsWith(baseUrl),
+      ),
+    ).toBe(true);
+  });
+
+  it('reports forbidden for a non-RFC1918 internal-IP base URL without calling fetch', async () => {
+    const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await realFetch(`${baseUrl}/api/test/connection`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        mode: 'provider',
+        protocol: 'openai',
+        baseUrl: 'http://169.254.169.254/latest/meta-data',
+        apiKey: 'sk-good',
+        model: 'gpt-4o',
+      }),
+    });
+    const body = (await res.json()) as Record<string, unknown>;
     expect(body.ok).toBe(false);
     expect(body.kind).toBe('forbidden');
-    // Internal-IP guard fires before any outbound fetch.
     expect(
       fetchMock.mock.calls.some(
         ([input]) => !String(input).startsWith(baseUrl),
@@ -1049,14 +1147,14 @@ describe('POST /api/test/connection provider mode', () => {
   // Regression for the DNS-bypass SSRF gap flagged on PR #1176: provider
   // mode must run the same resolved-IP check as the proxy/finalize paths
   // so a public hostname pointing at a private address can't be fetched.
-  it('reports forbidden for hostnames that resolve to a private IP without calling fetch', async () => {
+  it('reports forbidden for hostnames that resolve to a non-RFC1918 blocked IP without calling fetch', async () => {
     const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
     vi.stubGlobal('fetch', fetchMock);
     const dnsSpy = vi
       .spyOn(dnsPromises, 'lookup')
       .mockImplementation((async (hostname: string) => {
         if (hostname === 'rebind.example.test') {
-          return [{ address: '10.0.0.5', family: 4 }];
+          return [{ address: '169.254.169.254', family: 4 }];
         }
         const err: NodeJS.ErrnoException = new Error('ENOTFOUND');
         err.code = 'ENOTFOUND';
@@ -1126,7 +1224,7 @@ describe('POST /api/test/connection provider mode', () => {
     for (const blockedBaseUrl of [
       'http://[fd00::1]:1234/v1',
       'http://[fe80::1]:1234/v1',
-      'http://[::ffff:192.168.1.5]:1234/v1',
+      'http://[::ffff:169.254.169.254]:1234/v1',
     ]) {
       const fetchMock = passThroughOrUpstream(() => jsonResponse({}));
       vi.stubGlobal('fetch', fetchMock);
@@ -1844,7 +1942,7 @@ describe('POST /api/test/connection provider mode', () => {
     const proxySpy = vi.spyOn(platform, 'resolveSystemProxyEnv').mockReturnValue({});
 
     try {
-      const { close, requestInit } = proxyDispatcherRequestInit();
+      const { close, requestInit } = proxyDispatcherRequestInit({});
 
       expect(proxySpy).toHaveBeenCalledWith();
       expect(requestInit).toEqual({});
@@ -1855,14 +1953,7 @@ describe('POST /api/test/connection provider mode', () => {
   });
 
   it('reports malformed proxy env without leaking the connection-test timer', async () => {
-    const originalHttpProxy = process.env.HTTP_PROXY;
-    const originalHttpsProxy = process.env.HTTPS_PROXY;
-    const originalAllProxy = process.env.ALL_PROXY;
-    process.env.HTTP_PROXY = 'not a valid proxy url';
-    delete process.env.HTTPS_PROXY;
-    delete process.env.ALL_PROXY;
-
-    try {
+    await withProxyEnv({ HTTP_PROXY: 'not a valid proxy url' }, async () => {
       await expect(testProviderConnection({
         protocol: 'openai',
         baseUrl: 'https://api.openai.com/v1',
@@ -1872,14 +1963,7 @@ describe('POST /api/test/connection provider mode', () => {
         ok: false,
         kind: 'unknown',
       });
-    } finally {
-      if (originalHttpProxy === undefined) delete process.env.HTTP_PROXY;
-      else process.env.HTTP_PROXY = originalHttpProxy;
-      if (originalHttpsProxy === undefined) delete process.env.HTTPS_PROXY;
-      else process.env.HTTPS_PROXY = originalHttpsProxy;
-      if (originalAllProxy === undefined) delete process.env.ALL_PROXY;
-      else process.env.ALL_PROXY = originalAllProxy;
-    }
+    });
   });
 
   it('keeps loopback provider probes off the proxy when user NO_PROXY omits localhost', async () => {
@@ -3895,12 +3979,25 @@ describe('validateBaseUrlResolved (DNS-aware base URL validation)', () => {
     });
   });
 
-  it('rejects the literal-IP cases the sync check already catches', async () => {
+  it('allows default RFC1918 literal provider URLs but rejects remaining blocked literals', async () => {
     for (const baseUrl of [
       'http://10.0.0.5:11434/v1',
+      'http://172.16.0.5:11434/v1',
+      'http://192.168.1.5:11434/v1',
+      'http://[::ffff:192.168.1.5]:11434/v1',
+    ]) {
+      expect((await validateBaseUrlResolved(baseUrl, lookupReturning([]))).error).toBeUndefined();
+    }
+
+    for (const baseUrl of [
+      'http://0.0.0.0:11434/v1',
+      'http://100.64.0.1:11434/v1',
       'http://169.254.169.254/latest/meta-data',
+      'http://224.0.0.1:11434/v1',
+      'http://[::]/v1',
       'http://[fd00::1]:11434/v1',
       'http://[fe80::1]:11434/v1',
+      'http://[::ffff:169.254.169.254]:11434/v1',
     ]) {
       expect(await validateBaseUrlResolved(baseUrl, lookupReturning([]))).toMatchObject({
         error: 'Internal IPs blocked',
@@ -3929,11 +4026,23 @@ describe('validateBaseUrlResolved (DNS-aware base URL validation)', () => {
     expect(lookup).not.toHaveBeenCalled();
   });
 
-  it('rejects public hostnames that resolve to private IPv4 ranges', async () => {
+  it('allows public hostnames that resolve to default RFC1918 provider ranges', async () => {
     const cases: Array<{ resolved: string; family: number }> = [
       { resolved: '10.0.0.5', family: 4 },
       { resolved: '172.16.0.5', family: 4 },
       { resolved: '192.168.1.5', family: 4 },
+    ];
+    for (const { resolved, family } of cases) {
+      const result = await validateBaseUrlResolved(
+        'https://internal.example.com/v1',
+        lookupReturning([{ address: resolved, family }]),
+      );
+      expect(result.error).toBeUndefined();
+    }
+  });
+
+  it('rejects public hostnames that resolve to non-RFC1918 blocked IPv4 ranges', async () => {
+    const cases: Array<{ resolved: string; family: number }> = [
       { resolved: '100.64.0.1', family: 4 },
       { resolved: '169.254.169.254', family: 4 },
       { resolved: '0.0.0.0', family: 4 },
@@ -3969,7 +4078,7 @@ describe('validateBaseUrlResolved (DNS-aware base URL validation)', () => {
       'https://mixed.example.com/v1',
       lookupReturning([
         { address: '52.84.10.1', family: 4 },
-        { address: '10.0.0.5', family: 4 },
+        { address: '169.254.169.254', family: 4 },
       ]),
     );
     expect(result).toMatchObject({
@@ -4005,5 +4114,47 @@ describe('validateBaseUrlResolved (DNS-aware base URL validation)', () => {
     const result = await validateBaseUrlResolved('https://offline.example.com/v1', failingLookup);
     expect(result.error).toBeUndefined();
     expect(failingLookup).toHaveBeenCalledOnce();
+  });
+});
+
+describe('BYOK private target allowlist plumbing', () => {
+  function lookupReturning(addresses: DnsLookupAddress[]) {
+    return vi.fn(async () => addresses);
+  }
+
+  it('exposes default, hostname, and CIDR env policy as a read-only API shape', () => {
+    const policy = getByokPrivateTargetAllowlistForApi({
+      OD_BYOK_PRIVATE_HOST_ALLOWLIST: 'host.docker.internal, http://litellm.internal:4000/v1',
+      OD_BYOK_PRIVATE_CIDR_ALLOWLIST: '100.64.0.0/10',
+    });
+    expect(policy).toEqual({
+      hostnames: ['host.docker.internal', 'litellm.internal'],
+      cidrs: ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '100.64.0.0/10'],
+    });
+  });
+
+  it('supports the legacy OD_ALLOWED_INTERNAL_HOSTS spelling from operator opt-in PRs', async () => {
+    const env = {
+      OD_ALLOWED_INTERNAL_HOSTS: 'litellm.internal.corp',
+    };
+    const policy = getByokPrivateTargetAllowlistForApi(env);
+    expect(policy.hostnames).toContain('litellm.internal.corp');
+
+    await expect(
+      validateBaseUrlResolved(
+        'https://litellm.internal.corp/v1',
+        lookupReturning([{ address: '100.64.0.5', family: 4 }]),
+        { allowlist: parseByokPrivateAllowlistFromEnv(env) },
+      ),
+    ).resolves.toMatchObject({ parsed: { hostname: 'litellm.internal.corp' } });
+  });
+
+  it('does not let the allowlist relax the upstream-controlled asset URL guard', async () => {
+    await expect(assertExternalAssetUrl('http://10.0.0.5/evil.png')).resolves.toMatchObject({
+      ok: false,
+    });
+    await expect(
+      assertExternalAssetUrl('http://169.254.169.254/latest/meta-data'),
+    ).resolves.toMatchObject({ ok: false });
   });
 });

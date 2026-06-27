@@ -61,9 +61,14 @@ import { preparePromptFileForAgent, type PreparedPromptFile } from './runtimes/p
 import {
   isBlockedExternalApiHostname,
   isLoopbackApiHost,
+  isPrivateTargetAllowedByAllowlist,
+  parseByokPrivateAllowlistFromEnv,
+  serializeByokPrivateAllowlist,
   validateBaseUrl,
   type AgentTestRequest,
   type BaseUrlValidationResult,
+  type ByokPrivateAllowlist,
+  type ByokPrivateTargetAllowlist,
   type ConnectionTestDiagnostics,
   type ConnectionTestKind,
   type ConnectionTestPhase,
@@ -75,7 +80,31 @@ import {
 import { googleGenerateContentUrl } from './integrations/google-models.js';
 import { resolveAmrProfile } from './integrations/vela.js';
 
-export { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
+export {
+  parseByokPrivateAllowlistFromEnv,
+  serializeByokPrivateAllowlist,
+  validateBaseUrl,
+} from '@open-design/contracts/api/connectionTest';
+
+export function getByokPrivateAllowlist(
+  env: NodeJS.ProcessEnv = process.env,
+): ByokPrivateAllowlist {
+  return parseByokPrivateAllowlistFromEnv(env);
+}
+
+export function getByokPrivateTargetAllowlistForApi(
+  env: NodeJS.ProcessEnv = process.env,
+): ByokPrivateTargetAllowlist {
+  return serializeByokPrivateAllowlist(getByokPrivateAllowlist(env));
+}
+
+export type ValidateBaseUrlResolvedOptions = {
+  /**
+   * Undefined means use the daemon env/default BYOK allowlist. Null means
+   * strict mode, used for upstream-controlled asset URLs.
+   */
+  allowlist?: ByokPrivateAllowlist | null;
+};
 
 // DNS-aware companion to `validateBaseUrl`. The contracts-side check only
 // inspects the literal hostname string, so a public DNS name pointing at
@@ -113,12 +142,16 @@ function looksLikeIpLiteral(hostname: string): boolean {
 export async function validateBaseUrlResolved(
   baseUrl: string,
   lookup: DnsLookupFn = defaultDnsLookup,
+  options: ValidateBaseUrlResolvedOptions = {},
 ): Promise<BaseUrlValidationResult> {
-  const sync = validateBaseUrl(baseUrl);
+  const allowlist =
+    options.allowlist === undefined ? getByokPrivateAllowlist() : options.allowlist;
+  const sync = validateBaseUrl(baseUrl, { allowlist });
   if (sync.error || !sync.parsed) return sync;
 
   const hostname = sync.parsed.hostname.toLowerCase();
   if (isLoopbackApiHost(hostname)) return sync;
+  if (isPrivateTargetAllowedByAllowlist(hostname, allowlist)) return sync;
   if (looksLikeIpLiteral(hostname)) return sync;
 
   let addresses: DnsLookupAddress[];
@@ -132,11 +165,25 @@ export async function validateBaseUrlResolved(
     const ip = String(addr.address).toLowerCase();
     if (isLoopbackApiHost(ip)) continue;
     if (isBlockedExternalApiHostname(ip)) {
+      if (isPrivateTargetAllowedByAllowlist(hostname, allowlist, ip)) continue;
       return { error: 'Internal IPs blocked', forbidden: true };
     }
   }
 
   return sync;
+}
+
+/**
+ * Validate a URL the user/operator configured as a provider endpoint:
+ * connection tests, model discovery, BYOK chat proxy, and finalize calls.
+ * This path honors the daemon's OD_BYOK_PRIVATE_* allowlist so trusted
+ * RFC1918/VPN model gateways work without relaxing download URL protection.
+ */
+export function validateUserProviderBaseUrl(
+  baseUrl: string,
+  lookup: DnsLookupFn = defaultDnsLookup,
+): Promise<BaseUrlValidationResult> {
+  return validateBaseUrlResolved(baseUrl, lookup);
 }
 
 /**
@@ -162,7 +209,9 @@ export async function assertExternalAssetUrl(
   if (typeof rawUrl !== 'string' || !rawUrl) {
     return { ok: false, error: 'empty download url' };
   }
-  const validated = await validateBaseUrlResolved(rawUrl);
+  const validated = await validateBaseUrlResolved(rawUrl, defaultDnsLookup, {
+    allowlist: null,
+  });
   if (validated.error || !validated.parsed) {
     return {
       ok: false,

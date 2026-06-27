@@ -340,7 +340,7 @@ export const ar: Dict = {
   'settings.fetchModelsFailed': 'تعذّر جلب النماذج: {detail}',
   'settings.suggestedModelsHint': 'هذه نماذج مقترحة لهذا البروتوكول. قد يدعم مزوّدك نماذج مختلفة.',
   'settings.baseUrl': 'رابط القاعدة',
-  'settings.baseUrlInvalid': 'استخدم رابط http:// أو https:// عامًا.',
+  'settings.baseUrlInvalid': 'استخدم رابط http:// أو https:// صالحًا.',
   'settings.baseUrlCustomize': 'تخصيص',
   'settings.baseUrlDefaultHint': 'نقطة النهاية الافتراضية. عادة لا تحتاج إلى تغييرها.',
   'settings.azureBaseUrlPlaceholder': 'ألصق عنوان URL لنقطة نهاية Azure',

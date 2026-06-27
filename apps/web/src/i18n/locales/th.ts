@@ -340,7 +340,7 @@ export const th: Dict = {
   'settings.fetchModelsFailed': 'ไม่สามารถดึงโมเดลได้: {detail}',
   'settings.suggestedModelsHint': 'นี่คือโมเดลที่แนะนำสำหรับโปรโตคอลนี้ ผู้ให้บริการของคุณอาจรองรับโมเดลอื่นๆ',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': 'ใช้ URL สาธารณะ http:// หรือ https://',
+  'settings.baseUrlInvalid': 'ใช้ URL http:// หรือ https:// ที่ถูกต้อง',
   'settings.baseUrlCustomize': 'ปรับแต่ง',
   'settings.baseUrlDefaultHint': 'ปลายทางเริ่มต้น โดยปกติไม่จำเป็นต้องเปลี่ยน',
   'settings.azureBaseUrlPlaceholder': 'วาง URL ปลายทางของ Azure',

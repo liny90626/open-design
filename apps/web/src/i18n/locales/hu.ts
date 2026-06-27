@@ -340,7 +340,7 @@ export const hu: Dict = {
   'settings.fetchModelsFailed': 'Nem sikerült lekérni a modelleket: {detail}',
   'settings.suggestedModelsHint': 'Ezek a protokollhoz javasolt modellek. A szolgáltatód más modelleket is támogathat.',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': 'Használj nyilvános http:// vagy https:// URL-t.',
+  'settings.baseUrlInvalid': 'Használj érvényes http:// vagy https:// URL-t.',
   'settings.baseUrlCustomize': 'Testreszabás',
   'settings.baseUrlDefaultHint': 'Alapértelmezett végpont. Általában nem kell módosítani.',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

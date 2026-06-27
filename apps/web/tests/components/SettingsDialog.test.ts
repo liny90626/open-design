@@ -238,7 +238,7 @@ describe('SettingsDialog provider model fetch helpers', () => {
     ).toBe(false);
     expect(
       canFetchProviderModels(
-        { apiKey: 'sk-openai', baseUrl: 'http://10.0.0.5:11434/v1' },
+        { apiKey: 'sk-openai', baseUrl: 'http://169.254.169.254/latest/meta-data' },
         'openai',
       ),
     ).toBe(false);
@@ -370,13 +370,17 @@ describe('SettingsDialog AMR wallet display state', () => {
 });
 
 describe('SettingsDialog API Base URL validation', () => {
-  it('accepts public http/https URLs and loopback local providers', () => {
+  it('accepts public http/https URLs, loopback local providers, and RFC1918 BYOK targets', () => {
     expect(isValidApiBaseUrl('https://api.openai.com/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://localhost:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://127.0.0.1:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://[::1]:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://[::ffff:127.0.0.1]:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('  https://resource.openai.azure.com  ')).toBe(true);
+    expect(isValidApiBaseUrl('http://10.0.0.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://172.16.0.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://192.168.1.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://[::ffff:192.168.1.5]:11434/v1')).toBe(true);
 
     expect(isValidApiBaseUrl('ddddd')).toBe(false);
     expect(isValidApiBaseUrl('api.openai.com/v1')).toBe(false);
@@ -384,16 +388,13 @@ describe('SettingsDialog API Base URL validation', () => {
     expect(isValidApiBaseUrl('http:api.example.com')).toBe(false);
     expect(isValidApiBaseUrl('https://')).toBe(false);
     expect(isValidApiBaseUrl('http://0.0.0.0:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://10.0.0.5:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://100.64.0.1:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://169.254.1.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://172.16.0.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://192.168.1.5:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://224.0.0.1:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://[::]:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://[fd00::1]:11434/v1')).toBe(false);
     expect(isValidApiBaseUrl('http://[fe80::1]:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://[::ffff:192.168.1.5]:11434/v1')).toBe(false);
+    expect(isValidApiBaseUrl('http://[::ffff:169.254.1.5]:11434/v1')).toBe(false);
   });
 });
 

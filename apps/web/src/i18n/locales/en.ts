@@ -340,7 +340,7 @@ export const en: Dict = {
   'settings.fetchModelsFailed': 'Could not fetch models: {detail}',
   'settings.suggestedModelsHint': 'These are suggested models for this protocol. Your provider may support different models.',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': 'Use a public http:// or https:// URL.',
+  'settings.baseUrlInvalid': 'Use a valid http:// or https:// URL.',
   'settings.baseUrlCustomize': 'Customize',
   'settings.baseUrlDefaultHint': 'Default endpoint. Usually no need to change this.',
   'settings.azureBaseUrlPlaceholder': 'Paste Azure endpoint URL',

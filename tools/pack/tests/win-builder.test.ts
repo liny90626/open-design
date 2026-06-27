@@ -8,7 +8,12 @@ import { NtExecutable, NtExecutableResource, Resource } from "resedit";
 import { describe, expect, it } from "vitest";
 
 import { materializeCachedUnpackedForInstaller } from "../src/win/builder.js";
-import { createLauncherRuntimeSyncPowerShellScript } from "../src/win/custom-installer.js";
+import {
+  createLauncherRuntimeSyncPowerShellScript,
+  prepareWindowsToolArgsForWine,
+  resolveNsisRuntimeLogPaths,
+  toWineHostPath,
+} from "../src/win/custom-installer.js";
 import type { WinPaths } from "../src/win/types.js";
 import { readWinExecutableVersionSnapshot } from "../src/win/version-resource.js";
 
@@ -150,6 +155,60 @@ describe("Windows pack artifact boundaries", () => {
     expect(source).toContain('"-m0=LZMA2"');
     expect(source).toContain('"-mf=off"');
     expect(source).not.toContain('"-ms=off"');
+  });
+
+  it("can invoke cached Windows installer tools through Wine on Linux builders", async () => {
+    const source = await readFile(new URL("../src/win/custom-installer.ts", import.meta.url), "utf8");
+    expect(source).toContain("resolveWindowsToolInvocation");
+    expect(source).toContain('"Wine is required to run Windows installer tools on non-Windows hosts"');
+    expect(source).toContain('return { argsPrefix: [command], command: "wine", runner: "wine" };');
+    expect(source).not.toContain('Windows installer build must run on Windows');
+  });
+
+  it("uses electron-builder's current NSIS cache resolver when makensis is not in the legacy cache path", async () => {
+    const source = await readFile(new URL("../src/win/custom-installer.ts", import.meta.url), "utf8");
+    expect(source).toContain("createRequire");
+    expect(source).toContain('"app-builder-lib"');
+    expect(source).toContain('"nsisUtil.js"');
+    expect(source).toContain('nodeRequire.resolve("electron-builder/package.json")');
+    expect(source).toContain("resolveElectronBuilderNsisMakensis");
+    expect(source).toContain("util.NSIS_PATH()");
+    expect(source).toContain('join(nsisPath, "Bin", "makensis.exe")');
+  });
+
+  it("converts host paths in Wine tool arguments without rewriting NSIS switches", () => {
+    expect(toWineHostPath("/project/.tmp/out/win/installer.nsi")).toBe("Z:\\project\\.tmp\\out\\win\\installer.nsi");
+    expect(toWineHostPath("/V2")).toBe("/V2");
+    expect(prepareWindowsToolArgsForWine([
+      "/V2",
+      "/DAPP_VERSION=0.11.1",
+      "/DOUTPUT_EXE=/project/.tmp/out/Open Design-default-setup.exe",
+      "-o/project/.tmp/out/install",
+      "/project/.tmp/out/installer.nsi",
+    ])).toEqual([
+      "/V2",
+      "/DAPP_VERSION=0.11.1",
+      "/DOUTPUT_EXE=Z:\\project\\.tmp\\out\\Open Design-default-setup.exe",
+      "-oZ:\\project\\.tmp\\out\\install",
+      "Z:\\project\\.tmp\\out\\installer.nsi",
+    ]);
+  });
+
+  it("uses Windows runtime paths for NSIS logs when building from a POSIX output root", () => {
+    expect(resolveNsisRuntimeLogPaths(
+      { namespace: "default" },
+      "/project/.tmp/out/win/namespaces/default/logs/nsis.log",
+    )).toEqual({
+      directory: "$APPDATA\\Open Design\\namespaces\\default\\logs",
+      path: "$APPDATA\\Open Design\\namespaces\\default\\logs\\nsis.log",
+    });
+    expect(resolveNsisRuntimeLogPaths(
+      { namespace: "release beta" },
+      "C:\\odtp\\out\\win\\namespaces\\release-beta-win\\logs\\nsis.log",
+    )).toEqual({
+      directory: "C:\\odtp\\out\\win\\namespaces\\release-beta-win\\logs",
+      path: "C:\\odtp\\out\\win\\namespaces\\release-beta-win\\logs\\nsis.log",
+    });
   });
 
   it("invalidates Windows payload caches when the archive method changes", async () => {

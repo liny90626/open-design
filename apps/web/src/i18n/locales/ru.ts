@@ -340,7 +340,7 @@ export const ru: Dict = {
   'settings.fetchModelsFailed': 'Не удалось загрузить модели: {detail}',
   'settings.suggestedModelsHint': 'Это рекомендуемые модели для этого протокола. Ваш провайдер может поддерживать другие модели.',
   'settings.baseUrl': 'Базовый URL',
-  'settings.baseUrlInvalid': 'Используйте публичный URL с http:// или https://.',
+  'settings.baseUrlInvalid': 'Используйте корректный URL с http:// или https://.',
   'settings.baseUrlCustomize': 'Настроить',
   'settings.baseUrlDefaultHint': 'Эндпоинт по умолчанию. Обычно его не нужно менять.',
   'settings.azureBaseUrlPlaceholder': 'Вставьте URL эндпоинта Azure',
