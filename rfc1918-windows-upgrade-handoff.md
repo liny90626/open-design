@@ -26,6 +26,7 @@ Fresh build output:
 
 ```text
 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe
+.tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe
 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/latest.yml
 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/payload/Open Design-default-payload.7z
 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/win-unpacked/
@@ -35,6 +36,7 @@ Verified artifact metadata:
 
 ```text
 2026-06-28 07:55:49.805312182 +0800 273560682 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe
+2026-06-28 07:55:49.805312182 +0800 273560682 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe
 2026-06-28 07:55:52.041334332 +0800 366 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/latest.yml
 2026-06-28 07:58:18.812788164 +0800 258681414 .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/payload/Open Design-default-payload.7z
 ```
@@ -47,6 +49,16 @@ Open Design-default-payload.7z: 7-zip archive data, version 0.4
 ```
 
 `latest.yml` reports version `0.12.0`, size `273560682`, sha512 `J7rtT3YBpUrE0G9W3YOFmLxKszpMN+i/dOvowrFOnkTd0OZjHrWvjvrpbbM7la/X71H2hZdF6D5q2aJzRwN3pA==`, and `releaseDate: "2026-06-27T23:55:52.041Z"`.
+
+External handoff installer naming rule:
+
+```text
+OpenDesign-V<version>-local_allow_by_linky.exe
+```
+
+For this build, the user-facing handoff file is
+`OpenDesign-V0.12.0-local_allow_by_linky.exe`. It is a hard link to the NSIS
+builder output above, so the bytes match `Open Design-default-setup.exe`.
 
 Packaged contents check:
 
@@ -150,6 +162,8 @@ Use this when the LAN allowlist patch has to be rebuilt into a Windows upgrade i
 
    ```bash
    stat -c '%y %s %n' ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe" ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/latest.yml"
+   ln ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe" ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe" 2>/dev/null || cp ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe" ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe"
+   sha512sum ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe" ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe"
    file ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe"
    sed -n '1,80p' ".tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/latest.yml"
    ```
@@ -166,11 +180,12 @@ Use this when the LAN allowlist patch has to be rebuilt into a Windows upgrade i
 6. Keep these files as the upgrade deliverable:
 
    ```text
+   .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/OpenDesign-V0.12.0-local_allow_by_linky.exe
    .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/Open Design-default-setup.exe
    .tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/builder/latest.yml
    ```
 
-   The payload archive under `.tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/payload/` is useful for inspection but the user-facing Windows upgrade file is the NSIS setup `.exe`.
+   The payload archive under `.tmp/open-design-pack-win-v0.12.0-default-lan/out/win/namespaces/default/payload/` is useful for inspection. The preferred user-facing Windows upgrade file is the `OpenDesign-V<version>-local_allow_by_linky.exe` handoff alias.
 
 7. After a successful build, process caches can be cleaned to save disk, but do not delete the installer directory above. Preserve `.tmp/open-design-pack-win-v0.12.0-default-lan` and `.tmp/toolchains`; transient Docker/Corepack/npm/Electron caches can be removed.
 
