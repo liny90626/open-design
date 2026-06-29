@@ -5,6 +5,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  openProjectTabsFromWorkspaceState,
   openWorkspaceTab,
   WorkspaceTabsBar,
 } from '../../src/components/WorkspaceTabsBar';
@@ -121,6 +122,54 @@ describe('WorkspaceTabsBar navigation semantics', () => {
   afterEach(() => {
     cleanup();
     document.querySelector('[data-testid="blank-workspace-area"]')?.remove();
+  });
+
+  it('reports open project tabs for ProjectView keep-alive', () => {
+    const tabs = openProjectTabsFromWorkspaceState({
+      activeTabId: 'project:project-beta:2',
+      tabs: [
+        {
+          id: 'entry:home:1',
+          kind: 'entry',
+          view: 'home',
+          createdAt: 1,
+          lastActiveAt: 1,
+        },
+        {
+          id: 'project:project-alpha:1',
+          kind: 'project',
+          projectId: 'project-alpha',
+          conversationId: 'conv-a',
+          fileName: 'alpha.html',
+          createdAt: 2,
+          lastActiveAt: 2,
+        },
+        {
+          id: 'project:project-beta:2',
+          kind: 'project',
+          projectId: 'project-beta',
+          conversationId: 'conv-b',
+          fileName: null,
+          createdAt: 3,
+          lastActiveAt: 3,
+        },
+      ],
+    });
+
+    expect(tabs).toEqual([
+      {
+        projectId: 'project-alpha',
+        conversationId: 'conv-a',
+        fileName: 'alpha.html',
+        active: false,
+      },
+      {
+        projectId: 'project-beta',
+        conversationId: 'conv-b',
+        fileName: null,
+        active: true,
+      },
+    ]);
   });
 
   it('keeps Home tab as a singleton and avoids duplication', async () => {

@@ -9,6 +9,9 @@ branches apply that branch on top of the matching official release branch.
 - BYOK/provider Base URLs allow RFC1918 LAN IPv4 targets by default
   (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) so a local relay,
   NAS, workstation, or intranet model gateway can be used directly.
+- Open project tabs stay mounted in the web shell, so a BYOK/API or local-agent
+  generation started in one project tab keeps streaming and persists its result
+  after switching to another project tab.
 - Link-local, CGNAT, multicast, IPv6-private, and untrusted asset/download URLs
   remain blocked by the existing SSRF protections.
 - Linux-hosted Windows packaging is kept compatible with the documented

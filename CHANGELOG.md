@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   NAS/workstation gateways, and intranet model endpoints. Other unsafe internal
   targets and untrusted asset/download URLs remain blocked. The Windows
   Docker/Wine packaging path was kept buildable for the local upgrade installer.
+- Kept open project tabs mounted while another project tab is active so
+  in-flight BYOK/API streams and daemon-backed local-agent runs are not
+  interrupted by switching tabs.
 
 ## [0.9.0] - 2026-05-29
 

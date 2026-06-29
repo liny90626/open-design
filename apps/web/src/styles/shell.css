@@ -40,6 +40,16 @@
   min-height: 0;
 }
 
+.workspace-shell__project-stack,
+.workspace-shell__project-pane {
+  height: 100%;
+  min-height: 0;
+}
+
+.workspace-shell__project-pane[hidden] {
+  display: none;
+}
+
 .iframe-keep-alive-pool {
   display: none;
 }
