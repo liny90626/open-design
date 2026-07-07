@@ -2,7 +2,6 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { Button, VisuallyHidden } from '@open-design/components';
 import type { AmrWalletSnapshot } from '@open-design/contracts';
-import { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
 import {
   agentIdToTracking,
   byokProtocolToTracking,
@@ -1024,8 +1023,12 @@ function applyApiProtocolConfig(
 export function isValidApiBaseUrl(value: string): boolean {
   const trimmed = value.trim();
   if (!/^https?:\/\//i.test(trimmed)) return false;
-  const result = validateBaseUrl(trimmed);
-  return Boolean(result.parsed && !result.error);
+  try {
+    const parsed = new URL(trimmed);
+    return Boolean(parsed.hostname && ['http:', 'https:'].includes(parsed.protocol));
+  } catch {
+    return false;
+  }
 }
 
 const AGENT_CLI_AUTH_ENV_KEYS = new Set([

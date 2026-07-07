@@ -59,23 +59,35 @@ OpenDesign-V0.13.1-local_allow_by_linky.exe
 Verified artifact metadata after the fresh build:
 
 ```text
-TBD
+2026-07-08 00:02:53.481323671 +0800 275156141 .tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/OpenDesign-V0.13.1-local_allow_by_linky.exe
+2026-07-08 00:02:53.481323671 +0800 275156141 .tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/Open Design-default-setup.exe
+2026-07-08 00:02:58.685375908 +0800 366 .tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/latest.yml
 ```
 
 `file` verification:
 
 ```text
-TBD
+.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/OpenDesign-V0.13.1-local_allow_by_linky.exe: PE32 executable for MS Windows 4.00 (GUI), Intel i386, Nullsoft Installer self-extracting archive, 5 sections
 ```
 
 Installer SHA512:
 
 ```text
-TBD
+d20e1eae68235d6ce0b852518ba57bf4dc89c3b1e6e8c797dc51aedbc5de175c86726acf2bbafbac4bee2828c4d0066cdaec54d457baca5d0ccaa7c728f97afa
 ```
 
-`latest.yml` should report version `0.13.1`; fill size, sha512, and
-releaseDate after the fresh build.
+`latest.yml` reports:
+
+```yaml
+version: "0.13.1"
+files:
+  - url: "Open Design-default-setup.exe"
+    sha512: "0g4ermgjXWzguFJRi6V79NyJw7Hm6MeX3FGu28XeF1yGcmrPK7r7rEvuKCjE0AZs2uxU1Fe6yl0MyqfHKPl6+g=="
+    size: 275156141
+path: "Open Design-default-setup.exe"
+sha512: "0g4ermgjXWzguFJRi6V79NyJw7Hm6MeX3FGu28XeF1yGcmrPK7r7rEvuKCjE0AZs2uxU1Fe6yl0MyqfHKPl6+g=="
+releaseDate: "2026-07-07T16:02:58.684Z"
+```
 
 Packaged contents check:
 
@@ -170,18 +182,33 @@ installer again.
 
    If native `wine` is missing on the host, this prewarm command can fail later
    with `wine is required`; it is still useful once `workspace-build` has
-   completed because it fills the build cache. Then run the no-network
-   Docker/Wine build with source mounted read-only and only `.tmp` plus
-   `node_modules` writable:
+   completed because it fills the build cache. In this checkout,
+   `workspace-build` writes package `dist/` outputs, so a read-only repository
+   mount can fail with `EACCES`. Use a no-network Docker/Wine build with the
+   repository mounted read-write and npm forced to use the warmed local cache:
 
    ```bash
-   docker run --rm --network none --name open-design-win-pack-v0131-lan-keepalive-20260707 --user 1000:1000 -e HOME=/home/linky/workspace/open-design/.tmp/open-design-docker-home -e COREPACK_HOME=/home/linky/workspace/open-design/.tmp/open-design-corepack -e ELECTRON_CACHE=/home/linky/workspace/open-design/.tmp/open-design-electron-cache -e ELECTRON_BUILDER_CACHE=/home/linky/workspace/open-design/.tmp/open-design-electron-builder-cache -e npm_config_cache=/home/linky/workspace/open-design/.tmp/open-design-npm-cache -e ASTRO_TELEMETRY_DISABLED=1 -e XDG_CONFIG_HOME=/home/linky/workspace/open-design/.tmp/open-design-docker-home/.config -v /home/linky/workspace/open-design:/home/linky/workspace/open-design:ro -v /home/linky/workspace/open-design/.tmp:/home/linky/workspace/open-design/.tmp:rw -v /home/linky/workspace/open-design/node_modules:/home/linky/workspace/open-design/node_modules:rw -w /home/linky/workspace/open-design electronuserland/builder:wine bash -lc 'PATH="/home/linky/workspace/open-design/.tmp/toolchains/node-v24.17.0-linux-x64/bin:$PATH" pnpm tools-pack win build --dir /home/linky/workspace/open-design/.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707 --to nsis --portable --json'
+   docker run --rm --network none --name open-design-win-pack-v0131-lan-keepalive-20260707 --user 1000:1000 -e HOME=/home/linky/workspace/open-design/.tmp/open-design-docker-home -e COREPACK_HOME=/home/linky/workspace/open-design/.tmp/open-design-corepack -e ELECTRON_CACHE=/home/linky/workspace/open-design/.tmp/open-design-electron-cache -e ELECTRON_BUILDER_CACHE=/home/linky/workspace/open-design/.tmp/open-design-electron-builder-cache -e npm_config_cache=/home/linky/workspace/open-design/.tmp/open-design-npm-cache -e npm_config_offline=true -e npm_config_prefer_offline=true -e npm_config_fetch_retries=0 -e npm_config_audit=false -e npm_config_fund=false -e ASTRO_TELEMETRY_DISABLED=1 -e XDG_CONFIG_HOME=/home/linky/workspace/open-design/.tmp/open-design-docker-home/.config -v /home/linky/workspace/open-design:/home/linky/workspace/open-design:rw -w /home/linky/workspace/open-design electronuserland/builder:wine bash -lc 'PATH="/home/linky/workspace/open-design/.tmp/toolchains/node-v24.17.0-linux-x64/bin:$PATH" pnpm tools-pack win build --dir /home/linky/workspace/open-design/.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707 --to nsis --portable --json'
    ```
 
-   The 2026-07-07 no-network Docker/Wine run succeeded. Notable timings:
-   `nsis:payload-base-7z:process` took about 91 seconds, `nsis:makensis:process`
-   took about 22 seconds, and `launcher-payload:archive-cache` took about 18
-   minutes.
+   The 2026-07-07 no-network Docker/Wine run succeeded after a stale
+   `.tmp/tools-pack/cache/locks/global.lock` directory from an interrupted
+   container was moved aside. If a retry fails with `timed out waiting for lock`
+   and `docker ps` shows no matching build container, move the stale lock
+   directory before rerunning:
+
+   ```bash
+   mv .tmp/tools-pack/cache/locks/global.lock .tmp/tools-pack/cache/locks/global.lock.stale-$(date -u +%Y%m%dT%H%M%SZ)
+   ```
+
+   Notable timings from the successful run: `workspace-build` cache hit took
+   about 16 seconds, `resource-tree` about 165 seconds,
+   `electron-builder-raw:process` about 310 seconds,
+   `installer:materialize-unpacked` about 213 seconds,
+   `nsis:payload-base-7z:process` about 351 seconds,
+   `nsis:payload-overlay-7z:process` about 61 seconds,
+   `nsis:makensis:process` about 75 seconds, and
+   `launcher-payload:archive-cache` about 644 seconds.
 
 5. Rename or link the generated installer:
 

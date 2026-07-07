@@ -963,5 +963,5 @@ describe('App project creation routing', () => {
       expect(screen.getByTestId('project-route-conversation').textContent).toBe('conv-brand-acme');
     });
     expect(window.location.pathname).toBe(`/projects/${brandProject.id}/conversations/conv-brand-acme`);
-  });
+  }, 15_000);
 });

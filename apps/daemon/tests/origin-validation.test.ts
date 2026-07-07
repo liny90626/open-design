@@ -5,6 +5,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   allowedBrowserPorts,
+  configuredAllowedInternalHosts,
   configuredAllowedOrigins,
   isAllowedBrowserOrigin,
   isLocalSameOrigin,
@@ -119,6 +120,20 @@ function makeTestApp(port: number, host = '127.0.0.1') {
   });
   return app;
 }
+
+describe('configuredAllowedInternalHosts', () => {
+  it('parses OD_ALLOWED_INTERNAL_HOSTS with comma and whitespace separators', () => {
+    expect(
+      configuredAllowedInternalHosts({
+        OD_ALLOWED_INTERNAL_HOSTS: '10.0.0.5, litellm.internal\n100.64.0.5',
+      } as NodeJS.ProcessEnv),
+    ).toEqual(['10.0.0.5', 'litellm.internal', '100.64.0.5']);
+  });
+
+  it('returns an empty list when OD_ALLOWED_INTERNAL_HOSTS is absent', () => {
+    expect(configuredAllowedInternalHosts({} as NodeJS.ProcessEnv)).toEqual([]);
+  });
+});
 
 function request(
   port: number,

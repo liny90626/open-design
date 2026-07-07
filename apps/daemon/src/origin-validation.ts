@@ -32,6 +32,15 @@ export function configuredAllowedHosts(origins = configuredAllowedOrigins()): st
   return origins.map((origin) => new URL(origin).host);
 }
 
+export function configuredAllowedInternalHosts(env: NodeJS.ProcessEnv = process.env): string[] {
+  const raw = env.OD_ALLOWED_INTERNAL_HOSTS || '';
+  if (!raw.trim()) return [];
+  return raw
+    .split(/[,\s]+/)
+    .map((host) => host.trim())
+    .filter(Boolean);
+}
+
 export function allowedBrowserPorts(
   port: number | string | null | undefined,
   env: NodeJS.ProcessEnv = process.env,

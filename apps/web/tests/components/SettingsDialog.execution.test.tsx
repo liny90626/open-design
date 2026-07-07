@@ -759,7 +759,7 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
       'http://localhost:11434',
     );
     expect(screen.queryByRole('link', { name: /Get key/i })).toBeNull();
-    expect(screen.getByRole('button', { name: 'Test' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Retry test' })).toBeTruthy();
   });
 
   it('saves and auto-tests the self-hosted Ollama preset without an API key', async () => {
@@ -847,13 +847,7 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
     fireEvent.change(screen.getByLabelText('Base URL'), {
       target: { value: 'http://10.0.0.5:11434/v1' },
     });
-    expect(screen.getByRole('alert').textContent).toContain(
-      'Use a valid http:// or https:// URL.',
-    );
-
-    fireEvent.change(screen.getByLabelText('Base URL'), {
-      target: { value: 'http://10.0.0.5:11434/v1' },
-    });
+    expect(screen.queryByRole('alert')).toBeNull();
 
     await waitForPersist(
       onPersist,
@@ -1497,7 +1491,7 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
 
     expect(await screen.findByText('Invalid API key.')).toBeTruthy();
     expect(screen.queryByText('Ready to test')).toBeNull();
-    expect(screen.getByRole('button', { name: 'Test' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Retry test' })).toBeTruthy();
   });
 
   it('renders non-auth provider model discovery failures explicitly', async () => {

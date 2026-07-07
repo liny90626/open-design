@@ -2183,8 +2183,6 @@ function AppInner() {
         onChangeDefaultDesignSystem={handleChangeDefaultDesignSystem}
         onDesignSystemsRefresh={refreshDesignSystems}
         onCreateProjectFromDesignSystem={handleCreateProjectFromDesignSystem}
-        onCreateDesignSystemFromProject={handleCreateDesignSystemFromProject}
-        onDuplicateProject={handleDuplicateProject}
       />
     </div>
   );
