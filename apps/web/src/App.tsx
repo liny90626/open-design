@@ -28,7 +28,11 @@ import { buildPetTaskCenter } from './components/pet/taskCenter';
 import { migrateCustomPetAtlas } from './components/pet/pets';
 import { ProjectView } from './components/ProjectView';
 import { TooltipLayer } from './components/TooltipLayer';
-import { openWorkspaceTab, WorkspaceTabsBar } from './components/WorkspaceTabsBar';
+import {
+  openWorkspaceTab,
+  WorkspaceTabsBar,
+  type OpenProjectWorkspaceTab,
+} from './components/WorkspaceTabsBar';
 import {
   DesignSystemCreationFlow,
   DesignSystemDetailView,
@@ -364,6 +368,7 @@ function AppInner() {
   // effect while the project actually stayed in the managed root.
   const [workingDirError, setWorkingDirError] = useState<string | null>(null);
   const [projectOpenError, setProjectOpenError] = useState<string | null>(null);
+  const [openProjectTabs, setOpenProjectTabs] = useState<OpenProjectWorkspaceTab[]>([]);
   const [settingsWelcome, setSettingsWelcome] = useState(false);
   const [settingsInitialSection, setSettingsInitialSection] = useState<SettingsSection>('execution');
   const [settingsHighlight, setSettingsHighlight] = useState<SettingsHighlight>(null);
@@ -2118,6 +2123,84 @@ function AppInner() {
     route.view === 'home' &&
     config.onboardingCompleted !== true &&
     !daemonConfigLoaded;
+  const projectByIdForKeepAlive = new Map(projects.map((project) => [project.id, project]));
+  const activeProjectTab = route.kind === 'project'
+    ? openProjectTabs.find((tab) => tab.projectId === route.projectId) ?? {
+        projectId: route.projectId,
+        conversationId: route.conversationId ?? null,
+        fileName: route.fileName,
+        active: true,
+      }
+    : null;
+  const projectTabsToKeepAlive = activeProjectTab
+    ? [
+        ...openProjectTabs.filter((tab) => tab.projectId !== activeProjectTab.projectId),
+        activeProjectTab,
+      ]
+    : openProjectTabs;
+  const renderProjectView = (
+    project: Project,
+    tab: OpenProjectWorkspaceTab,
+    active: boolean,
+  ) => (
+    <div
+      key={project.id}
+      className={`workspace-shell__project-pane${active ? ' is-active' : ''}`}
+      hidden={!active}
+      aria-hidden={active ? undefined : true}
+    >
+      <ProjectView
+        project={project}
+        activeWorkspaceProject={active}
+        routeFileName={active ? (route.kind === 'project' ? route.fileName : tab.fileName) : tab.fileName}
+        routeConversationId={active ? (route.kind === 'project' ? route.conversationId : tab.conversationId) : tab.conversationId}
+        config={config}
+        agents={agents}
+        skills={enabledFunctionalSkills}
+        designTemplates={designTemplates}
+        designSystems={designSystems}
+        daemonLive={daemonLive}
+        onModeChange={handleModeChange}
+        onAgentChange={handleAgentChange}
+        onAgentModelChange={handleAgentModelChange}
+        onApiModelChange={handleApiModelChange}
+        onRefreshAgents={refreshAgents}
+        onThemeChange={handleThemeChange}
+        onOpenSettings={openSettings}
+        onOpenAmrSettings={openAmrSettings}
+        onOpenMcpSettings={openMcpSettings}
+        onBrowsePlugins={openPluginRegistry}
+        onOpenConnectors={openConnectorIntegrations}
+        onAdoptPetInline={handleAdoptPet}
+        onTogglePet={handleTogglePet}
+        onOpenPetSettings={openPetSettings}
+        onBack={handleBack}
+        onClearPendingPrompt={handleClearPendingPrompt}
+        onTouchProject={handleTouchProject}
+        onProjectChange={handleProjectChange}
+        onProjectsRefresh={refreshProjects}
+        onDeleteProject={handleDeleteProject}
+        onChangeDefaultDesignSystem={handleChangeDefaultDesignSystem}
+        onDesignSystemsRefresh={refreshDesignSystems}
+        onCreateProjectFromDesignSystem={handleCreateProjectFromDesignSystem}
+        onCreateDesignSystemFromProject={handleCreateDesignSystemFromProject}
+        onDuplicateProject={handleDuplicateProject}
+      />
+    </div>
+  );
+  const projectKeepAliveStack = projectTabsToKeepAlive.length > 0 ? (
+    <div className="workspace-shell__project-stack">
+      {projectTabsToKeepAlive.map((tab) => {
+        const project =
+          route.kind === 'project' && tab.projectId === route.projectId
+            ? activeProject
+            : projectByIdForKeepAlive.get(tab.projectId);
+        if (!project) return null;
+        const active = route.kind === 'project' && tab.projectId === route.projectId;
+        return renderProjectView(project, tab, active);
+      })}
+    </div>
+  ) : null;
   if (pendingFirstRunOnboardingRoute) {
     appMain = (
       <div className="entry-shell entry-shell--no-header">
@@ -2172,43 +2255,7 @@ function AppInner() {
       />
     );
   } else if (activeProject) {
-    appMain = (
-      <ProjectView
-        key={activeProject.id}
-        project={activeProject}
-        routeFileName={route.kind === 'project' ? route.fileName : null}
-        routeConversationId={route.kind === 'project' ? route.conversationId : null}
-        config={config}
-        agents={agents}
-        skills={enabledFunctionalSkills}
-        designTemplates={designTemplates}
-        designSystems={designSystems}
-        daemonLive={daemonLive}
-        onModeChange={handleModeChange}
-        onAgentChange={handleAgentChange}
-        onAgentModelChange={handleAgentModelChange}
-        onApiModelChange={handleApiModelChange}
-        onRefreshAgents={refreshAgents}
-        onThemeChange={handleThemeChange}
-        onOpenSettings={openSettings}
-        onOpenAmrSettings={openAmrSettings}
-        onOpenMcpSettings={openMcpSettings}
-        onBrowsePlugins={openPluginRegistry}
-        onOpenConnectors={openConnectorIntegrations}
-        onAdoptPetInline={handleAdoptPet}
-        onTogglePet={handleTogglePet}
-        onOpenPetSettings={openPetSettings}
-        onBack={handleBack}
-        onClearPendingPrompt={handleClearPendingPrompt}
-        onTouchProject={handleTouchProject}
-        onProjectChange={handleProjectChange}
-        onProjectsRefresh={refreshProjects}
-        onDeleteProject={handleDeleteProject}
-        onChangeDefaultDesignSystem={handleChangeDefaultDesignSystem}
-        onDesignSystemsRefresh={refreshDesignSystems}
-        onCreateProjectFromDesignSystem={handleCreateProjectFromDesignSystem}
-      />
-    );
+    appMain = null;
   } else {
     appMain = (
       <EntryView
@@ -2273,9 +2320,11 @@ function AppInner() {
           route={route}
           projects={projects}
           onboardingCompleted={config.onboardingCompleted === true}
+          onOpenProjectTabsChange={setOpenProjectTabs}
         />
         <div className="workspace-shell__body">
           {appMain}
+          {projectKeepAliveStack}
         </div>
       </div>
       {clientType === 'desktop' ? null : (

@@ -155,7 +155,9 @@ export async function validateBaseUrlResolved(
     options.allowlist === undefined ? getByokPrivateAllowlist() : options.allowlist;
   const sync = validateBaseUrl(baseUrl, {
     allowlist,
-    allowedInternalHosts: options.allowedInternalHosts,
+    ...(options.allowedInternalHosts
+      ? { allowedInternalHosts: options.allowedInternalHosts }
+      : {}),
   });
   if (sync.error || !sync.parsed) return sync;
 

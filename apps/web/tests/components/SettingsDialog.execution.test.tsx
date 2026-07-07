@@ -847,6 +847,13 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
     fireEvent.change(screen.getByLabelText('Base URL'), {
       target: { value: 'http://10.0.0.5:11434/v1' },
     });
+    expect(screen.getByRole('alert').textContent).toContain(
+      'Use a valid http:// or https:// URL.',
+    );
+
+    fireEvent.change(screen.getByLabelText('Base URL'), {
+      target: { value: 'http://10.0.0.5:11434/v1' },
+    });
 
     await waitForPersist(
       onPersist,

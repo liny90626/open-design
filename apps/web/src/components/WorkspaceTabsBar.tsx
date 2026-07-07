@@ -35,6 +35,13 @@ interface WorkspaceTabsState {
   activeTabId: string;
 }
 
+export interface OpenProjectWorkspaceTab {
+  projectId: string;
+  conversationId: string | null;
+  fileName: string | null;
+  active: boolean;
+}
+
 interface DisplayTab {
   id: string;
   title: string;
@@ -58,6 +65,7 @@ interface Props {
   // paths navigate straight to a new project/design-system and leave the entry
   // tab showing Welcome in the background. This flips it back to Home.
   onboardingCompleted?: boolean;
+  onOpenProjectTabsChange?: (tabs: OpenProjectWorkspaceTab[]) => void;
 }
 
 const STORAGE_KEY = 'open-design:workspace-tabs:v1';
@@ -396,6 +404,23 @@ function normalizeSearch(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
 
+export function openProjectTabsFromWorkspaceState(
+  state: WorkspaceTabsState,
+): OpenProjectWorkspaceTab[] {
+  const normalized = normalizeTabsState(state);
+  const latestByProject = new Map<string, OpenProjectWorkspaceTab>();
+  for (const tab of normalized.tabs) {
+    if (tab.kind !== 'project') continue;
+    latestByProject.set(tab.projectId, {
+      projectId: tab.projectId,
+      conversationId: tab.conversationId,
+      fileName: tab.fileName,
+      active: tab.id === normalized.activeTabId,
+    });
+  }
+  return Array.from(latestByProject.values());
+}
+
 interface HoverPreviewState {
   tabId: string;
   anchorLeft: number;
@@ -406,7 +431,12 @@ interface HoverPreviewState {
 
 const HOVER_PREVIEW_DELAY_MS = 380;
 
-export function WorkspaceTabsBar({ route, projects, onboardingCompleted = false }: Props) {
+export function WorkspaceTabsBar({
+  route,
+  projects,
+  onboardingCompleted = false,
+  onOpenProjectTabsChange,
+}: Props) {
   const t = useT();
   const [state, setState] = useState<WorkspaceTabsState>(() => initialTabsState(route));
   const [tabsMenuOpen, setTabsMenuOpen] = useState(false);
@@ -615,6 +645,10 @@ export function WorkspaceTabsBar({ route, projects, onboardingCompleted = false 
       // Best-effort browser chrome state. Navigation itself remains URL-driven.
     }
   }, [state]);
+
+  useEffect(() => {
+    onOpenProjectTabsChange?.(openProjectTabsFromWorkspaceState(state));
+  }, [onOpenProjectTabsChange, state]);
 
   useEffect(() => {
     if (!tabsMenuOpen) return;

@@ -157,6 +157,12 @@ describe("Windows pack artifact boundaries", () => {
     expect(source).not.toContain('"-ms=off"');
   });
 
+  it("gives Wine-hosted NSIS payload compression enough time for release packages", async () => {
+    const source = await readFile(new URL("../src/win/custom-installer.ts", import.meta.url), "utf8");
+    expect(source).toContain("const WIN_NSIS_PAYLOAD_SEVEN_Z_TIMEOUT_MS = 30 * 60 * 1000");
+    expect(source).toContain("timeoutMs: WIN_NSIS_PAYLOAD_SEVEN_Z_TIMEOUT_MS");
+  });
+
   it("can invoke cached Windows installer tools through Wine on Linux builders", async () => {
     const source = await readFile(new URL("../src/win/custom-installer.ts", import.meta.url), "utf8");
     expect(source).toContain("resolveWindowsToolInvocation");

@@ -1,9 +1,10 @@
 ## Fork Differences
 
 This fork tracks the official `nexu-io/open-design` upstream release branches.
-The current `release/v0.12.0` fork branch is based on official
-`open-design-v0.12.0` and keeps a small local patch set for LAN-hosted model
-gateways. The reusable patch branch is `feature/rfc1918-lan-byok`; release
+The current `release/v0.13.1` fork branch is based on the official
+`open-design-v0.13.0` release tag / `origin/release/v0.13.0` branch and keeps a
+small local patch set for LAN-hosted model gateways and local Windows upgrade
+builds. The reusable patch branch is `feature/rfc1918-lan-byok`; release
 branches apply that branch on top of the matching official release branch.
 
 - BYOK/provider Base URLs allow RFC1918 LAN IPv4 targets by default
@@ -11,6 +12,8 @@ branches apply that branch on top of the matching official release branch.
   NAS, workstation, or intranet model gateway can be used directly.
 - Link-local, CGNAT, multicast, IPv6-private, and untrusted asset/download URLs
   remain blocked by the existing SSRF protections.
+- Project tabs stay mounted in the workspace while open, so a run started in
+  one tab can continue if you switch to another tab.
 - Linux-hosted Windows packaging is kept compatible with the documented
   Docker/Wine build path used for local Windows upgrade installers.
 
@@ -401,6 +404,7 @@ od skill list --scenario marketing
 
 **Security model.** Read-only by default, the daemon binds to `127.0.0.1`, and SSRF is blocked at the proxy edge. LAN exposure requires an explicit `OD_BIND_HOST` plus `OD_ALLOWED_ORIGINS`. Connector credentials and live-artifact preview routes stay loopback-only regardless.
 
+**Internally-hosted model endpoints.** In this fork, user-configured BYOK/provider base URLs allow RFC1918 LAN IPv4 targets (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) by default so local relays, LiteLLM, Ollama, LM Studio, vLLM, NAS gateways, and workstation gateways can be reached directly. Link-local, CGNAT, multicast, IPv6-private, metadata-service IPs, and other unsafe targets still surface `Internal IPs blocked`. Additional exact hosts can be trusted with `OD_ALLOWED_INTERNAL_HOSTS=<host1>,<host2>,...` or `OD_BYOK_PRIVATE_HOST_ALLOWLIST=<host1>,<host2>,...`; additional CIDRs can be added with `OD_BYOK_PRIVATE_CIDR_ALLOWLIST=<cidr1>,<cidr2>,...`. These relaxations apply **only** to provider endpoints you configure (connection test, model discovery, BYOK chat). They deliberately do **not** relax the guard on download URLs returned inside upstream responses, which stay blocked.
 ---
 
 ## Skills

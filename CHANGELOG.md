@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fork patch
 
-- Based the fork's `release/v0.12.0` branch on official `open-design-v0.12.0`,
-  while allowing BYOK/provider Base URLs to use RFC1918 LAN IPv4 targets
-  (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) for local relays,
-  NAS/workstation gateways, and intranet model endpoints. Other unsafe internal
-  targets and untrusted asset/download URLs remain blocked. The Windows
-  Docker/Wine packaging path was kept buildable for the local upgrade installer.
+- Based the fork's `release/v0.13.1` branch on the official
+  `open-design-v0.13.0` tag / `origin/release/v0.13.0` branch.
+- Kept the local BYOK/provider LAN patch: RFC1918 IPv4 targets
+  (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) are allowed by default
+  for local relays, NAS/workstation gateways, and intranet model endpoints.
+  Link-local, CGNAT, multicast, IPv6-private, metadata-service targets, and
+  untrusted asset/download URLs remain blocked.
+- Kept open project tabs mounted so a run continues when the user starts it in
+  one project tab and switches to another tab.
+- Kept the Linux-hosted Docker/Wine Windows packaging path buildable for local
+  upgrade installers, including the longer NSIS payload compression timeout.
 
 ## [0.9.0] - 2026-05-29
 

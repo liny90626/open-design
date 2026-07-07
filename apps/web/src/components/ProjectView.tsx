@@ -321,6 +321,7 @@ interface Props {
    * pass the value from `useRoute()`.
    */
   routeConversationId?: string | null;
+  activeWorkspaceProject?: boolean;
   config: AppConfig;
   agents: AgentInfo[];
   // Mentionable functional skills — already filtered by config.disabledSkills
@@ -856,6 +857,7 @@ export function ProjectView({
   project,
   routeFileName,
   routeConversationId = null,
+  activeWorkspaceProject = true,
   config,
   agents,
   skills,
@@ -1509,6 +1511,7 @@ export function ProjectView({
   // active id. Falls through to a no-op for stale / missing routes so
   // the default picker above keeps its result.
   useEffect(() => {
+    if (!activeWorkspaceProject) return;
     if (!routeConversationId) {
       lastSeenRouteConversationIdRef.current = null;
       return;
@@ -1527,7 +1530,7 @@ export function ProjectView({
     const match = conversations.find((c) => c.id === routeConversationId);
     if (!match) return;
     setActiveConversationId(routeConversationId);
-  }, [routeConversationId, conversations, activeConversationId]);
+  }, [activeWorkspaceProject, routeConversationId, conversations, activeConversationId]);
 
   useEffect(() => {
     setWorkspaceFocused(false);
@@ -2215,6 +2218,7 @@ export function ProjectView({
   const lastSyncedRouteKeyRef = useRef<string | null>(null);
   const lastSeenRouteConversationIdRef = useRef<string | null>(null);
   useEffect(() => {
+    if (!activeWorkspaceProject) return;
     const target = openTabsState.active && (
       openTabsState.tabs.includes(openTabsState.active)
       || projectFileNames.has(openTabsState.active)
@@ -2243,7 +2247,7 @@ export function ProjectView({
       },
       { replace: true },
     );
-  }, [openTabsState.active, projectFileNames, project.id, activeConversationId]);
+  }, [activeWorkspaceProject, openTabsState.active, projectFileNames, project.id, activeConversationId]);
 
   const handleEnsureProject = useCallback(async (): Promise<string | null> => {
     return project.id;
@@ -5440,15 +5444,17 @@ export function ProjectView({
       // it can revert `activeConversationId`. Without this, the route-sync
       // effect can fight the conversation switch, preventing users from
       // switching back to older conversations after creating a new one.
-      navigate(
-        {
-          kind: 'project',
-          projectId: project.id,
-          conversationId: fresh.id,
-          fileName: openTabsState.active ?? null,
-        },
-        { replace: true },
-      );
+      if (activeWorkspaceProject) {
+        navigate(
+          {
+            kind: 'project',
+            projectId: project.id,
+            conversationId: fresh.id,
+            fileName: openTabsState.active ?? null,
+          },
+          { replace: true },
+        );
+      }
       setError(null);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Could not create a conversation for this project.';
@@ -5458,7 +5464,7 @@ export function ProjectView({
       creatingConversationRef.current = false;
       setCreatingConversation(false);
     }
-  }, [project.id, activeConversationId, messages.length, navigate, openTabsState.active]);
+  }, [activeWorkspaceProject, project.id, activeConversationId, messages.length, navigate, openTabsState.active]);
 
   const handleSelectConversation = useCallback((id: string) => {
     if (id === activeConversationId && failedMessagesConversationId !== id) return;
@@ -5480,17 +5486,19 @@ export function ProjectView({
     // revert `activeConversationId` to it. Without this, the same
     // effect that fights handleNewConversation also fights chat
     // switching, ping-ponging until React's nested-update guard fires.
-    navigate(
-      {
-        kind: 'project',
-        projectId: project.id,
-        conversationId: id,
-        fileName: openTabsState.active ?? null,
-      },
-      { replace: true },
-    );
+    if (activeWorkspaceProject) {
+      navigate(
+        {
+          kind: 'project',
+          projectId: project.id,
+          conversationId: id,
+          fileName: openTabsState.active ?? null,
+        },
+        { replace: true },
+      );
+    }
     setMessageLoadRetryNonce((nonce) => nonce + 1);
-  }, [activeConversationId, failedMessagesConversationId, project.id, openTabsState.active]);
+  }, [activeConversationId, activeWorkspaceProject, failedMessagesConversationId, project.id, openTabsState.active]);
 
   const handleDeleteConversation = useCallback(
     async (id: string) => {
