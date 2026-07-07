@@ -58,12 +58,19 @@ import type { AgentCliEnvPrefs } from './app-config.js';
 import type { RuntimeAgentDef } from './runtimes/types.js';
 import { resolveModelForAgent } from './runtimes/models.js';
 import { preparePromptFileForAgent, type PreparedPromptFile } from './runtimes/prompt-file.js';
+import { configuredAllowedInternalHosts } from './origin-validation.js';
 import {
+  isAllowlistedInternalHost,
   isBlockedExternalApiHostname,
   isLoopbackApiHost,
+  isPrivateTargetAllowedByAllowlist,
+  parseByokPrivateAllowlistFromEnv,
+  serializeByokPrivateAllowlist,
   validateBaseUrl,
   type AgentTestRequest,
   type BaseUrlValidationResult,
+  type ByokPrivateAllowlist,
+  type ByokPrivateTargetAllowlist,
   type ConnectionTestDiagnostics,
   type ConnectionTestKind,
   type ConnectionTestPhase,
@@ -75,7 +82,36 @@ import {
 import { googleGenerateContentUrl } from './integrations/google-models.js';
 import { resolveAmrProfile } from './integrations/vela.js';
 
-export { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
+export {
+  parseByokPrivateAllowlistFromEnv,
+  serializeByokPrivateAllowlist,
+  validateBaseUrl,
+} from '@open-design/contracts/api/connectionTest';
+
+export function getByokPrivateAllowlist(
+  env: NodeJS.ProcessEnv = process.env,
+): ByokPrivateAllowlist {
+  return parseByokPrivateAllowlistFromEnv(env);
+}
+
+export function getByokPrivateTargetAllowlistForApi(
+  env: NodeJS.ProcessEnv = process.env,
+): ByokPrivateTargetAllowlist {
+  return serializeByokPrivateAllowlist(getByokPrivateAllowlist(env));
+}
+
+export type ValidateBaseUrlResolvedOptions = {
+  /**
+   * Undefined means use the daemon env/default BYOK allowlist. Null means
+   * strict mode, used for upstream-controlled asset URLs.
+   */
+  allowlist?: ByokPrivateAllowlist | null;
+  /**
+   * Hosts the operator explicitly trusted through the official
+   * OD_ALLOWED_INTERNAL_HOSTS escape hatch.
+   */
+  allowedInternalHosts?: readonly string[];
+};
 
 // DNS-aware companion to `validateBaseUrl`. The contracts-side check only
 // inspects the literal hostname string, so a public DNS name pointing at
@@ -113,12 +149,24 @@ function looksLikeIpLiteral(hostname: string): boolean {
 export async function validateBaseUrlResolved(
   baseUrl: string,
   lookup: DnsLookupFn = defaultDnsLookup,
+  options: ValidateBaseUrlResolvedOptions = {},
 ): Promise<BaseUrlValidationResult> {
-  const sync = validateBaseUrl(baseUrl);
+  const allowlist =
+    options.allowlist === undefined ? getByokPrivateAllowlist() : options.allowlist;
+  const sync = validateBaseUrl(baseUrl, {
+    allowlist,
+    allowedInternalHosts: options.allowedInternalHosts,
+  });
   if (sync.error || !sync.parsed) return sync;
 
   const hostname = sync.parsed.hostname.toLowerCase();
   if (isLoopbackApiHost(hostname)) return sync;
+  // Issue #3225 — an operator who trusts this hostname has opted it out of the
+  // guard entirely, so skip the resolved-IP block even though it points into
+  // private space. The sync check above already honored a literal-IP allowlist
+  // entry; this covers the hostname-that-resolves-private case.
+  if (isAllowlistedInternalHost(hostname, options.allowedInternalHosts)) return sync;
+  if (isPrivateTargetAllowedByAllowlist(hostname, allowlist)) return sync;
   if (looksLikeIpLiteral(hostname)) return sync;
 
   let addresses: DnsLookupAddress[];
@@ -131,12 +179,38 @@ export async function validateBaseUrlResolved(
   for (const addr of addresses) {
     const ip = String(addr.address).toLowerCase();
     if (isLoopbackApiHost(ip)) continue;
+    // A resolved address the operator explicitly allowlisted (they listed the
+    // IP rather than the hostname) is permitted; everything else in private
+    // space is still blocked.
+    if (isAllowlistedInternalHost(ip, options.allowedInternalHosts)) continue;
     if (isBlockedExternalApiHostname(ip)) {
+      if (isPrivateTargetAllowedByAllowlist(hostname, allowlist, ip)) continue;
       return { error: 'Internal IPs blocked', forbidden: true };
     }
   }
 
   return sync;
+}
+
+/**
+ * Validate a base URL that the USER deliberately configured as a provider
+ * endpoint (connection test, model discovery, BYOK chat dispatch). This path
+ * honors the daemon's default RFC1918 BYOK allowlist plus the operator's
+ * `OD_ALLOWED_INTERNAL_HOSTS` allowlist (issue #3225), so trusted LAN/VPN
+ * gateways work without relaxing upstream-controlled download URL validation.
+ *
+ * INVARIANT: use this ONLY for user-configured endpoints. URLs that arrive
+ * inside an upstream response (image/video download links) are
+ * attacker-controllable and MUST stay on the strict {@link assertExternalAssetUrl}
+ * / {@link validateBaseUrlResolved} path, which never consults the allowlist.
+ */
+export function validateUserProviderBaseUrl(
+  baseUrl: string,
+  lookup: DnsLookupFn = defaultDnsLookup,
+): Promise<BaseUrlValidationResult> {
+  return validateBaseUrlResolved(baseUrl, lookup, {
+    allowedInternalHosts: configuredAllowedInternalHosts(),
+  });
 }
 
 /**
@@ -162,7 +236,9 @@ export async function assertExternalAssetUrl(
   if (typeof rawUrl !== 'string' || !rawUrl) {
     return { ok: false, error: 'empty download url' };
   }
-  const validated = await validateBaseUrlResolved(rawUrl);
+  const validated = await validateBaseUrlResolved(rawUrl, defaultDnsLookup, {
+    allowlist: null,
+  });
   if (validated.error || !validated.parsed) {
     return {
       ok: false,
@@ -831,6 +907,55 @@ function statusToKind(status: number, detailText = ''): ConnectionTestKind {
   return 'unknown';
 }
 
+function isNvidiaDegradedProviderError(detailText: string): boolean {
+  return /\bDEGRADED\b/i.test(detailText) && /\bfunction\s+id\b/i.test(detailText);
+}
+
+function providerHttpErrorOverride(
+  protocol: ConnectionTestProtocol,
+  hostname: string,
+  status: number,
+  detailText: string,
+): { kind: ConnectionTestKind; detail: string } | null {
+  if (
+    protocol === 'openai' &&
+    status === 400 &&
+    hostname.toLowerCase() === 'integrate.api.nvidia.com' &&
+    isNvidiaDegradedProviderError(detailText)
+  ) {
+    return {
+      kind: 'upstream_unavailable',
+      detail:
+        'The selected NVIDIA model instance is currently unavailable at the provider. Try a different model or retry later.',
+    };
+  }
+  return null;
+}
+
+function classifyProviderHttpFailure(
+  protocol: ConnectionTestProtocol,
+  hostname: string,
+  status: number,
+  detailText: string,
+  secrets: string[],
+): { kind: ConnectionTestKind; detail: string } {
+  const redactedDetail = redactSecrets(detailText.slice(0, 240), secrets);
+  const override = providerHttpErrorOverride(
+    protocol,
+    hostname,
+    status,
+    redactedDetail,
+  );
+  if (override) return override;
+  const kind = statusToKind(status, redactedDetail);
+  const detail =
+    redactedDetail ||
+    (status === 404
+      ? 'HTTP 404 from provider; check the Base URL path.'
+      : '');
+  return { kind, detail };
+}
+
 function extractOpenAiModelIds(data: unknown): string[] {
   const items = (data as { data?: unknown }).data;
   if (!Array.isArray(items)) return [];
@@ -1241,7 +1366,7 @@ export async function testProviderConnection(
   const start = Date.now();
   const model = String(input.model ?? '');
   const normalizedInput = normalizeProviderTestInput(input);
-  const validated = await validateBaseUrlResolved(normalizedInput.baseUrl);
+  const validated = await validateUserProviderBaseUrl(normalizedInput.baseUrl);
   if (validated.error || !validated.parsed) {
     const kind: ConnectionTestKind = validated.forbidden ? 'forbidden' : 'invalid_base_url';
     return {
@@ -1344,15 +1469,13 @@ export async function testProviderConnection(
         });
         latencyMs = Date.now() - start;
       } else {
-        const redactedDetail = redactSecrets(detailText.slice(0, 240), [
-          input.apiKey,
-        ]);
-        const kind = statusToKind(response.status, redactedDetail);
-        const detail =
-          redactedDetail ||
-          (response.status === 404
-            ? 'HTTP 404 from provider; check the Base URL path.'
-            : '');
+        const { kind, detail } = classifyProviderHttpFailure(
+          input.protocol,
+          validated.parsed.hostname,
+          response.status,
+          detailText,
+          [input.apiKey],
+        );
         console.warn(
           `[test:provider] ${input.protocol} ${validated.parsed.hostname} model=${input.model} → ${response.status} in ${latencyMs}ms (${kind})${detail ? ` ${detail}` : ''}`,
         );
@@ -1478,15 +1601,13 @@ export async function testProviderConnection(
     } catch {
       // Ignore — we still report the status code.
     }
-    const redactedDetail = redactSecrets(detailText.slice(0, 240), [
-      input.apiKey,
-    ]);
-    const kind = statusToKind(response.status, redactedDetail);
-    const detail =
-      redactedDetail ||
-      (response.status === 404
-        ? 'HTTP 404 from provider; check the Base URL path.'
-        : '');
+    const { kind, detail } = classifyProviderHttpFailure(
+      input.protocol,
+      validated.parsed.hostname,
+      response.status,
+      detailText,
+      [input.apiKey],
+    );
     console.warn(
       `[test:provider] ${input.protocol} ${validated.parsed.hostname} model=${input.model} → ${response.status} in ${latencyMs}ms (${kind})${detail ? ` ${detail}` : ''}`,
     );

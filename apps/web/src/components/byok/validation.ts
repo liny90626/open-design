@@ -163,24 +163,32 @@ export function validateByokDraft(
       message: 'Base URL is required.',
       action: 'focus_base_url',
     });
-  } else if (validateBaseUrl(baseUrl).error) {
-    issues.push({
-      field: 'base_url',
-      level: 'error',
-      code: 'base_url_invalid',
-      message: 'Base URL must be a valid public http:// or https:// URL.',
-      action: 'focus_base_url',
-    });
-  } else if (protocol === 'google' && baseUrl) {
-    const host = baseUrlHostname(baseUrl);
-    if (host === 'api.anthropic.com' || host === 'api.openai.com') {
+  } else {
+    // A `forbidden` result is a syntactically-valid URL that points at an
+    // internal address. Don't block it here: the daemon owns the provider
+    // allow/block decision for both OD_ALLOWED_INTERNAL_HOSTS and the BYOK
+    // RFC1918 allowlist. Only genuinely malformed/non-http URLs are client
+    // blockers.
+    const baseUrlCheck = validateBaseUrl(baseUrl);
+    if (baseUrlCheck.error && !baseUrlCheck.forbidden) {
       issues.push({
         field: 'base_url',
         level: 'error',
         code: 'base_url_invalid',
-        message: `Base URL points to ${host}. For Google Gemini use ${GOOGLE_GEMINI_DEFAULT_BASE_URL}.`,
+        message: 'Base URL must be a valid http:// or https:// URL.',
         action: 'focus_base_url',
       });
+    } else if (protocol === 'google' && baseUrl) {
+      const host = baseUrlHostname(baseUrl);
+      if (host === 'api.anthropic.com' || host === 'api.openai.com') {
+        issues.push({
+          field: 'base_url',
+          level: 'error',
+          code: 'base_url_invalid',
+          message: `Base URL points to ${host}. For Google Gemini use ${GOOGLE_GEMINI_DEFAULT_BASE_URL}.`,
+          action: 'focus_base_url',
+        });
+      }
     }
   }
 

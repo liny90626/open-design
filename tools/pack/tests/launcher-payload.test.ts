@@ -244,6 +244,15 @@ describe("tools-pack launcher payload archives", () => {
     });
   });
 
+  it("allows Windows launcher payload archives to be built through Wine on Linux builders", async () => {
+    const source = await readFile(new URL("../src/win/payload.ts", import.meta.url), "utf8");
+    expect(source).toContain("resolveWindowsToolInvocation");
+    expect(source).toContain("prepareWindowsToolArgsForWine");
+    expect(source).toContain("execWindowsTool");
+    expect(source).not.toContain("Windows launcher payload build must run on Windows");
+    expect(source).toContain("Windows launcher payload validation must run on Windows");
+  });
+
   it.skipIf(process.platform !== "darwin")("creates a mac payload zip with bootstrap-readable contents", async () => {
     const root = await mkdtemp(join(tmpdir(), "od-tools-pack-mac-payload-"));
     try {

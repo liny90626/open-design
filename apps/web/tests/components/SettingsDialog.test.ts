@@ -482,12 +482,15 @@ describe('SettingsDialog provider model fetch helpers', () => {
         'openai',
       ),
     ).toBe(false);
+    // #3225 — an internal-IP endpoint is now fetchable from the UI's
+    // perspective; the daemon enforces the OD_ALLOWED_INTERNAL_HOSTS allowlist
+    // and returns the authoritative allow/block decision.
     expect(
       canFetchProviderModels(
-        { apiKey: 'sk-openai', baseUrl: 'http://10.0.0.5:11434/v1' },
+        { apiKey: 'sk-openai', baseUrl: 'http://169.254.169.254/latest/meta-data' },
         'openai',
       ),
-    ).toBe(false);
+    ).toBe(true);
     expect(
       canFetchProviderModels(
         { apiKey: 'azure-key', baseUrl: 'https://example.openai.azure.com' },
@@ -658,30 +661,52 @@ describe('SettingsDialog AMR wallet display state', () => {
 });
 
 describe('SettingsDialog API Base URL validation', () => {
-  it('accepts public http/https URLs and loopback local providers', () => {
+  it('accepts public http/https URLs, loopback local providers, and RFC1918 BYOK targets', () => {
     expect(isValidApiBaseUrl('https://api.openai.com/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://localhost:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://127.0.0.1:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://[::1]:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('http://[::ffff:127.0.0.1]:11434/v1')).toBe(true);
     expect(isValidApiBaseUrl('  https://resource.openai.azure.com  ')).toBe(true);
+    expect(isValidApiBaseUrl('http://10.0.0.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://172.16.0.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://192.168.1.5:11434/v1')).toBe(true);
+    expect(isValidApiBaseUrl('http://[::ffff:192.168.1.5]:11434/v1')).toBe(true);
 
     expect(isValidApiBaseUrl('ddddd')).toBe(false);
     expect(isValidApiBaseUrl('api.openai.com/v1')).toBe(false);
     expect(isValidApiBaseUrl('ftp://api.example.com')).toBe(false);
     expect(isValidApiBaseUrl('http:api.example.com')).toBe(false);
     expect(isValidApiBaseUrl('https://')).toBe(false);
-    expect(isValidApiBaseUrl('http://0.0.0.0:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://10.0.0.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://100.64.0.1:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://169.254.1.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://172.16.0.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://192.168.1.5:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://224.0.0.1:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://[::]:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://[fd00::1]:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://[fe80::1]:11434/v1')).toBe(false);
-    expect(isValidApiBaseUrl('http://[::ffff:192.168.1.5]:11434/v1')).toBe(false);
+  });
+
+  it('keeps syntactically-valid internal-IP base URLs UI-valid so the daemon allowlist can decide (#3225)', () => {
+    // The internal-IP / SSRF decision belongs to the daemon, which honors the
+    // operator's OD_ALLOWED_INTERNAL_HOSTS and BYOK RFC1918 allowlists — values
+    // the browser cannot fully know. These are well-formed URLs that merely
+    // point at internal addresses, so the client must not block them: the
+    // operator needs to run the connection test / model fetch and get the
+    // daemon's authoritative answer.
+    for (const internal of [
+      'http://0.0.0.0:11434/v1',
+      'http://10.0.0.5:11434/v1',
+      'http://100.64.0.1:11434/v1',
+      'http://169.254.1.5:11434/v1',
+      'http://172.16.0.5:11434/v1',
+      'http://192.168.1.5:11434/v1',
+      'http://224.0.0.1:11434/v1',
+      'http://[::]:11434/v1',
+      'http://[fd00::1]:11434/v1',
+      'http://[fe80::1]:11434/v1',
+      'http://[::ffff:192.168.1.5]:11434/v1',
+    ]) {
+      expect(isValidApiBaseUrl(internal)).toBe(true);
+    }
+  });
+
+  it('still rejects genuinely malformed URLs client-side', () => {
+    expect(isValidApiBaseUrl('http://')).toBe(false);
+    expect(isValidApiBaseUrl('http:// /v1')).toBe(false);
   });
 });
 
@@ -1267,7 +1292,6 @@ describe('shouldEnableSettingsSave', () => {
     expect(shouldEnableSettingsSave(incompleteApiCfg, 'integrations', [availableAgent], true)).toBe(true);
     expect(shouldEnableSettingsSave(incompleteApiCfg, 'notifications', [availableAgent], true)).toBe(true);
     expect(shouldEnableSettingsSave(incompleteApiCfg, 'pet', [availableAgent], true)).toBe(true);
-    expect(shouldEnableSettingsSave(incompleteApiCfg, 'skills', [availableAgent], true)).toBe(true);
     expect(shouldEnableSettingsSave(incompleteApiCfg, 'designSystems', [availableAgent], true)).toBe(true);
     expect(shouldEnableSettingsSave(incompleteApiCfg, 'about', [availableAgent], true)).toBe(true);
   });
@@ -1414,7 +1438,6 @@ describe('sanitizeSettingsSavePayload', () => {
       'appearance',
       'notifications',
       'pet',
-      'skills',
       'designSystems',
       'about',
     ];

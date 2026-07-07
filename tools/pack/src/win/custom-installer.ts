@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 import { execFile } from "node:child_process";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
-import { dirname, join, relative } from "node:path";
+import { createRequire } from "node:module";
+import { dirname, join, relative, win32 } from "node:path";
 import { promisify } from "node:util";
 
 import type { ToolPackConfig } from "../config.js";
@@ -17,6 +18,14 @@ import { signAndVerifyWinFile } from "./sign.js";
 import type { WinBuiltAppManifest, WinPackTiming, WinPaths } from "./types.js";
 
 const execFileAsync = promisify(execFile);
+const nodeRequire = createRequire(import.meta.url);
+
+type ElectronBuilderNsisUtil = {
+  NSIS_PATH: () => Promise<string>;
+  NsisTargetOptions?: {
+    resolve?: (options: Record<string, unknown>) => void;
+  };
+};
 
 const NSIS_LANGUAGES = [
   { macro: "LANG_ENGLISH", name: "English" },
@@ -38,6 +47,10 @@ const WIN_NSIS_PAYLOAD_SEVEN_Z_TIMEOUT_MS = 300_000;
 
 function escapeNsisString(value: string): string {
   return value.replace(/\$/g, "$$").replace(/"/g, '$\\"').replace(/\r?\n/g, "$\\r$\\n");
+}
+
+function escapeNsisStringWithVariables(value: string): string {
+  return value.replace(/"/g, '$\\"').replace(/\r?\n/g, "$\\r$\\n");
 }
 
 function normalizeArchivePath(relativePath: string): string {
@@ -112,12 +125,13 @@ FunctionEnd
   const escapedCleanupPath = escapeNsisString(cleanupPath);
   const escapedChannel = escapeNsisString(resolveToolPackLauncherLayout(config).channel);
   const escapedNamespace = escapeNsisString(config.namespace);
+  const escapedHelperScriptPath = escapeNsisString(resolveNsisBuildSourcePath(helperScriptPath));
 
   return `
 Function SyncLauncherRuntime
   Push $0
   InitPluginsDir
-  File "/oname=$PLUGINSDIR\\${helperFileName}" "${escapeNsisString(helperScriptPath)}"
+  File "/oname=$PLUGINSDIR\\${helperFileName}" "${escapedHelperScriptPath}"
   nsExec::ExecToLog 'powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$PLUGINSDIR\\${helperFileName}" -RuntimePath "${escapedRuntimePath}" -AttemptsPath "${escapedAttemptsPath}" -CleanupPath "${escapedCleanupPath}" -Channel "${escapedChannel}" -Namespace "${escapedNamespace}" -Version "\${APP_VERSION}"'
   Pop $0
   Push "launcher runtime sync exit=$0"
@@ -296,6 +310,73 @@ async function findFirstExistingPath(candidates: string[]): Promise<string | nul
   return null;
 }
 
+export function shouldRunWindowsToolThroughWine(command: string): boolean {
+  if (process.platform === "win32") return false;
+  return command.toLowerCase().endsWith(".exe") || /^[a-z]:[\\/]/i.test(command);
+}
+
+function looksLikePosixHostPath(value: string): boolean {
+  return value.startsWith("/") && value.split("/").filter(Boolean).length >= 2;
+}
+
+export function toWineHostPath(value: string): string {
+  if (!looksLikePosixHostPath(value)) return value;
+  return `Z:${value.split("/").join("\\")}`;
+}
+
+export function prepareWindowsToolArgsForWine(args: string[]): string[] {
+  return args.map((arg) => {
+    const defineMatch = /^(\/D[^=]+=)(.*)$/.exec(arg);
+    if (defineMatch != null) {
+      return `${defineMatch[1]}${toWineHostPath(defineMatch[2])}`;
+    }
+    const outputDirMatch = /^(-o)(\/.*)$/.exec(arg);
+    if (outputDirMatch != null) {
+      return `${outputDirMatch[1]}${toWineHostPath(outputDirMatch[2])}`;
+    }
+    return toWineHostPath(arg);
+  });
+}
+
+export function resolveNsisBuildSourcePath(value: string): string {
+  if (process.platform === "win32") return value.split("/").join("\\");
+  return toWineHostPath(value);
+}
+
+export function resolveNsisRuntimeLogPaths(config: Pick<ToolPackConfig, "namespace">, logPath: string): {
+  directory: string;
+  path: string;
+} {
+  const normalized = logPath.split("/").join("\\");
+  if (/^[a-z]:[\\/]/i.test(normalized) || normalized.startsWith("\\\\")) {
+    return {
+      directory: escapeNsisString(win32.dirname(normalized)),
+      path: escapeNsisString(normalized),
+    };
+  }
+  const directory = `$APPDATA\\${PRODUCT_NAME}\\namespaces\\${sanitizeNamespace(config.namespace)}\\logs`;
+  return {
+    directory: escapeNsisStringWithVariables(directory),
+    path: escapeNsisStringWithVariables(`${directory}\\nsis.log`),
+  };
+}
+
+export async function resolveWindowsToolInvocation(command: string): Promise<{
+  argsPrefix: string[];
+  command: string;
+  runner: "direct" | "wine";
+}> {
+  if (!shouldRunWindowsToolThroughWine(command)) {
+    return { argsPrefix: [], command, runner: "direct" };
+  }
+  try {
+    await execFileAsync("wine", ["--version"], { windowsHide: true });
+  } catch {
+    throw new Error("Wine is required to run Windows installer tools on non-Windows hosts");
+  }
+  return { argsPrefix: [command], command: "wine", runner: "wine" };
+}
+
 async function findElectronBuilderMakensis(config: ToolPackConfig): Promise<string | null> {
   const cacheRoots = [
     process.env.ELECTRON_BUILDER_CACHE,
@@ -310,7 +391,36 @@ async function findElectronBuilderMakensis(config: ToolPackConfig): Promise<stri
     ]);
     if (direct != null) return direct;
   }
+  const electronBuilderMakensis = await resolveElectronBuilderNsisMakensis();
+  if (electronBuilderMakensis != null) return electronBuilderMakensis;
   return null;
+}
+
+async function resolveElectronBuilderNsisMakensis(): Promise<string | null> {
+  try {
+    const electronBuilderPackageJson = nodeRequire.resolve("electron-builder/package.json");
+    const utilPath = join(
+      dirname(electronBuilderPackageJson),
+      "..",
+      "app-builder-lib",
+      "out",
+      "targets",
+      "nsis",
+      "nsisUtil.js",
+    );
+    const util = nodeRequire(utilPath) as ElectronBuilderNsisUtil;
+    util.NsisTargetOptions?.resolve?.({});
+    const nsisPath = await util.NSIS_PATH();
+    const candidates = process.platform === "win32"
+      ? [join(nsisPath, "Bin", "makensis.exe")]
+      : [
+          join(nsisPath, "Bin", "makensis.exe"),
+          join(nsisPath, "makensis.exe"),
+        ];
+    return findFirstExistingPath(candidates);
+  } catch {
+    return null;
+  }
 }
 
 async function resolveMakensisCommand(config: ToolPackConfig): Promise<string> {
@@ -324,7 +434,8 @@ async function resolveMakensisCommand(config: ToolPackConfig): Promise<string> {
   ];
   for (const candidate of candidates) {
     try {
-      await execFileAsync(candidate, ["/VERSION"], { windowsHide: true });
+      const invocation = await resolveWindowsToolInvocation(candidate);
+      await execFileAsync(invocation.command, [...invocation.argsPrefix, "/VERSION"], { windowsHide: true });
       return candidate;
     } catch {
       // Keep probing known locations.
@@ -422,7 +533,7 @@ async function writeInstallerScript(config: ToolPackConfig, paths: WinPaths, pac
   const localUpdateDownloadsRoot = `${localDataRoot}\\updates\\downloads`;
   const localUpdateReleasesRoot = `${localDataRoot}\\updates\\releases`;
   const localUpdateStagingRoot = `${localDataRoot}\\updates\\staging`;
-  const nsisLogPath = escapeNsisString(paths.nsisLogPath);
+  const nsisLogPaths = resolveNsisRuntimeLogPaths(config, paths.nsisLogPath);
   const runningInstancesScriptPath = join(dirname(paths.installerScriptPath), "running-instances.ps1");
   const launcherRuntimeSyncScriptPath = join(dirname(paths.installerScriptPath), "sync-launcher-runtime.ps1");
 
@@ -536,8 +647,8 @@ Var LX
 Function LogInstallerEvent
   Exch $0
   Push $1
-  CreateDirectory "${escapeNsisString(dirname(paths.nsisLogPath))}"
-  FileOpen $1 "${nsisLogPath}" a
+  CreateDirectory "${nsisLogPaths.directory}"
+  FileOpen $1 "${nsisLogPaths.path}" a
   IfErrors done
   FileSeek $1 0 END
   FileWrite $1 "$0$\\r$\\n"
@@ -571,8 +682,8 @@ ${createLauncherRuntimeSyncScript(
 Function un.LogInstallerEvent
   Exch $0
   Push $1
-  CreateDirectory "${escapeNsisString(dirname(paths.nsisLogPath))}"
-  FileOpen $1 "${nsisLogPath}" a
+  CreateDirectory "${nsisLogPaths.directory}"
+  FileOpen $1 "${nsisLogPaths.path}" a
   IfErrors done
   FileSeek $1 0 END
   FileWrite $1 "$0$\\r$\\n"
@@ -1025,10 +1136,6 @@ SectionEnd
   await writeFile(paths.installerScriptPath, `\uFEFF${script}`, "utf8");
 }
 
-function assertWinInstallerBuildPlatform(): void {
-  if (process.platform !== "win32") throw new Error("Windows installer build must run on Windows");
-}
-
 function logWinInstallerProgress(message: string, fields: Record<string, unknown> = {}): void {
   const suffix = Object.entries(fields)
     .map(([key, value]) => `${key}=${String(value)}`)
@@ -1067,14 +1174,20 @@ function createWinNsisTimingHelpers() {
     options: { cwd: string; outputPath?: string; timeoutMs?: number },
   ): Promise<void> => {
     const startedAt = Date.now();
+    const invocation = await resolveWindowsToolInvocation(command);
+    const toolArgs = invocation.runner === "wine" ? prepareWindowsToolArgsForWine(args) : args;
+    const resolvedArgs = [...invocation.argsPrefix, ...toolArgs];
     const details: Record<string, unknown> = {
       args,
       command,
       cwd: options.cwd,
+      runner: invocation.runner,
+      resolvedArgs,
+      resolvedCommand: invocation.command,
     };
     logWinInstallerProgress("segment:start", { phase });
     try {
-      const result = await execFileAsync(command, args, {
+      const result = await execFileAsync(invocation.command, resolvedArgs, {
         cwd: options.cwd,
         timeout: options.timeoutMs,
         windowsHide: true,
@@ -1118,7 +1231,6 @@ async function buildWinNsisPayloadArchive(
   phasePrefix: string,
   archiveArgs: string[],
 ): Promise<WinPackTiming[]> {
-  assertWinInstallerBuildPlatform();
   const { runExecSegment, runSegment, timings } = createWinNsisTimingHelpers();
 
   await runSegment(`${phasePrefix}:prepare`, async () => {
@@ -1173,7 +1285,6 @@ export async function buildWinNsisOverlayPayload(
   paths: WinPaths,
   builtApp: WinBuiltAppManifest,
 ): Promise<WinPackTiming[]> {
-  assertWinInstallerBuildPlatform();
   const { runExecSegment, runSegment, timings } = createWinNsisTimingHelpers();
   const stageRoot = join(dirname(paths.installerOverlayPayloadPath), "payload-overlay-stage");
 
@@ -1212,7 +1323,6 @@ export async function buildCustomWinNsisInstaller(
   config: ToolPackConfig,
   paths: WinPaths,
 ): Promise<WinPackTiming[]> {
-  assertWinInstallerBuildPlatform();
   const { runExecSegment, runSegment, timings } = createWinNsisTimingHelpers();
   const makensisCommand = await runSegment("nsis:resolve-makensis", async () => resolveMakensisCommand(config));
   const packagedVersion = await runSegment("nsis:read-version", async () => readPackagedVersion(config));

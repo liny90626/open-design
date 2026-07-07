@@ -847,13 +847,6 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
     fireEvent.change(screen.getByLabelText('Base URL'), {
       target: { value: 'http://10.0.0.5:11434/v1' },
     });
-    expect(screen.getByRole('alert').textContent).toContain(
-      'Use a public http:// or https:// URL.',
-    );
-
-    fireEvent.change(screen.getByLabelText('Base URL'), {
-      target: { value: 'http://localhost:11434/v1' },
-    });
 
     await waitForPersist(
       onPersist,
@@ -861,7 +854,7 @@ describe('SettingsDialog execution settings BYOK interactions', () => {
         mode: 'api',
         apiProtocol: 'anthropic',
         apiKey: 'sk-test',
-        baseUrl: 'http://localhost:11434/v1',
+        baseUrl: 'http://10.0.0.5:11434/v1',
         model: 'claude-sonnet-4-5',
         apiProviderBaseUrl: null,
       }),

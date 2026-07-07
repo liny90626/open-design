@@ -343,7 +343,7 @@ export const zhCN: Dict = {
   'settings.fetchModelsFailed': '无法拉取模型：{detail}',
   'settings.suggestedModelsHint': '这些是此协议的建议模型。你的提供方可能支持不同的模型。',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': '使用公网 http:// 或 https:// URL。',
+  'settings.baseUrlInvalid': '使用有效的 http:// 或 https:// URL。',
   'settings.baseUrlCustomize': '自定义',
   'settings.baseUrlDefaultHint': '默认接口地址，通常不需要修改。',
   'settings.azureBaseUrlPlaceholder': '粘贴 Azure endpoint URL',

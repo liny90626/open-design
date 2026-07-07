@@ -343,7 +343,7 @@ export const zhTW: Dict = {
   'settings.fetchModelsFailed': '無法取得模型：{detail}',
   'settings.suggestedModelsHint': '這些是此協定的建議模型。你的提供方可能支援不同的模型。',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': '使用公網 http:// 或 https:// URL。',
+  'settings.baseUrlInvalid': '使用有效的 http:// 或 https:// URL。',
   'settings.baseUrlCustomize': '自訂',
   'settings.baseUrlDefaultHint': '預設端點，通常不需要修改。',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

@@ -343,7 +343,7 @@ export const pl: Dict = {
   'settings.fetchModelsFailed': 'Nie udało się pobrać modeli: {detail}',
   'settings.suggestedModelsHint': 'To sugerowane modele dla tego protokołu. Twój dostawca może obsługiwać inne modele.',
   'settings.baseUrl': 'Bazowy URL',
-  'settings.baseUrlInvalid': 'Użyj publicznego URL http:// lub https://.',
+  'settings.baseUrlInvalid': 'Użyj prawidłowego URL http:// lub https://.',
   'settings.baseUrlCustomize': 'Dostosuj',
   'settings.baseUrlDefaultHint': 'Domyślny punkt końcowy. Zwykle nie trzeba go zmieniać.',
   'settings.azureBaseUrlPlaceholder': 'https://my-resource.openai.azure.com',

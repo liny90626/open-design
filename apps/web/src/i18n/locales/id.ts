@@ -343,7 +343,7 @@ export const id: Dict = {
   'settings.fetchModelsFailed': 'Tidak dapat mengambil model: {detail}',
   'settings.suggestedModelsHint': 'Ini model yang disarankan untuk protokol ini. Provider kamu mungkin mendukung model lain.',
   'settings.baseUrl': 'Base URL',
-  'settings.baseUrlInvalid': 'Gunakan URL publik http:// atau https://.',
+  'settings.baseUrlInvalid': 'Gunakan URL http:// atau https:// yang valid.',
   'settings.baseUrlCustomize': 'Sesuaikan',
   'settings.baseUrlDefaultHint': 'Endpoint default. Biasanya tidak perlu diubah.',
   'settings.azureBaseUrlPlaceholder': 'Tempel URL endpoint Azure',

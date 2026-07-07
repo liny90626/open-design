@@ -108,7 +108,190 @@ export function isBlockedExternalApiHostname(hostname: string): boolean {
   return Boolean(mapped && isBlockedIpv4(mapped));
 }
 
-export function validateBaseUrl(baseUrl: string): BaseUrlValidationResult {
+// Normalized forms a hostname can be matched under: the bracket-stripped,
+// lowercased, trailing-dot-stripped string plus, for IPv4-mapped IPv6
+// literals, the dotted-quad form. Both an allowlist entry and a candidate
+// host are reduced through this so `10.0.0.5`, `10.0.0.5.`, `[::ffff:10.0.0.5]`
+// and `10.0.0.5` all compare equal.
+function internalHostMatchForms(hostname: string): string[] {
+  const normalized = normalizeBracketedIpv6(hostname);
+  const forms = new Set<string>([normalized]);
+  const mapped = ipv4MappedToDotted(hostname);
+  if (mapped) forms.add(mapped.toLowerCase());
+  return [...forms];
+}
+
+// Issue #3225 — explicit, operator-declared escape hatch from the
+// default-deny internal-IP guard. Returns true only when `hostname` matches
+// a host the operator deliberately trusted (see `OD_ALLOWED_INTERNAL_HOSTS`
+// on the daemon). An empty/absent allowlist always returns false, so the
+// strict default is preserved unless an operator opts in. This is consulted
+// ONLY for user-configured provider endpoints, never for the
+// attacker-controllable asset-download SSRF guard.
+export function isAllowlistedInternalHost(
+  hostname: string,
+  allowedInternalHosts?: readonly string[],
+): boolean {
+  if (!allowedInternalHosts || allowedInternalHosts.length === 0) return false;
+  const candidateForms = internalHostMatchForms(hostname);
+  for (const entry of allowedInternalHosts) {
+    if (typeof entry !== 'string' || !entry.trim()) continue;
+    const entryForms = internalHostMatchForms(entry.trim());
+    if (entryForms.some((form) => candidateForms.includes(form))) return true;
+  }
+  return false;
+}
+
+/** Read-only daemon policy for trusted internal BYOK/provider gateways. */
+export interface ByokPrivateTargetAllowlist {
+  hostnames: string[];
+  cidrs: string[];
+}
+
+export interface ByokPrivateAllowlist {
+  hostnames: ReadonlySet<string>;
+  cidrs: readonly string[];
+}
+
+export const DEFAULT_BYOK_PRIVATE_CIDR_ALLOWLIST = [
+  '10.0.0.0/8',
+  '172.16.0.0/12',
+  '192.168.0.0/16',
+] as const;
+
+export function defaultByokPrivateAllowlist(): ByokPrivateAllowlist {
+  return {
+    hostnames: new Set(),
+    cidrs: [...DEFAULT_BYOK_PRIVATE_CIDR_ALLOWLIST],
+  };
+}
+
+function ipv4ToUint32(hostname: string): number | null {
+  const parts = parseIpv4(normalizeBracketedIpv6(hostname));
+  if (!parts) return null;
+  return (
+    ((parts[0] << 24) >>> 0) +
+    (parts[1] << 16) +
+    (parts[2] << 8) +
+    parts[3]
+  ) >>> 0;
+}
+
+function parseIpv4Cidr(cidr: string): { network: number; mask: number } | null {
+  const trimmed = cidr.trim();
+  const slash = trimmed.indexOf('/');
+  if (slash <= 0) return null;
+  const ipPart = trimmed.slice(0, slash);
+  const prefix = Number(trimmed.slice(slash + 1));
+  if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) return null;
+  const network = ipv4ToUint32(ipPart);
+  if (network === null) return null;
+  const mask = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
+  return { network: network & mask, mask };
+}
+
+export function ipv4MatchesCidr(ip: string, cidr: string): boolean {
+  const parsed = parseIpv4Cidr(cidr);
+  const value = ipv4ToUint32(ip);
+  if (!parsed || value === null) return false;
+  return (value & parsed.mask) === parsed.network;
+}
+
+function normalizeAllowlistHostToken(entry: string): string | null {
+  const trimmed = entry.trim();
+  if (!trimmed) return null;
+  try {
+    const url = new URL(trimmed.includes('://') ? trimmed : `http://${trimmed}`);
+    return normalizeBracketedIpv6(url.hostname);
+  } catch {
+    return normalizeBracketedIpv6(trimmed);
+  }
+}
+
+export function parseByokPrivateAllowlistFromEnv(
+  env: Record<string, string | undefined>,
+): ByokPrivateAllowlist {
+  const hostnames = new Set<string>();
+  const rawHosts = [
+    env.OD_BYOK_PRIVATE_HOST_ALLOWLIST,
+    // Backwards-compatible spelling from the operator opt-in PR.
+    env.OD_ALLOWED_INTERNAL_HOSTS,
+  ].filter(Boolean).join(',');
+  for (const entry of rawHosts.split(/[,\s]+/)) {
+    const normalized = normalizeAllowlistHostToken(entry);
+    if (normalized) hostnames.add(normalized);
+  }
+
+  const envCidrs = [
+    env.OD_BYOK_PRIVATE_CIDR_ALLOWLIST,
+    env.OD_ALLOWED_INTERNAL_CIDRS,
+  ]
+    .filter(Boolean)
+    .join(',')
+    .split(/[,\s]+/)
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.length > 0);
+  const cidrs = new Set([
+    ...DEFAULT_BYOK_PRIVATE_CIDR_ALLOWLIST,
+    ...envCidrs,
+  ]);
+
+  return { hostnames, cidrs: [...cidrs] };
+}
+
+export function serializeByokPrivateAllowlist(
+  allowlist: ByokPrivateAllowlist,
+): ByokPrivateTargetAllowlist {
+  return {
+    hostnames: [...allowlist.hostnames],
+    cidrs: [...allowlist.cidrs],
+  };
+}
+
+export function byokAllowlistFromResponse(
+  response: ByokPrivateTargetAllowlist | null | undefined,
+): ByokPrivateAllowlist | null {
+  if (!response) return defaultByokPrivateAllowlist();
+  const hostnames = new Set<string>();
+  for (const entry of response.hostnames ?? []) {
+    const normalized = normalizeAllowlistHostToken(String(entry));
+    if (normalized) hostnames.add(normalized);
+  }
+  const cidrs = (response.cidrs ?? []).map((entry) => String(entry).trim()).filter(Boolean);
+  if (hostnames.size === 0 && cidrs.length === 0) return null;
+  return { hostnames, cidrs };
+}
+
+export function isPrivateTargetAllowedByAllowlist(
+  hostname: string,
+  allowlist: ByokPrivateAllowlist | null | undefined,
+  resolvedIp?: string,
+): boolean {
+  if (!allowlist) return false;
+  const normalizedHostname = normalizeBracketedIpv6(hostname);
+  if (allowlist.hostnames.has(normalizedHostname)) return true;
+
+  const candidateIp = resolvedIp ? normalizeBracketedIpv6(resolvedIp) : normalizedHostname;
+  if (parseIpv4(candidateIp)) return allowlist.cidrs.some((cidr) => ipv4MatchesCidr(candidateIp, cidr));
+  const mapped = ipv4MappedToDotted(candidateIp);
+  return Boolean(mapped && allowlist.cidrs.some((cidr) => ipv4MatchesCidr(mapped, cidr)));
+}
+
+export interface ValidateBaseUrlOptions {
+  // Hosts the operator has explicitly declared trusted (issue #3225). Each
+  // entry is a bare hostname or IP literal; a host that matches is exempted
+  // from the internal-IP block. Defaults to none, keeping the strict
+  // default-deny behavior for every caller that does not opt in.
+  allowedInternalHosts?: readonly string[];
+  // Undefined means the BYOK/provider default allowlist applies. Null means
+  // strict SSRF mode, used by asset/download validation.
+  allowlist?: ByokPrivateAllowlist | null;
+}
+
+export function validateBaseUrl(
+  baseUrl: string,
+  options: ValidateBaseUrlOptions = {},
+): BaseUrlValidationResult {
   let parsed: ParsedBaseUrl;
   try {
     parsed = new URL(String(baseUrl).replace(/\/+$/, ''));
@@ -118,8 +301,16 @@ export function validateBaseUrl(baseUrl: string): BaseUrlValidationResult {
   if (!['http:', 'https:'].includes(parsed.protocol)) {
     return { error: 'Only http/https allowed' };
   }
+  const allowlist = options.allowlist === undefined
+    ? defaultByokPrivateAllowlist()
+    : options.allowlist;
   const hostname = parsed.hostname.toLowerCase();
-  if (!isLoopbackApiHost(hostname) && isBlockedExternalApiHostname(hostname)) {
+  if (
+    !isLoopbackApiHost(hostname) &&
+    !isAllowlistedInternalHost(hostname, options.allowedInternalHosts) &&
+    !isPrivateTargetAllowedByAllowlist(hostname, allowlist) &&
+    isBlockedExternalApiHostname(hostname)
+  ) {
     return { error: 'Internal IPs blocked', forbidden: true };
   }
   return { parsed };

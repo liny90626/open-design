@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fork patch
+
+- Based the fork's `release/v0.12.0` branch on official `open-design-v0.12.0`,
+  while allowing BYOK/provider Base URLs to use RFC1918 LAN IPv4 targets
+  (`10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`) for local relays,
+  NAS/workstation gateways, and intranet model endpoints. Other unsafe internal
+  targets and untrusted asset/download URLs remain blocked. The Windows
+  Docker/Wine packaging path was kept buildable for the local upgrade installer.
+
 ## [0.9.0] - 2026-05-29
 
 🎉 **310 PRs · 88 contributors · 7 days** — Meet the **install-and-create release**. No more API-key scavenger hunts. No more asking teammates to install three different CLIs before their first prompt. **Open Design AMR** is now built into the app: sign in once, pick a model, and start building. Around that zero-config first run, 0.9.0 brings a bigger agent bench, faster model picking, a more discoverable plugin marketplace, richer review workflows, smoother Studio tools, and easier installs across Windows, macOS, and Linux. 🚀

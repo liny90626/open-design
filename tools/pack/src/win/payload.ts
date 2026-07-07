@@ -18,7 +18,12 @@ import {
   resolveToolPackLauncherRoot,
 } from "../launcher-layout.js";
 import { readPackagedVersion } from "./manifest.js";
-import { WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, resolveWinNsisOverlayRequiredPaths } from "./custom-installer.js";
+import {
+  WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS,
+  prepareWindowsToolArgsForWine,
+  resolveWinNsisOverlayRequiredPaths,
+  resolveWindowsToolInvocation,
+} from "./custom-installer.js";
 import type { WinBuiltAppManifest, WinPackTiming, WinPaths } from "./types.js";
 
 const execFileAsync = promisify(execFile);
@@ -64,6 +69,15 @@ function logWinPayloadProgress(message: string, fields: Record<string, unknown> 
   process.stderr.write(`[tools-pack win] ${message}${suffix.length === 0 ? "" : ` ${suffix}`}\n`);
 }
 
+async function execWindowsTool(command: string, args: string[], options: { cwd?: string } = {}): Promise<void> {
+  const invocation = await resolveWindowsToolInvocation(command);
+  const toolArgs = invocation.runner === "wine" ? prepareWindowsToolArgsForWine(args) : args;
+  await execFileAsync(invocation.command, [...invocation.argsPrefix, ...toolArgs], {
+    cwd: options.cwd,
+    windowsHide: true,
+  });
+}
+
 export async function buildWinLauncherPayloadArchive(
   config: ToolPackConfig,
   paths: WinPaths,
@@ -71,7 +85,6 @@ export async function buildWinLauncherPayloadArchive(
   cache?: ToolPackCache,
   options: { seedFromInstallerPayload?: boolean } = {},
 ): Promise<WinPackTiming[]> {
-  if (process.platform !== "win32") throw new Error("Windows launcher payload build must run on Windows");
   const timings: WinPackTiming[] = [];
   const packagedVersion = await readPackagedVersion(config);
   const channel = resolveToolPackLauncherChannel(config);
@@ -149,9 +162,8 @@ export async function buildWinLauncherPayloadArchive(
     await rm(stageRoot, { force: true, recursive: true });
     await mkdir(payloadRoot, { recursive: true });
     await cp(builtApp.unpackedRoot, payloadRoot, { recursive: true });
-    await execFileAsync(winResources.sevenZipExe, ["a", ...WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["a", ...WIN_PAYLOAD_SEVEN_Z_CREATE_ARGS, outputPath, ".\\*"], {
       cwd: stageRoot,
-      windowsHide: true,
     });
   };
 
@@ -169,14 +181,11 @@ export async function buildWinLauncherPayloadArchive(
       .filter((name) => !overlayTopLevel.has(name))
       .flatMap((name) => [name, `payload/${name}`]);
     if (renameArgs.length > 0) {
-      await execFileAsync(winResources.sevenZipExe, ["rn", outputPath, ...renameArgs], {
-        windowsHide: true,
-      });
+      await execWindowsTool(winResources.sevenZipExe, ["rn", outputPath, ...renameArgs]);
     }
     await writeOverlay({ includeExecutable: true });
-    await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
       cwd: overlayRoot,
-      windowsHide: true,
     });
     return true;
   };
@@ -185,9 +194,8 @@ export async function buildWinLauncherPayloadArchive(
     if (await createArchiveFromInstallerBase(outputPath)) return;
     await createBaseArchive(outputPath);
     await writeOverlay({ includeExecutable: false });
-    await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+    await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
       cwd: overlayRoot,
-      windowsHide: true,
     });
   };
 
@@ -246,9 +254,8 @@ export async function buildWinLauncherPayloadArchive(
           if (baseArchivePath == null) throw new Error("missing Windows launcher payload base cache path");
           await cp(baseArchivePath, outputPath);
           await writeOverlay({ includeExecutable: false });
-          await execFileAsync(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
+          await execWindowsTool(winResources.sevenZipExe, ["u", "-t7z", outputPath, ".\\*"], {
             cwd: overlayRoot,
-            windowsHide: true,
           });
         }
         return { createdAt: new Date().toISOString(), sourceKey };
@@ -313,9 +320,7 @@ export async function validateWinLauncherPayloadArchive(input: {
 
   const extractRoot = await mkdtemp(join(tmpdir(), "od-win-payload-"));
   try {
-    await execFileAsync(winResources.sevenZipExe, ["x", payloadPath, `-o${extractRoot}`, "-y"], {
-      windowsHide: true,
-    });
+    await execWindowsTool(winResources.sevenZipExe, ["x", payloadPath, `-o${extractRoot}`, "-y"]);
     const manifest = JSON.parse(await readFile(join(extractRoot, "manifest.json"), "utf8")) as WinLauncherPayloadManifest;
     const expectedChannel = resolveToolPackLauncherChannel({
       appVersion: input.expectedVersion,
