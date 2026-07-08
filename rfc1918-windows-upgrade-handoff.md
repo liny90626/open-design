@@ -1,6 +1,6 @@
 # RFC1918 Windows Upgrade Handoff
 
-Updated on 2026-07-07 for the `open-design` 0.13.1 maintenance task.
+Updated on 2026-07-08 for the `open-design` 0.13.1 maintenance task.
 
 ## Goal
 
@@ -38,6 +38,19 @@ keeping open project tabs mounted. Non-active `ProjectView` instances no longer
 write route state, so their in-flight runs can continue without fighting the
 currently active tab.
 
+Final fork branch state after the 2026-07-08 cleanup:
+
+- `fork/main` -> `1925fe6086180c7e8987ac95dead63a622c688b2`
+- `fork/release/v0.13.1` contains the final code/build handoff commit
+  `8252fd963eb3e51bfdd254b36be29ea07d8b53fc`, followed by the
+  documentation-only cleanup/archive note commit. Use `git log -1` for the
+  exact current release branch head after this note is committed.
+- `fork/feature/rfc1918-lan-byok` ->
+  `7f94c55b1f5d92da0de268a2fa1c8b4de9eb2d84`
+- Local and fork remote `release/v0.14.0` were removed because this delivery
+  intentionally targets the official formal `open-design-v0.13.0` release tag,
+  packaged as the fork's `0.13.1`.
+
 ## Current Windows Artifacts
 
 Target 2026-07-07 build output:
@@ -54,6 +67,12 @@ User-facing upgrade installer:
 
 ```text
 OpenDesign-V0.13.1-local_allow_by_linky.exe
+```
+
+Keep this installer when cleaning process files:
+
+```text
+/home/linky/workspace/open-design/.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/OpenDesign-V0.13.1-local_allow_by_linky.exe
 ```
 
 Verified artifact metadata after the fresh build:
@@ -242,6 +261,37 @@ installer again.
 9. After a successful build, process caches can be cleaned to save disk, but do
    not delete the installer directory above. Preserve `.tmp/toolchains` unless
    you have a replacement Node 24/pnpm 10.33.2 toolchain ready.
+
+## Post-Delivery Cleanup And Source Archive
+
+After the final verification and push, process caches can be removed while
+preserving the user-facing installer. The cleanup target is generated state, not
+source state:
+
+- remove `.tmp/tools-pack/`, `.tmp/open-design-docker-home/`,
+  `.tmp/open-design-corepack/`, `.tmp/open-design-electron-cache/`,
+  `.tmp/open-design-electron-builder-cache/`, `.tmp/open-design-npm-cache/`,
+  and `.tmp/xdg-config/`;
+- remove large non-installer build subtrees under
+  `.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/`;
+- keep
+  `.tmp/open-design-pack-win-v0.13.1-local-keepalive-lan-20260707/out/win/namespaces/default/builder/OpenDesign-V0.13.1-local_allow_by_linky.exe`;
+- keep `latest.yml` and `Open Design-default-setup.exe` only if update-feed
+  metadata or the original tools-pack output name needs to be rechecked;
+- keep `.tmp/toolchains/` unless another Node 24 / pnpm 10.33.2 toolchain is
+  available.
+
+The requested source archive is created outside the repository, after process
+cleanup:
+
+```text
+/home/linky/workspace/open-design-v0.13.1-local_allow_by_linky-source.zip
+```
+
+Archive policy: include the repository source and git metadata needed to reopen
+the checkout, but exclude dependency folders and generated/build/runtime
+outputs such as `.tmp/`, `node_modules/`, `dist/`, `.next/`, Playwright reports,
+and other package/build outputs.
 
 ## Verification Commands
 
