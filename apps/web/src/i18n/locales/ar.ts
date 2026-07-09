@@ -378,6 +378,7 @@ export const ar: Dict = {
   'settings.amrBalance': 'الرصيد',
   'settings.amrPlan': 'الخطة',
   'settings.amrUpgrade': 'ترقية',
+  'settings.amrModelUpgradeHint': 'قم بالترقية للاستخدام',
   'settings.amrLoginErrorCompact': 'فشل تسجيل الدخول إلى Open Design.',
   'settings.advanced': 'متقدّم',
   'settings.amrLogin': 'تسجيل الدخول',

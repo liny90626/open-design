@@ -378,6 +378,7 @@ export const de: Dict = {
   'settings.amrBalance': 'Guthaben',
   'settings.amrPlan': 'Tarif',
   'settings.amrUpgrade': 'Upgrade',
+  'settings.amrModelUpgradeHint': 'Zum Nutzen upgraden',
   'settings.amrLoginErrorCompact': 'Open Design-Anmeldung fehlgeschlagen.',
   'settings.advanced': 'Erweitert',
   'settings.amrLogin': 'Anmelden',
