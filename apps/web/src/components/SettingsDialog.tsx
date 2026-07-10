@@ -5173,7 +5173,7 @@ export function SettingsDialog({
                 model={cfg.model}
                 modelSelectRef={modelSelectRef}
                 models={apiModelOptions.map((m) => ({
-                  id: m.id,
+                  ...m,
                   label: apiModelOptionLabel(
                     m,
                     !hidesAccountModelSourceLabel(apiProtocol) &&

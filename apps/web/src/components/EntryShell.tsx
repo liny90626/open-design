@@ -3258,7 +3258,7 @@ function formatModelToken(token: string): string {
 
 function onboardingModelCapabilityLabel(
   t: ReturnType<typeof useT>,
-  model: Pick<NonNullable<AgentInfo['models']>[number], 'id' | 'label'>,
+  model: Pick<NonNullable<AgentInfo['models']>[number], 'id' | 'metadata'>,
 ): { label: string; kind: ModelCapabilityTag } | undefined {
   const tag = getModelCapabilityTag(model);
   return tag ? { label: t(MODEL_CAPABILITY_TAG_LABEL_KEYS[tag]), kind: tag } : undefined;
@@ -3266,7 +3266,7 @@ function onboardingModelCapabilityLabel(
 
 function onboardingModelCostLabel(
   t: ReturnType<typeof useT>,
-  model: Pick<NonNullable<AgentInfo['models']>[number], 'id' | 'label'>,
+  model: Pick<NonNullable<AgentInfo['models']>[number], 'id' | 'metadata'>,
 ): { label: string } | undefined {
   const tier = getModelCostTier(model);
   return tier ? { label: t(MODEL_COST_TIER_LABEL_KEYS[tier]) } : undefined;
