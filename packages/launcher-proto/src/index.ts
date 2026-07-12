@@ -128,6 +128,7 @@ export class LauncherProtocolError extends Error {
 }
 
 type ParsedComparableVersion = {
+  iteration: number | null;
   nums: [number, number, number];
   pre: string[];
 };
@@ -141,6 +142,7 @@ function parseComparableLauncherVersion(value: string): ParsedComparableVersion 
   const nightlyMatch = /^(\d+)\.(\d+)\.(\d+)\.nightly\.(\d+)$/i.exec(cleaned);
   if (nightlyMatch?.[1] != null && nightlyMatch[2] != null && nightlyMatch[3] != null && nightlyMatch[4] != null) {
     return {
+      iteration: null,
       nums: [Number(nightlyMatch[1]), Number(nightlyMatch[2]), Number(nightlyMatch[3])],
       pre: ["nightly", nightlyMatch[4]],
     };
@@ -150,9 +152,17 @@ function parseComparableLauncherVersion(value: string): ParsedComparableVersion 
   const core = prereleaseSeparator === -1 ? cleaned : cleaned.slice(0, prereleaseSeparator);
   const prerelease = prereleaseSeparator === -1 ? "" : cleaned.slice(prereleaseSeparator + 1);
   const nums = core.split(".");
+  const pre = prerelease.length === 0 ? [] : prerelease.split(".");
+  const numericIteration = pre.length === 1 && /^\d+$/.test(pre[0] ?? "")
+    ? Number(pre[0])
+    : null;
   return {
+    // Fork releases use X.Y.Z-N, where N is a local iteration on top of
+    // official X.Y.Z. Treat the official build as iteration zero without
+    // changing the ordering of named beta/prerelease channels.
+    iteration: pre.length === 0 ? 0 : numericIteration,
     nums: [numberPart(nums[0]), numberPart(nums[1]), numberPart(nums[2])],
-    pre: prerelease.length === 0 ? [] : prerelease.split("."),
+    pre,
   };
 }
 
@@ -171,6 +181,9 @@ export function compareLauncherVersions(a: string, b: string): number {
   for (let index = 0; index < 3; index += 1) {
     const delta = (left.nums[index] ?? 0) - (right.nums[index] ?? 0);
     if (delta !== 0) return Math.sign(delta);
+  }
+  if (left.iteration != null && right.iteration != null) {
+    return Math.sign(left.iteration - right.iteration);
   }
   if (left.pre.length === 0 && right.pre.length === 0) return 0;
   if (left.pre.length === 0) return 1;

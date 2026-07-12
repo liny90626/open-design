@@ -1829,6 +1829,30 @@ describe("desktop updater", () => {
     }
   });
 
+  it("does not replace a numeric local iteration with its matching official base", async () => {
+    const root = makeRoot();
+    const fixture = await createUpdaterFixture({ version: "0.14.1" });
+    try {
+      const updater = createDesktopUpdater({
+        arch: "arm64",
+        downloadRoot: root,
+        env: {
+          ...updaterEnv(fixture.metadataUrl),
+          [DESKTOP_UPDATE_ENV.CURRENT_VERSION]: "0.14.1-1",
+        },
+        source: SIDECAR_SOURCES.TOOLS_PACK,
+      });
+
+      const checked = await updater.checkForUpdates();
+      expect(checked.state).toBe(DESKTOP_UPDATE_STATES.NOT_AVAILABLE);
+      expect(checked.downloadPath).toBeUndefined();
+      expect(fixture.artifactRequests()).toBe(0);
+    } finally {
+      await fixture.close();
+      rmSync(root, { force: true, recursive: true });
+    }
+  });
+
   it("accepts beta metadata that exposes betaVersion instead of releaseVersion", async () => {
     const root = makeRoot();
     const fixture = await createUpdaterFixture({ channel: "beta", version: "1.0.1-beta.2" });
@@ -2981,5 +3005,9 @@ describe("desktop updater", () => {
     expect(compareVersions("1.0.0-prerelease.10", "1.0.0-prerelease.2")).toBe(1);
     expect(compareVersions("1.0.0", "1.0.0-beta.9")).toBe(1);
     expect(compareVersions("1.0.0-beta.1", "1.0.0")).toBe(-1);
+    expect(compareVersions("0.14.1-1", "0.14.1")).toBe(1);
+    expect(compareVersions("0.14.1-2", "0.14.1-1")).toBe(1);
+    expect(compareVersions("0.14.1-10", "0.14.1-2")).toBe(1);
+    expect(compareVersions("0.14.1", "0.14.1-1")).toBe(-1);
   });
 });

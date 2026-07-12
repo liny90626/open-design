@@ -327,4 +327,45 @@ describe("resolvePackagedLauncherRuntime", () => {
       await rm(root, { force: true, recursive: true });
     }
   });
+
+  it("lets a numeric local iteration supersede its persisted official base", async () => {
+    const root = await mkdtemp(join(tmpdir(), "od-packaged-launcher-local-iteration-"));
+    try {
+      const config = {
+        ...fakeConfig(root, "0.14.1-1"),
+        namespace: "release-stable-win",
+      };
+      const paths = resolvePackagedNamespacePaths(config);
+      const namespaceRoot = join(paths.installationRoot, "launcher", "channels", "stable", "namespaces", config.namespace);
+      await mkdir(join(namespaceRoot, "state"), { recursive: true });
+      await writeFile(
+        join(namespaceRoot, "runtime.json"),
+        `${JSON.stringify({
+          active: { generation: 3, version: "0.14.1" },
+          channel: "stable",
+          lastSuccessful: { generation: 3, version: "0.14.1" },
+          namespace: config.namespace,
+          schemaVersion: LAUNCHER_SCHEMA_VERSION,
+        })}\n`,
+      );
+
+      const runtime = await resolvePackagedLauncherRuntime(config, paths);
+
+      expect(runtime.source).toBe("current-package");
+      expect(runtime.config.appVersion).toBe("0.14.1-1");
+      expect(JSON.parse(await readFile(runtime.launcherPaths.runtimePath, "utf8"))).toMatchObject({
+        active: { generation: 0, version: "0.14.1-1" },
+        lastSuccessful: { generation: 0, version: "0.14.1-1" },
+      });
+      expect(JSON.parse(await readFile(runtime.launcherPaths.cleanupPath, "utf8"))).toMatchObject({
+        currentVersion: "0.14.1-1",
+        versions: expect.arrayContaining([
+          expect.objectContaining({ reason: "older-than-bound-package", state: "deprecated", version: "0.14.1" }),
+          expect.objectContaining({ reason: "current-bound-package", state: "retained", version: "0.14.1-1" }),
+        ]),
+      });
+    } finally {
+      await rm(root, { force: true, recursive: true });
+    }
+  });
 });

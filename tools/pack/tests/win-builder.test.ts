@@ -171,6 +171,13 @@ describe("Windows pack artifact boundaries", () => {
     expect(source).not.toContain("Windows installer build must run on Windows");
   });
 
+  it("keeps numeric local iteration ordering in the Windows launcher sync script", () => {
+    const source = createLauncherRuntimeSyncPowerShellScript();
+    expect(source).toContain('"Iteration"');
+    expect(source).toContain("$leftParsed.Iteration");
+    expect(source).toContain("$rightParsed.Iteration");
+  });
+
   it("finds makensis in the electron-builder extracted cache layout", async () => {
     const root = await mkdtemp(join(tmpdir(), "open-design-electron-builder-cache-"));
     const makensisPath = join(root, "nsis-3.0.4.1", "nsis-3.0.4.1-1mx3n", "Bin", "makensis.exe");

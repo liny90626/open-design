@@ -186,4 +186,12 @@ describe("launcher version comparison", () => {
     expect(compareLauncherVersions("1.0.0", "1.0.0-beta.9")).toBe(1);
     expect(compareLauncherVersions("1.0.0-beta.1", "1.0.0")).toBe(-1);
   });
+
+  it("orders numeric local iterations above their matching official base", () => {
+    expect(compareLauncherVersions("0.14.1-1", "0.14.1")).toBe(1);
+    expect(compareLauncherVersions("0.14.1-2", "0.14.1-1")).toBe(1);
+    expect(compareLauncherVersions("0.14.1-10", "0.14.1-2")).toBe(1);
+    expect(compareLauncherVersions("0.14.1", "0.14.1-1")).toBe(-1);
+    expect(compareLauncherVersions("0.14.2", "0.14.1-99")).toBe(1);
+  });
 });

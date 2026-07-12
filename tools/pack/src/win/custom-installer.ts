@@ -166,6 +166,7 @@ function Parse-ComparableLauncherVersion {
   $nightly = [regex]::Match($cleaned, '^(\\d+)\\.(\\d+)\\.(\\d+)\\.nightly\\.(\\d+)$', 'IgnoreCase')
   if ($nightly.Success) {
     return [pscustomobject]@{
+      "Iteration" = $null
       "Nums" = @([int]$nightly.Groups[1].Value, [int]$nightly.Groups[2].Value, [int]$nightly.Groups[3].Value)
       "Pre" = @('nightly', $nightly.Groups[4].Value)
     }
@@ -173,14 +174,23 @@ function Parse-ComparableLauncherVersion {
 
   $separator = $cleaned.IndexOf('-')
   $core = if ($separator -lt 0) { $cleaned } else { $cleaned.Substring(0, $separator) }
-  $pre = if ($separator -lt 0) { @() } else { $cleaned.Substring($separator + 1).Split('.') }
+  $pre = @(
+    if ($separator -ge 0) { $cleaned.Substring($separator + 1).Split('.') }
+  )
   $parts = $core.Split('.')
   $nums = @()
   for ($index = 0; $index -lt 3; $index += 1) {
     $part = if ($index -lt $parts.Count) { $parts[$index] } else { '' }
     if ($part -match '^\\d+$') { $nums += [int]$part } else { $nums += 0 }
   }
-  return [pscustomobject]@{ "Nums" = @($nums); "Pre" = @($pre) }
+  $iteration = if ($pre.Count -eq 0) {
+    0
+  } elseif ($pre.Count -eq 1 -and [string]$pre[0] -match '^\\d+$') {
+    [int]$pre[0]
+  } else {
+    $null
+  }
+  return [pscustomobject]@{ "Iteration" = $iteration; "Nums" = @($nums); "Pre" = @($pre) }
 }
 
 function Compare-LauncherIdentifier {
@@ -200,6 +210,9 @@ function Compare-LauncherVersions {
   for ($index = 0; $index -lt 3; $index += 1) {
     $delta = $leftParsed.Nums[$index] - $rightParsed.Nums[$index]
     if ($delta -ne 0) { return [Math]::Sign($delta) }
+  }
+  if ($null -ne $leftParsed.Iteration -and $null -ne $rightParsed.Iteration) {
+    return [Math]::Sign(([int]$leftParsed.Iteration) - ([int]$rightParsed.Iteration))
   }
   if ($leftParsed.Pre.Count -eq 0 -and $rightParsed.Pre.Count -eq 0) { return 0 }
   if ($leftParsed.Pre.Count -eq 0) { return 1 }
