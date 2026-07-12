@@ -10,6 +10,7 @@ import { describe, expect, it } from "vitest";
 import { materializeCachedUnpackedForInstaller } from "../src/win/builder.js";
 import {
   createLauncherRuntimeSyncPowerShellScript,
+  findElectronBuilderMakensisInCacheRoot,
   prepareWindowsToolArgsForWine,
   resolveNsisRuntimeLogPaths,
   toWineHostPath,
@@ -168,6 +169,20 @@ describe("Windows pack artifact boundaries", () => {
     expect(source).toContain("resolveWindowsToolInvocation");
     expect(source).toContain('"Wine is required to run Windows installer tools on non-Windows hosts"');
     expect(source).not.toContain("Windows installer build must run on Windows");
+  });
+
+  it("finds makensis in the electron-builder extracted cache layout", async () => {
+    const root = await mkdtemp(join(tmpdir(), "open-design-electron-builder-cache-"));
+    const makensisPath = join(root, "nsis-3.0.4.1", "nsis-3.0.4.1-1mx3n", "Bin", "makensis.exe");
+
+    try {
+      await mkdir(join(makensisPath, ".."), { recursive: true });
+      await writeFile(makensisPath, "cached makensis");
+
+      await expect(findElectronBuilderMakensisInCacheRoot(root)).resolves.toBe(makensisPath);
+    } finally {
+      await rm(root, { force: true, recursive: true });
+    }
   });
 
   it("converts host paths in Wine tool arguments without rewriting NSIS switches", () => {
