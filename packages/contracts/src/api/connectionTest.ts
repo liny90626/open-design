@@ -64,6 +64,17 @@ function isBlockedIpv4(hostname: string): boolean {
   );
 }
 
+function isRfc1918Ipv4(hostname: string): boolean {
+  const parts = parseIpv4(hostname);
+  if (!parts) return false;
+  const [a, b] = parts;
+  return (
+    a === 10 ||
+    (a === 172 && b >= 16 && b <= 31) ||
+    (a === 192 && b === 168)
+  );
+}
+
 function ipv4MappedToDotted(hostname: string): string | null {
   const host = normalizeBracketedIpv6(hostname);
   const mapped = /^::ffff:(.+)$/i.exec(host)?.[1];
@@ -88,6 +99,13 @@ function ipv4MappedToDotted(hostname: string): string | null {
     (value >>> 8) & 255,
     value & 255,
   ].join('.');
+}
+
+export function isRfc1918ApiHost(hostname: string): boolean {
+  const host = normalizeBracketedIpv6(hostname);
+  if (isRfc1918Ipv4(host)) return true;
+  const mapped = ipv4MappedToDotted(host);
+  return Boolean(mapped && isRfc1918Ipv4(mapped));
 }
 
 export function isLoopbackApiHost(hostname: string): boolean {
@@ -148,6 +166,9 @@ export interface ValidateBaseUrlOptions {
   // from the internal-IP block. Defaults to none, keeping the strict
   // default-deny behavior for every caller that does not opt in.
   allowedInternalHosts?: readonly string[];
+  // RFC1918 is allowed only for endpoints the user deliberately configured.
+  // Asset/download URLs must keep the default strict behavior.
+  allowRfc1918?: boolean;
 }
 
 export function validateBaseUrl(
@@ -167,6 +188,7 @@ export function validateBaseUrl(
   if (
     !isLoopbackApiHost(hostname) &&
     !isAllowlistedInternalHost(hostname, options.allowedInternalHosts) &&
+    !(options.allowRfc1918 && isRfc1918ApiHost(hostname)) &&
     isBlockedExternalApiHostname(hostname)
   ) {
     return { error: 'Internal IPs blocked', forbidden: true };

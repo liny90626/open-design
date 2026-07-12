@@ -116,7 +116,10 @@ import {
   extractBrandFromHtml,
   finalizeBrandProject,
 } from '../runtime/brands';
-import { isOpenDesignHostAvailable } from '@open-design/host';
+import {
+  isOpenDesignHostAvailable,
+  pickAndReplaceHostProjectWorkingDir,
+} from '@open-design/host';
 import {
   getBrandBrowser,
   BRAND_BROWSER_TAB_ID,
@@ -1515,6 +1518,7 @@ export function ProjectView({
   // True while a working-dir replace is reindexing the new folder. Surfaced
   // to the Design Files panel so the file list shows a loading state instead
   // of silently sitting on the old tree for the few seconds the scan takes.
+  const [projectRootReplaceBusy, setProjectRootReplaceBusy] = useState(false);
   const [projectFiles, setProjectFiles] = useState<ProjectFile[]>([]);
   const projectFilesRef = useRef<ProjectFile[]>([]);
   const [liveArtifacts, setLiveArtifacts] = useState<LiveArtifactSummary[]>([]);
@@ -2432,6 +2436,40 @@ export function ProjectView({
     const [nextFiles] = await Promise.all([refreshProjectFiles(), refreshLiveArtifacts()]);
     return nextFiles;
   }, [refreshLiveArtifacts, refreshProjectFiles]);
+
+  const handleReplaceProjectRoot = useCallback(async () => {
+    if (projectRootReplaceBusy) return;
+    setProjectRootReplaceBusy(true);
+    setProjectActionsToast(null);
+    try {
+      const result = await pickAndReplaceHostProjectWorkingDir(project.id);
+      if (!result.ok) {
+        if ('canceled' in result) return;
+        throw new Error(result.reason);
+      }
+      await Promise.all([
+        projectDetail.refresh(),
+        refreshWorkspaceItems(),
+        Promise.resolve(onProjectsRefresh()),
+      ]);
+      setFilesRefresh((value) => value + 1);
+    } catch (err) {
+      setProjectActionsToast({
+        message: t('workingDirPicker.replaceFailed'),
+        details: err instanceof Error ? err.message : String(err),
+        tone: 'error',
+      });
+    } finally {
+      setProjectRootReplaceBusy(false);
+    }
+  }, [
+    onProjectsRefresh,
+    project.id,
+    projectDetail.refresh,
+    projectRootReplaceBusy,
+    refreshWorkspaceItems,
+    t,
+  ]);
 
   useEffect(() => {
     if (!currentBrandExtractionId) {
@@ -8595,7 +8633,7 @@ export function ProjectView({
               ? baseDir.split(/[/\\]/).filter(Boolean).pop()
               : undefined;
           })()}
-          reloading={false}
+          reloading={projectRootReplaceBusy}
           resolvedDir={projectDetail.resolvedDir}
           files={projectFiles}
           liveArtifacts={liveArtifacts}
@@ -8639,6 +8677,10 @@ export function ProjectView({
             projectIsDesignSystemProject ? undefined : handleCreateDesignSystemFromProject
           }
           createDesignSystemFromProjectBusy={projectDesignSystemCreateStarting}
+          onReplaceProjectRoot={
+            isOpenDesignHostAvailable() ? handleReplaceProjectRoot : undefined
+          }
+          replaceProjectRootBusy={projectRootReplaceBusy}
           onDuplicateProject={onDuplicateProject ? handleDuplicateProject : undefined}
           duplicateProjectBusy={projectDuplicateStarting}
           onDeleteDesignSystemProject={onDeleteProject}

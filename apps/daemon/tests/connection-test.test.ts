@@ -7,7 +7,7 @@ import { promises as fsp } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { Socks5ProxyAgent } from 'undici';
+import { Agent, EnvHttpProxyAgent, Socks5ProxyAgent } from 'undici';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import * as platform from '@open-design/platform';
 import {
@@ -2056,6 +2056,42 @@ describe('POST /api/test/connection provider mode', () => {
     } finally {
       dispatchSpy.mockRestore();
       proxySpy.mockRestore();
+    }
+  });
+
+  it('keeps RFC1918 provider requests off an inherited HTTP proxy', async () => {
+    const proxyEnvSpy = vi.spyOn(platform, 'resolveSystemProxyEnv').mockReturnValue({});
+    const directDispatchSpy = vi
+      .spyOn(Agent.prototype, 'dispatch')
+      .mockReturnValue(true as ReturnType<typeof Agent.prototype.dispatch>);
+    const proxyDispatchSpy = vi
+      .spyOn(EnvHttpProxyAgent.prototype, 'dispatch')
+      .mockReturnValue(true as ReturnType<typeof EnvHttpProxyAgent.prototype.dispatch>);
+
+    try {
+      const { close, requestInit } = proxyDispatcherRequestInit({
+        HTTP_PROXY: 'http://system-proxy.example:8080',
+      });
+      const dispatcher = requestInit.dispatcher as unknown as {
+        dispatch(options: { origin: string; path: string; method: string }, handler: unknown): boolean;
+      };
+
+      dispatcher.dispatch(
+        {
+          origin: 'http://192.168.10.7:3001',
+          path: '/v1/chat/completions',
+          method: 'POST',
+        },
+        {},
+      );
+
+      expect(directDispatchSpy).toHaveBeenCalledOnce();
+      expect(proxyDispatchSpy).not.toHaveBeenCalled();
+      await expect(close()).resolves.toBeUndefined();
+    } finally {
+      proxyDispatchSpy.mockRestore();
+      directDispatchSpy.mockRestore();
+      proxyEnvSpy.mockRestore();
     }
   });
 
@@ -4472,7 +4508,7 @@ describe('validateBaseUrlResolved (DNS-aware base URL validation)', () => {
   });
 });
 
-describe('validateUserProviderBaseUrl: OD_ALLOWED_INTERNAL_HOSTS opt-in (issue #3225)', () => {
+describe('validateUserProviderBaseUrl: trusted user-configured internal targets', () => {
   afterEach(() => {
     vi.unstubAllEnvs();
   });
@@ -4490,9 +4526,13 @@ describe('validateUserProviderBaseUrl: OD_ALLOWED_INTERNAL_HOSTS opt-in (issue #
     expect(result.error).toBeUndefined();
   });
 
-  it('still blocks a private endpoint that is not on the allowlist', async () => {
-    vi.stubEnv('OD_ALLOWED_INTERNAL_HOSTS', '10.0.0.5');
+  it('allows RFC1918 endpoints by default without an environment allowlist', async () => {
     const result = await validateUserProviderBaseUrl('http://192.168.1.5:4000/v1');
+    expect(result.error).toBeUndefined();
+  });
+
+  it('still blocks non-RFC1918 internal endpoints by default', async () => {
+    const result = await validateUserProviderBaseUrl('http://169.254.169.254/latest/meta-data');
     expect(result).toMatchObject({ error: 'Internal IPs blocked', forbidden: true });
   });
 

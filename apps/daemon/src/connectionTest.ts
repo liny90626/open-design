@@ -62,6 +62,7 @@ import {
   isAllowlistedInternalHost,
   isBlockedExternalApiHostname,
   isLoopbackApiHost,
+  isRfc1918ApiHost,
   validateBaseUrl,
   type AgentTestRequest,
   type BaseUrlValidationResult,
@@ -151,6 +152,7 @@ export async function validateBaseUrlResolved(
   for (const addr of addresses) {
     const ip = String(addr.address).toLowerCase();
     if (isLoopbackApiHost(ip)) continue;
+    if (options.allowRfc1918 && isRfc1918ApiHost(ip)) continue;
     // A resolved address the operator explicitly allowlisted (they listed the
     // IP rather than the hostname) is permitted; everything else in private
     // space is still blocked.
@@ -165,11 +167,9 @@ export async function validateBaseUrlResolved(
 
 /**
  * Validate a base URL that the USER deliberately configured as a provider
- * endpoint (connection test, model discovery, BYOK chat dispatch). Identical
- * to {@link validateBaseUrlResolved} except it honors the operator's
- * `OD_ALLOWED_INTERNAL_HOSTS` allowlist (issue #3225), so an internally hosted
- * gateway on an RFC1918 address can be reached when — and only when — the
- * operator opted in.
+ * endpoint (connection test, model discovery, BYOK chat dispatch). It allows
+ * RFC1918 targets by default and also honors the operator's
+ * `OD_ALLOWED_INTERNAL_HOSTS` allowlist (issue #3225).
  *
  * INVARIANT: use this ONLY for user-configured endpoints. URLs that arrive
  * inside an upstream response (image/video download links) are
@@ -182,6 +182,7 @@ export function validateUserProviderBaseUrl(
 ): Promise<BaseUrlValidationResult> {
   return validateBaseUrlResolved(baseUrl, lookup, {
     allowedInternalHosts: configuredAllowedInternalHosts(),
+    allowRfc1918: true,
   });
 }
 
@@ -352,13 +353,14 @@ function noProxyTokenMatchesUrl(token: string, url: URL): boolean {
 }
 
 function shouldBypassProxyForUrl(target: string | URL, noProxy: string | null): boolean {
-  if (!noProxy) return false;
   let url: URL;
   try {
     url = target instanceof URL ? target : new URL(target);
   } catch {
     return false;
   }
+  if (isRfc1918ApiHost(url.hostname)) return true;
+  if (!noProxy) return false;
   return noProxy.split(/[\s,]+/).some((token) => noProxyTokenMatchesUrl(token, url));
 }
 
@@ -566,7 +568,7 @@ function buildConnectionTestProxyDispatcher(
   }
   if (!httpProxy && !httpsProxy) return null;
   const proxyAgent = new EnvHttpProxyAgent(proxyOptions);
-  return noProxy?.split(/[\s,]+/).some((token) => token.trim() === '<local>')
+  return noProxy
     ? new NoProxyAwareEnvProxyAgent(noProxy, proxyAgent, options)
     : proxyAgent;
 }

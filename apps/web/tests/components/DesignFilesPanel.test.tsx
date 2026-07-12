@@ -159,6 +159,29 @@ describe("DesignFilesPanel sections", () => {
     expect(screen.getByTestId("design-files-upload-trigger")).toBeTruthy();
   });
 
+  it("lets packaged users replace the writable project root from the project menu", () => {
+    const onReplaceProjectRoot = vi.fn();
+    renderPanel([file({ name: "page.html", kind: "html" })], {
+      onReplaceProjectRoot,
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Project actions" }));
+    fireEvent.click(screen.getByTestId("design-files-replace-project-root"));
+
+    expect(onReplaceProjectRoot).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole("menu")).toBeNull();
+  });
+
+  it("disables project-root replacement while the folder is being indexed", () => {
+    renderPanel([file({ name: "page.html", kind: "html" })], {
+      onReplaceProjectRoot: vi.fn(),
+      replaceProjectRootBusy: true,
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Project actions" }));
+    expect(screen.getByTestId("design-files-replace-project-root")).toBeDisabled();
+  });
+
   it("shows prioritized project starter actions in the empty state", () => {
     const onNewSketch = vi.fn();
     const onOpenBrowser = vi.fn();

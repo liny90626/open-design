@@ -63,6 +63,8 @@ interface Props {
   onCreateDesignSystem?: () => void;
   onCreateDesignSystemFromProject?: () => void;
   createDesignSystemFromProjectBusy?: boolean;
+  onReplaceProjectRoot?: () => void;
+  replaceProjectRootBusy?: boolean;
   onDuplicateProject?: () => void;
   duplicateProjectBusy?: boolean;
   /** Opens the "Select from library" picker to pull registry assets in. */
@@ -305,6 +307,8 @@ export function DesignFilesPanel({
   onCreateDesignSystem,
   onCreateDesignSystemFromProject,
   createDesignSystemFromProjectBusy = false,
+  onReplaceProjectRoot,
+  replaceProjectRootBusy = false,
   onDuplicateProject,
   duplicateProjectBusy = false,
   onSelectFromLibrary,
@@ -912,7 +916,7 @@ export function DesignFilesPanel({
         <Icon name="upload" size={13} />
         <span>{t('designFiles.upload.label')}</span>
       </button>
-      {onCreateDesignSystemFromProject || onDuplicateProject ? (
+      {onCreateDesignSystemFromProject || onReplaceProjectRoot || onDuplicateProject ? (
         <div className="df-project-menu-anchor" ref={projectMenuRef}>
           <button
             type="button"
@@ -944,6 +948,21 @@ export function DesignFilesPanel({
                 >
                   <Icon name={createDesignSystemFromProjectBusy ? 'spinner' : 'blocks'} size={13} />
                   <span>{t('designFiles.createDesignSystemFromProject')}</span>
+                </button>
+              ) : null}
+              {onReplaceProjectRoot ? (
+                <button
+                  type="button"
+                  role="menuitem"
+                  data-testid="design-files-replace-project-root"
+                  disabled={replaceProjectRootBusy}
+                  onClick={() => {
+                    setProjectMenuOpen(false);
+                    onReplaceProjectRoot();
+                  }}
+                >
+                  <Icon name={replaceProjectRootBusy ? 'spinner' : 'folder'} size={13} />
+                  <span>{t('workingDirPicker.replace')}</span>
                 </button>
               ) : null}
               {onDuplicateProject ? (

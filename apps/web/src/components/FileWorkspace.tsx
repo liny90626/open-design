@@ -199,6 +199,8 @@ interface Props {
   onDesignSystemsRefresh?: () => Promise<void> | void;
   onCreateDesignSystemFromProject?: () => void;
   createDesignSystemFromProjectBusy?: boolean;
+  onReplaceProjectRoot?: () => void;
+  replaceProjectRootBusy?: boolean;
   onDuplicateProject?: () => void;
   duplicateProjectBusy?: boolean;
   // Delete the backing project (and navigate away) for the design-system project
@@ -573,6 +575,8 @@ export function FileWorkspace({
   onDesignSystemsRefresh,
   onCreateDesignSystemFromProject,
   createDesignSystemFromProjectBusy = false,
+  onReplaceProjectRoot,
+  replaceProjectRootBusy = false,
   onDuplicateProject,
   duplicateProjectBusy = false,
   onDeleteDesignSystemProject,
@@ -2872,6 +2876,8 @@ export function FileWorkspace({
             }}
             onCreateDesignSystemFromProject={onCreateDesignSystemFromProject}
             createDesignSystemFromProjectBusy={createDesignSystemFromProjectBusy}
+            onReplaceProjectRoot={onReplaceProjectRoot}
+            replaceProjectRootBusy={replaceProjectRootBusy}
             onDuplicateProject={onDuplicateProject}
             duplicateProjectBusy={duplicateProjectBusy}
             onSelectFromLibrary={() => {

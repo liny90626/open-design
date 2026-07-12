@@ -48,6 +48,31 @@ describe('provider base URL validation', () => {
     }
   });
 
+  it('allows RFC1918 provider targets only when the caller opts in', () => {
+    for (const baseUrl of [
+      'http://10.0.0.5:11434/v1',
+      'http://172.16.0.5:11434/v1',
+      'http://192.168.1.5:11434/v1',
+      'http://[::ffff:192.168.1.5]:11434/v1',
+    ]) {
+      expect(validateBaseUrl(baseUrl, { allowRfc1918: true }).error).toBeUndefined();
+    }
+
+    for (const baseUrl of [
+      'http://0.0.0.0:11434/v1',
+      'http://100.64.0.1:11434/v1',
+      'http://169.254.169.254/latest/meta-data',
+      'http://224.0.0.1:11434/v1',
+      'http://[fd00::1]:11434/v1',
+      'http://[fe80::1]:11434/v1',
+    ]) {
+      expect(validateBaseUrl(baseUrl, { allowRfc1918: true })).toMatchObject({
+        error: 'Internal IPs blocked',
+        forbidden: true,
+      });
+    }
+  });
+
   it('blocks trailing-dot FQDN bypass across every blocked IPv4 range', () => {
     // The trailing-dot strip in normalizeBracketedIpv6 must apply to
     // every range isBlockedIpv4 covers — not just the three originally
