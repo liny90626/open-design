@@ -10,6 +10,7 @@ This file is the single source of truth for agents entering this repository. Rea
 - Roadmap and references: `docs/roadmap.md`, `docs/references.md`, `docs/code-review-guidelines.md`, `specs/current/maintainability-roadmap.md`.
 - Directory-level agent guidance: `.github/AGENTS.md`, `apps/AGENTS.md`, `packages/AGENTS.md`, `tools/AGENTS.md`, `e2e/AGENTS.md`.
 - Packaged auto-update architecture and high-confidence local harness: read `tools/pack/AGENTS.md` section "Packaged auto-update architecture and harness" before touching packaged updater code, release-channel identity, installer behavior, or updater UI.
+- Fork-local Windows build cache, Docker command, version rule, and final artifact naming: `LOCAL_WINDOWS_BUILD.md`.
 
 ## Workspace directories
 
